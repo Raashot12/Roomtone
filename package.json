@@ -1,0 +1,29 @@
+{
+  "name": "roomtone-voice-enhancer",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@audio/neural-denoise": "^0.6.1",
+    "@fontsource/dm-sans": "^5.3.0",
+    "@fontsource/space-grotesk": "^5.3.0",
+    "@hookform/resolvers": "^6.0.2",
+    "@mediabunny/aac-encoder": "^1.63.0",
+    "@mediabunny/mp3-encoder": "^1.63.0",
+    "gsap": "^3.15.0",
+    "lucide-react": "^0.468.0",
+    "mediabunny": "^1.63.0",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-hook-form": "^7.91.0",
+    "three": "^0.187.0",
+    "vite": "latest",
+    "vite-plugin-pwa": "^2.0.0",
+    "zod": "^4.6.7"
+  }
+}
