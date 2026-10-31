@@ -55,6 +55,9 @@ button:disabled { cursor: not-allowed; }
 .topbar-actions { display: flex; align-items: center; gap: 21px; }
 .local-pill { display: flex; align-items: center; gap: 7px; color: #68776e; font-size: 11px; }
 .local-pill > span { width: 6px; height: 6px; border-radius: 50%; background: #9fc85b; }
+.install-app-button { min-height: 32px; display: inline-flex; align-items: center; justify-content: center; gap: 7px; padding: 0 10px; border: 1px solid #dfe6dc; border-radius: 7px; background: #fff; color: #4b6753; font-size: 10px; font-weight: 600; cursor: pointer; transition: background .16s, border-color .16s; }
+.install-app-button:hover { border-color: #bdcdb7; background: #f6f9f3; }
+.install-app-button svg { flex: none; }
 .icon-button { padding: 7px; display: inline-grid; place-items: center; border: 0; background: transparent; color: #718078; border-radius: 7px; cursor: pointer; }
 .icon-button:hover { background: #edf1eb; color: #294739; }
 .help-button { color: #77857e; }
@@ -99,6 +102,19 @@ button:disabled { cursor: not-allowed; }
 .workflow-strip small { color: #8a968e; font-size: 9px; margin-top: 3px; }
 .workflow-rule { width: 24px; height: 1px; background: #d7dfd4; }
 .recent-section { padding: 25px 4px 0; }
+.seo-guide { margin: 42px 4px 0; padding: 25px; border: 1px solid #e1e8de; border-radius: 12px; background: #fbfcf9; }
+.seo-guide-intro { max-width: 720px; }
+.seo-guide-intro .heading-kicker { margin-bottom: 10px; }
+.seo-guide-intro h2 { margin: 0; color: #294036; font: 500 clamp(23px, 2.4vw, 31px)/1.12 'Space Grotesk', 'DM Sans', sans-serif; letter-spacing: -.9px; }
+.seo-guide-intro p { margin: 11px 0 0; color: #718077; font-size: 12px; line-height: 1.7; }
+.seo-guide-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 11px; margin-top: 19px; }
+.seo-guide-card { min-width: 0; padding: 15px; border: 1px solid #e8ede6; border-radius: 9px; background: #fff; }
+.seo-guide-card h3 { margin: 0 0 8px; color: #42564a; font-size: 11px; font-weight: 700; }
+.seo-guide-card p, .seo-guide-card li { color: #78867d; font-size: 10px; line-height: 1.65; }
+.seo-guide-card p { margin: 0; }
+.seo-guide-card ol { display: grid; gap: 5px; margin: 0 0 10px; padding-left: 18px; }
+.seo-guide-card a, .seo-guide-links a { color: #587b46; font-size: 10px; font-weight: 600; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.seo-guide-links { display: flex; flex-wrap: wrap; gap: 12px 20px; margin-top: 17px; }
 .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 13px; }
 .text-button { border: 0; background: transparent; color: #607c4e; font-size: 10px; font-weight: 600; padding: 6px 0 6px 10px; cursor: pointer; }
 .text-button span { margin-left: 4px; }
@@ -307,6 +323,13 @@ input[type="range"]::-moz-range-thumb { width: 9px; height: 9px; border: 2px sol
 .toast-check { display: grid; place-items: center; width: 19px; height: 19px; color: #243b2c; background: var(--lime); border-radius: 50%; }
 .toast-message button { display: inline-grid; place-items: center; margin-left: 4px; padding: 2px; border: 0; background: transparent; color: #c5d3c8; cursor: pointer; }
 @keyframes toast-in { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+.pwa-update-banner { z-index: 25; position: fixed; left: 50%; bottom: calc(72px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); width: min(530px, calc(100vw - 28px)); display: flex; align-items: center; gap: 11px; padding: 12px; border: 1px solid #dce5d9; border-radius: 10px; background: #fff; box-shadow: 0 10px 32px #17352d1f; }
+.pwa-update-copy { display: grid; min-width: 0; flex: 1; gap: 3px; }
+.pwa-update-copy strong { color: #30483a; font-size: 11px; }
+.pwa-update-copy span { color: #7d8980; font-size: 9px; line-height: 1.4; }
+.pwa-update-banner .button { min-height: 33px; flex: none; font-size: 10px; padding: 0 10px; }
+.pwa-dismiss-button { width: 29px; height: 29px; display: grid; place-items: center; flex: none; border: 0; border-radius: 6px; background: transparent; color: #87948b; cursor: pointer; }
+.pwa-dismiss-button:hover { background: #f0f3ee; color: #385342; }
 
 @media (max-width: 1050px) {
   .sidebar { width: 218px; min-width: 218px; }
@@ -349,7 +372,7 @@ input[type="range"]::-moz-range-thumb { width: 9px; height: 9px; border: 2px sol
   .topbar { height: 56px; padding: 0 16px; }
   .topbar-context { font-size: 10px; }
   .topbar-actions { gap: 11px; }
-  .local-pill { font-size: 9px; }
+  .local-pill { display: none; }
   .page-content { padding: 28px 16px 20px; }
   .page-heading { min-height: auto; padding: 8px 2px 25px; }
   .heading-kicker { font-size: 9px; margin-bottom: 11px; }
@@ -369,6 +392,12 @@ input[type="range"]::-moz-range-thumb { width: 9px; height: 9px; border: 2px sol
   .workflow-rule { display: none; }
   .workflow-icon { width: 25px; height: 25px; }
   .recent-section { padding-top: 18px; }
+  .seo-guide { margin: 28px 0 0; padding: 16px 13px; }
+  .seo-guide-intro h2 { font-size: 23px; }
+  .seo-guide-grid { grid-template-columns: 1fr; gap: 8px; margin-top: 14px; }
+  .seo-guide-card { padding: 12px; }
+  .seo-guide-card p, .seo-guide-card li { font-size: 9px; }
+  .seo-guide-links { display: grid; gap: 9px; margin-top: 14px; }
   .section-header h2 { font-size: 12px; }
   .section-header p { font-size: 9px; }
   .recent-ready, .recent-date { display: none; }
@@ -413,6 +442,11 @@ input[type="range"]::-moz-range-thumb { width: 9px; height: 9px; border: 2px sol
   .support-submit-row { align-items: stretch; flex-direction: column; }
   .support-submit-row .button { width: 100%; }
   .toast-message { right: 10px; bottom: 10px; font-size: 10px; }
+  .pwa-update-banner { bottom: calc(62px + env(safe-area-inset-bottom, 0px)); gap: 7px; padding: 9px; }
+  .pwa-update-copy strong { font-size: 10px; }
+  .pwa-update-copy span { font-size: 8px; }
+  .pwa-update-banner .button { min-height: 31px; gap: 5px; padding: 0 8px; font-size: 9px; }
+  .pwa-dismiss-button { width: 25px; height: 25px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

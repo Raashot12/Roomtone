@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { createRoot } from 'react-dom/client';
 import '@fontsource/dm-sans/400.css';
 import '@fontsource/dm-sans/500.css';
 import '@fontsource/dm-sans/600.css';
@@ -40,6 +39,7 @@ import './style.css';
 import { SUPPORT_EMAIL } from './support-config.js';
 import { encodeEnhancedMedia, isMp4File } from './media-export.js';
 import AppLoader from './AppLoader.jsx';
+import PWAControls from './PWAControls.jsx';
 import { loadLocalProjects, saveLocalProject } from './project-storage.js';
 import ExtractAudioPage from './ExtractAudioPage.jsx';
 
@@ -48,6 +48,42 @@ const presets = {
   bright: { label: 'Bright', description: 'More detail up front', presence: 76, leveling: 42, noiseReduction: 68 },
   warm: { label: 'Warm', description: 'Softer, fuller tone', presence: 34, leveling: 62, noiseReduction: 48 },
 };
+
+const PUBLIC_PAGE_METADATA = {
+  enhance: {
+    title: 'Roomtone: Browser Audio Cleaner & Voice Noise Removal',
+    description: 'Clean up voice recordings in your browser with Roomtone. Reduce background noise, shape the sound, and export WAV or MP3. Your files stay on your device.',
+    url: 'https://roomtone-flax.vercel.app/',
+  },
+  extract: {
+    title: 'Extract Audio from Video Online | Roomtone',
+    description: 'Extract audio from MP4 or WebM videos up to 50 MB in your browser. Reduce background noise and download WAV or MP3; files stay on your device.',
+    url: 'https://roomtone-flax.vercel.app/extract-audio-from-video/',
+  },
+};
+
+function updatePublicPageMetadata(view) {
+  if (typeof document === 'undefined') return;
+  const metadata = view === 'extract' ? PUBLIC_PAGE_METADATA.extract : PUBLIC_PAGE_METADATA.enhance;
+  const setContent = (selector, value) => document.querySelector(selector)?.setAttribute('content', value);
+
+  document.title = metadata.title;
+  document.querySelector('link[rel="canonical"]')?.setAttribute('href', metadata.url);
+  setContent('meta[name="description"]', metadata.description);
+  setContent('meta[property="og:title"]', metadata.title);
+  setContent('meta[property="og:description"]', metadata.description);
+  setContent('meta[property="og:url"]', metadata.url);
+  setContent('meta[name="twitter:title"]', metadata.title);
+  setContent('meta[name="twitter:description"]', metadata.description);
+
+  const schemaElement = document.getElementById('roomtone-webapp-schema');
+  if (schemaElement) {
+    const schema = JSON.parse(schemaElement.textContent || '{}');
+    schema.url = metadata.url;
+    schema.description = metadata.description;
+    schemaElement.textContent = JSON.stringify(schema);
+  }
+}
 
 function formatTime(seconds = 0) {
   if (!Number.isFinite(seconds)) return '0:00';
@@ -136,7 +172,6 @@ function MessageEditor({ value, onChange }) {
     </div>
   );
 }
-
 function safeAudioContext() {
   const AudioContextClass = window.AudioContext || window.webkitAudioContext;
   if (!AudioContextClass) throw new Error('This browser does not support audio processing. Try a current version of Chrome, Edge, or Safari.');
@@ -329,8 +364,8 @@ function SupportPage() {
   );
 }
 
-function App() {
-  const [view, setView] = useState('enhance');
+export function App({ initialView = 'enhance', showLoader = true } = {}) {
+  const [view, setView] = useState(initialView);
   const [file, setFile] = useState(null);
   const [fileUrl, setFileUrl] = useState('');
   const [decoded, setDecoded] = useState(null);
@@ -365,6 +400,25 @@ function App() {
   const denoiseWorkerRef = useRef(null);
   const pendingDenoiseRef = useRef(new Map());
   const denoiseRequestRef = useRef(0);
+
+  const navigateToView = (nextView) => {
+    setView(nextView);
+    const nextPath = nextView === 'extract' ? '/extract-audio-from-video/' : '/';
+    if (window.location.pathname !== nextPath) window.history.pushState({}, '', nextPath);
+    updatePublicPageMetadata(nextView);
+  };
+
+  useEffect(() => {
+    const syncViewWithPath = () => {
+      const path = window.location.pathname.replace(/\/+$/, '');
+      const nextView = path === '/extract-audio-from-video' ? 'extract' : 'enhance';
+      setView(nextView);
+      updatePublicPageMetadata(nextView);
+    };
+
+    window.addEventListener('popstate', syncViewWithPath);
+    return () => window.removeEventListener('popstate', syncViewWithPath);
+  }, []);
 
   useEffect(() => () => {
     if (fileUrlRef.current) URL.revokeObjectURL(fileUrlRef.current);
@@ -462,7 +516,7 @@ function App() {
     setLoadError('');
     setPlaybackError('');
     setLoadingFile(true);
-    setView('editor');
+    navigateToView('editor');
     let context;
     try {
       context = safeAudioContext();
@@ -798,10 +852,10 @@ function App() {
 
   const goToEditor = (project) => {
     if (file && project.key === projectKeyFor(file) && processedUrl === project.url) {
-      setView('editor');
+      navigateToView('editor');
       changePreview('enhanced');
     } else if (project.file) {
-      setView('editor');
+      navigateToView('editor');
       setNewFile(project.file, project);
     }
   };
@@ -815,10 +869,10 @@ function App() {
 
   return (
     <>
-    <AppLoader loading={loadingProjects} />
+    {showLoader && <AppLoader loading={loadingProjects} />}
     <div className="app-shell">
       <aside className="sidebar">
-        <a href="#home" className="brand" onClick={(event) => { event.preventDefault(); setView('enhance'); }} aria-label="Roomtone home">
+        <a href="/" className="brand" onClick={(event) => { event.preventDefault(); navigateToView('enhance'); }} aria-label="Roomtone home">
           <span className="brand-mark"><AudioWaveform size={21} strokeWidth={2.2} /></span>
           <span className="brand-word">roomtone<span className="brand-dot">.</span></span>
         </a>
@@ -826,7 +880,7 @@ function App() {
         <div className="sidebar-section-label">Workspace</div>
         <nav className="side-nav" aria-label="Main navigation">
           {nav.map(({ id, label, icon: Icon, count }) => (
-            <button key={id} aria-label={label} disabled={processing || loadingFile || Boolean(exportingFormat)} className={`nav-item${view === id || (id === 'enhance' && view === 'editor') ? ' active' : ''}`} onClick={() => setView(id)}>
+            <button key={id} aria-label={label} disabled={processing || loadingFile || Boolean(exportingFormat)} className={`nav-item${view === id || (id === 'enhance' && view === 'editor') ? ' active' : ''}`} onClick={() => navigateToView(id)}>
               <Icon size={17} strokeWidth={1.8} />
               <span>{label}</span>
               {count && <span className="nav-count">{count}</span>}
@@ -849,6 +903,7 @@ function App() {
           <div className="topbar-context"><span className="context-dot" /> {view === 'extract' ? 'Video audio extraction' : 'Voice workspace'}</div>
           <div className="topbar-actions">
             <span className="local-pill"><span /> Runs in your browser</span>
+            <PWAControls busy={loadingProjects || loadingFile || processing || Boolean(exportingFormat)} onToast={setToast} />
             <button className="icon-button help-button" aria-label="About Roomtone" onClick={() => setToast('Roomtone cleans recordings and extracts audio from video locally.') }><CircleHelp size={17} /></button>
           </div>
         </header>
@@ -884,14 +939,56 @@ function App() {
             </section>
 
             <section className="recent-section">
-              <div className="section-header"><div><h2>Recent recordings</h2><p>Your latest work on this device</p></div><button className="text-button" onClick={() => setView('projects')}>View projects <span>↗</span></button></div>
+              <div className="section-header"><div><h2>Recent recordings</h2><p>Your latest work on this device</p></div><button className="text-button" onClick={() => navigateToView('projects')}>View projects <span>↗</span></button></div>
               {projects.length === 0 ? (
                 <div className="empty-recent"><span className="empty-recent-icon"><FileAudio2 size={18} /></span><span><strong>No recordings yet</strong><small>Your enhanced clips will appear here.</small></span><span className="empty-recent-tail">—</span></div>
               ) : (
                 <div className="recent-list">{projects.slice(0, 3).map((project, index) => <button key={`${project.name}-${index}`} disabled={processing || loadingFile || Boolean(exportingFormat)} className="recent-row" onClick={() => goToEditor(project)}><span className="recent-wave"><AudioWaveform size={17} /></span><span className="recent-name"><strong>{project.name}</strong><small>Enhanced · {formatTime(project.duration)}</small></span><span className="recent-ready"><Check size={13} /> Ready</span><span className="recent-date">Just now</span><ChevronDown className="recent-chevron" size={16} /></button>)}</div>
               )}
             </section>
-            <footer className="page-footer"><span>Roomtone is a small, local-first voice workspace.</span><span>Built for the moments between takes.</span></footer>
+
+            <section className="seo-guide" aria-labelledby="seo-guide-title">
+              <div className="seo-guide-intro">
+                <div className="heading-kicker"><span className="heading-kicker-line" /> Browser-based voice cleanup</div>
+                <h2 id="seo-guide-title">Clean up voice recordings in your browser</h2>
+                <p>Roomtone reduces background noise in voice recordings, then lets you shape voice presence, volume balance, and pauses. Audio processing and exports run on your device.</p>
+              </div>
+
+              <div className="seo-guide-grid">
+                <section className="seo-guide-card" aria-labelledby="seo-how-title">
+                  <h3 id="seo-how-title">How Roomtone works</h3>
+                  <ol>
+                    <li>Add a voice recording or an MP4 video with sound.</li>
+                    <li>Listen to the original, reduce background noise, and adjust the voice controls.</li>
+                    <li>Compare the result, then export WAV or MP3 audio. MP4 input can also be exported with enhanced audio.</li>
+                  </ol>
+                  <a href="/extract-audio-from-video/">Learn about extracting audio from video</a>
+                </section>
+
+                <section className="seo-guide-card" aria-labelledby="seo-formats-title">
+                  <h3 id="seo-formats-title">Supported recordings and exports</h3>
+                  <p>Roomtone accepts common audio formats including MP3, WAV, M4A, AAC, OGG, and FLAC. You can also open an MP4 video with an audio track. Export enhanced audio as WAV or MP3; MP4 input can be exported as an enhanced MP4.</p>
+                </section>
+
+                <section className="seo-guide-card" id="processing-privacy" aria-labelledby="seo-privacy-title">
+                  <h3 id="seo-privacy-title">Processing stays on this device</h3>
+                  <p>Roomtone processes recordings in your browser and stores saved projects in this browser on this device. Clearing browser site data removes saved projects. Support opens a prepared email in your email app; nothing is sent until you choose to send it.</p>
+                </section>
+
+                <section className="seo-guide-card" aria-labelledby="seo-limits-title">
+                  <h3 id="seo-limits-title">What noise reduction can do</h3>
+                  <p>Roomtone uses RNNoise to reduce background noise around speech and provides local voice shaping controls. Noise reduction can make speech easier to hear, but it does not recreate a voice or repair every recording artifact.</p>
+                </section>
+              </div>
+
+              <div className="seo-guide-links">
+                <a href="/extract-audio-from-video/">Extract audio from video</a>
+                <a href={`mailto:${SUPPORT_EMAIL}`}>Contact Roomtone support</a>
+                <a href="#processing-privacy">How audio is processed</a>
+              </div>
+            </section>
+
+            <footer className="page-footer"><span>Roomtone is a small, local-first voice workspace.</span><a href="#seo-guide-title">How Roomtone works</a><span>Built for the moments between takes.</span></footer>
           </div>
         )}
 
@@ -910,7 +1007,7 @@ function App() {
 
         {view === 'editor' && (
           <div className="page-content editor-page">
-            <button className="back-link" disabled={Boolean(exportingFormat)} onClick={() => setView('enhance')}><ArrowLeft size={15} /> All recordings</button>
+            <button className="back-link" disabled={Boolean(exportingFormat)} onClick={() => navigateToView('enhance')}><ArrowLeft size={15} /> All recordings</button>
             <div className="editor-heading">
               <div><div className="heading-kicker"><span className="heading-kicker-line" /> Voice cleanup</div><h1>{file?.name.replace(/\.[^.]+$/, '') || 'Untitled recording'}</h1><p>{file ? `${formatBytes(file.size)} · ${duration ? formatTime(duration) : 'Loading duration'}` : 'Add a recording to start.'}</p></div>
               <FilePicker compact disabled={processing || loadingFile || Boolean(exportingFormat)} onFile={setNewFile} />
@@ -973,10 +1070,10 @@ function App() {
 
         {view === 'projects' && (
           <div className="page-content projects-page">
-            <div className="projects-heading"><div><div className="heading-kicker"><span className="heading-kicker-line" /> Your workspace</div><h1>Projects</h1><p>Recordings saved in this browser on this device.</p></div><button className="button button-primary" onClick={() => setView('enhance')}><Plus size={16} /> New recording</button></div>
+            <div className="projects-heading"><div><div className="heading-kicker"><span className="heading-kicker-line" /> Your workspace</div><h1>Projects</h1><p>Recordings saved in this browser on this device.</p></div><button className="button button-primary" onClick={() => navigateToView('enhance')}><Plus size={16} /> New recording</button></div>
             <div className="projects-table-wrap">
               <div className="projects-table-head"><span>Name</span><span>Length</span><span>File size</span><span>Status</span><span /></div>
-              {projects.length ? projects.map((project, index) => <button key={`${project.name}-${index}`} disabled={processing || loadingFile || Boolean(exportingFormat)} className="project-table-row" onClick={() => goToEditor(project)}><span className="project-name-cell"><span className="project-icon"><AudioWaveform size={17} /></span><span><strong>{project.name}</strong><small>Saved on this device</small></span></span><span>{formatTime(project.duration)}</span><span>{formatBytes(project.size)}</span><span><span className="status-ready"><Check size={12} /> Ready</span></span><MoreHorizontal size={18} /></button>) : <div className="projects-empty"><span className="empty-record-icon"><Clapperboard size={22} /></span><h2>A clean slate</h2><p>Enhanced recordings will collect here as you work.</p><button className="button button-dark" onClick={() => setView('enhance')}><Plus size={15} /> Add a recording</button></div>}
+              {projects.length ? projects.map((project, index) => <button key={`${project.name}-${index}`} disabled={processing || loadingFile || Boolean(exportingFormat)} className="project-table-row" onClick={() => goToEditor(project)}><span className="project-name-cell"><span className="project-icon"><AudioWaveform size={17} /></span><span><strong>{project.name}</strong><small>Saved on this device</small></span></span><span>{formatTime(project.duration)}</span><span>{formatBytes(project.size)}</span><span><span className="status-ready"><Check size={12} /> Ready</span></span><MoreHorizontal size={18} /></button>) : <div className="projects-empty"><span className="empty-record-icon"><Clapperboard size={22} /></span><h2>A clean slate</h2><p>Enhanced recordings will collect here as you work.</p><button className="button button-dark" onClick={() => navigateToView('enhance')}><Plus size={15} /> Add a recording</button></div>}
             </div>
             <div className="project-storage-note"><Info size={15} /><span>Saved originals and enhanced files stay in this browser on this device. Clearing browser site data removes saved projects.</span></div>
           </div>
@@ -991,5 +1088,3 @@ function App() {
     </>
   );
 }
-
-createRoot(document.getElementById('root')).render(<App />);

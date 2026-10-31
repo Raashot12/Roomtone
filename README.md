@@ -13,7 +13,7 @@ Open the local URL printed by Vite. To create a production build, run `npm run b
 
 ## Offline use and local projects
 
-The production app uses a service worker to cache its app shell, scripts, styles, fonts, and audio-processing models. After the first successful online load completes, the app can open offline. The audio files and enhanced projects are stored separately in IndexedDB on the device; clearing browser site data removes those projects. Browser storage limits vary, so download important exports as a backup. The service worker is generated in production builds and works when served over HTTPS or localhost; it is disabled on Vite's development server.
+The production app uses a service worker to cache its app shell, scripts, styles, fonts, and audio-processing models. Let the first online load finish so the cache is ready before going offline. In supported browsers, choose **Install app** in the top bar; on iPhone or iPad, open Roomtone in Safari, tap **Share**, then **Add to Home Screen**. New versions wait for you to reload before they replace the open app. The audio files and enhanced projects are stored separately in IndexedDB on the device; clearing browser site data removes those projects. Browser storage limits vary, so download important exports as a backup. The service worker is generated in production builds and works when served over HTTPS or localhost; it is disabled on Vite's development server.
 
 ## Support email
 
