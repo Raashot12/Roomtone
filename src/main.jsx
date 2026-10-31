@@ -37,7 +37,8 @@ import {
 } from 'lucide-react';
 import './style.css';
 import { SUPPORT_EMAIL } from './support-config.js';
-import { encodeEnhancedMedia, isMp4File } from './media-export.js';
+import { encodeEnhancedMedia } from './media-export.js';
+import { decodeVideoAudio, isMovFile, isMp4File, isSupportedVideoFile } from './media-import.js';
 import AppLoader from './AppLoader.jsx';
 import PWAControls from './PWAControls.jsx';
 import { loadLocalProjects, saveLocalProject } from './project-storage.js';
@@ -57,7 +58,7 @@ const PUBLIC_PAGE_METADATA = {
   },
   extract: {
     title: 'Extract Audio from Video Online | Roomtone',
-    description: 'Extract audio from MP4 or WebM videos up to 50 MB in your browser. Reduce background noise and download WAV or MP3; files stay on your device.',
+    description: 'Extract audio from MP4, MOV, or WebM videos up to 200 MB in your browser. Reduce background noise and download WAV or MP3; files stay on your device.',
     url: 'https://roomtone-flax.vercel.app/extract-audio-from-video/',
   },
 };
@@ -270,9 +271,9 @@ function FilePicker({ onFile, compact = false, disabled = false }) {
 
   const acceptFile = (file) => {
     if (!file) return;
-    const isSupportedMedia = file.type.startsWith('audio/') || file.type === 'video/mp4' || /\.(mp3|wav|m4a|aac|ogg|flac|webm|mp4)$/i.test(file.name);
+    const isSupportedMedia = file.type.startsWith('audio/') || isSupportedVideoFile(file) || /\.(mp3|wav|m4a|aac|ogg|flac)$/i.test(file.name);
     if (!isSupportedMedia) {
-      setFileError('Choose a supported audio file or an MP4 video with an audio track.');
+      setFileError('Choose a supported audio file or an MP4, MOV, or WebM video with an audio track.');
       return;
     }
     setFileError('');
@@ -291,13 +292,13 @@ function FilePicker({ onFile, compact = false, disabled = false }) {
         className="visually-hidden"
         type="file"
         disabled={disabled}
-        accept="audio/*,video/mp4,.mp3,.wav,.m4a,.aac,.ogg,.flac,.webm,.mp4"
+        accept="audio/*,video/mp4,video/quicktime,video/webm,application/mp4,.mp3,.wav,.m4a,.aac,.ogg,.flac,.webm,.mp4,.mov"
         onChange={(event) => { acceptFile(event.target.files?.[0]); event.target.value = ''; }}
       />
       <div className="upload-orbit" aria-hidden="true"><AudioWaveform size={compact ? 22 : 27} strokeWidth={1.7} /></div>
       <div className="upload-copy">
         <strong>{compact ? 'Drop a new recording here' : 'Drop a recording to get started'}</strong>
-        <span>{compact ? 'or browse your files' : 'Audio files or MP4 video with sound'}</span>
+        <span>{compact ? 'or browse your files' : 'Audio files or MP4, MOV, or WebM video with sound'}</span>
       </div>
       <button type="button" className="button button-dark upload-button" disabled={disabled} onClick={() => inputRef.current?.click()}>
         <Upload size={15} /> {compact ? 'Choose file' : 'Choose a file'}
@@ -519,15 +520,19 @@ export function App({ initialView = 'enhance', showLoader = true } = {}) {
     navigateToView('editor');
     let context;
     try {
-      context = safeAudioContext();
-      const arrayBuffer = await nextFile.arrayBuffer();
-      const audioBuffer = await context.decodeAudioData(arrayBuffer.slice(0));
+      let audioBuffer;
+      if (isSupportedVideoFile(nextFile)) {
+        audioBuffer = await decodeVideoAudio(nextFile);
+      } else {
+        context = safeAudioContext();
+        audioBuffer = await context.decodeAudioData((await nextFile.arrayBuffer()).slice(0));
+      }
       setDecoded(audioBuffer);
       setDuration(audioBuffer.duration);
     } catch (error) {
-      const isMp4 = nextFile.type === 'video/mp4' || /\.mp4$/i.test(nextFile.name);
-      setLoadError(isMp4
-        ? 'We could not read an audio track from this MP4. Choose an MP4 with audio encoded in a format your browser supports, such as AAC.'
+      const videoType = isMovFile(nextFile) ? 'MOV' : isMp4File(nextFile) ? 'MP4' : 'video';
+      setLoadError(isSupportedVideoFile(nextFile)
+        ? error.message || `We could not read an audio track from this ${videoType}. Choose a video with audio encoded in a format your browser supports, such as AAC.`
         : error.message || 'We could not open this audio file. Try an MP3 or WAV recording.');
     } finally {
       if (context && context.state !== 'closed') context.close().catch(() => {});
@@ -760,15 +765,7 @@ export function App({ initialView = 'enhance', showLoader = true } = {}) {
       if (!hasVideoTrack) throw new Error('This file does not contain a video track. Choose a video file.');
       if (!hasAudioTrack) throw new Error('No audio track was found in this video.');
 
-      const context = safeAudioContext();
-      let sourceBuffer;
-      try {
-        sourceBuffer = await context.decodeAudioData((await videoFile.arrayBuffer()).slice(0));
-      } catch {
-        throw new Error('The video has an audio track, but this browser cannot decode it. Try an MP4 with AAC audio or a WebM with Opus audio.');
-      } finally {
-        if (context.state !== 'closed') await context.close().catch(() => {});
-      }
+      const sourceBuffer = await decodeVideoAudio(videoFile);
 
       const enhancedBuffer = await enhanceAudioBuffer(sourceBuffer);
       const blob = writeWav(enhancedBuffer);
@@ -860,6 +857,10 @@ export function App({ initialView = 'enhance', showLoader = true } = {}) {
     }
   };
 
+  const canExportVideo = isMp4File(file) || isMovFile(file);
+  const videoExportFormat = isMovFile(file) ? 'mov' : 'mp4';
+  const videoExportLabel = videoExportFormat.toUpperCase();
+
   const nav = [
     { id: 'enhance', label: 'Enhance speech', icon: AudioLines },
     { id: 'extract', label: 'Extract audio from video', icon: Clapperboard },
@@ -935,7 +936,7 @@ export function App({ initialView = 'enhance', showLoader = true } = {}) {
               <span className="workflow-rule" />
               <div><span className="workflow-icon"><Sparkles size={15} /></span><span><strong>Shape the sound</strong><small>Choose a tone that feels right</small></span></div>
               <span className="workflow-rule" />
-              <div><span className="workflow-icon"><ArrowDownToLine size={15} /></span><span><strong>Take it with you</strong><small>Export WAV, MP3, or enhanced MP4</small></span></div>
+              <div><span className="workflow-icon"><ArrowDownToLine size={15} /></span><span><strong>Take it with you</strong><small>Export WAV, MP3, or enhanced video</small></span></div>
             </section>
 
             <section className="recent-section">
@@ -958,16 +959,16 @@ export function App({ initialView = 'enhance', showLoader = true } = {}) {
                 <section className="seo-guide-card" aria-labelledby="seo-how-title">
                   <h3 id="seo-how-title">How Roomtone works</h3>
                   <ol>
-                    <li>Add a voice recording or an MP4 video with sound.</li>
+                    <li>Add a voice recording or an MP4 or MOV video with sound.</li>
                     <li>Listen to the original, reduce background noise, and adjust the voice controls.</li>
-                    <li>Compare the result, then export WAV or MP3 audio. MP4 input can also be exported with enhanced audio.</li>
+                    <li>Compare the result, then export WAV or MP3 audio. MP4 and MOV input can also be exported with enhanced audio.</li>
                   </ol>
                   <a href="/extract-audio-from-video/">Learn about extracting audio from video</a>
                 </section>
 
                 <section className="seo-guide-card" aria-labelledby="seo-formats-title">
                   <h3 id="seo-formats-title">Supported recordings and exports</h3>
-                  <p>Roomtone accepts common audio formats including MP3, WAV, M4A, AAC, OGG, and FLAC. You can also open an MP4 video with an audio track. Export enhanced audio as WAV or MP3; MP4 input can be exported as an enhanced MP4.</p>
+                  <p>Roomtone accepts common audio formats including MP3, WAV, M4A, AAC, OGG, and FLAC. You can also open MP4 or MOV video with an audio track. Export enhanced audio as WAV or MP3; video input can be exported with enhanced audio while keeping its original picture.</p>
                 </section>
 
                 <section className="seo-guide-card" id="processing-privacy" aria-labelledby="seo-privacy-title">
@@ -1056,9 +1057,9 @@ export function App({ initialView = 'enhance', showLoader = true } = {}) {
                     <div className="export-options">
                       <button type="button" className="button button-download export-format-button" disabled={Boolean(exportingFormat) || processing} onClick={() => downloadEnhanced('wav')}><ArrowDownToLine size={14} /> WAV</button>
                       <button type="button" className="button button-download export-format-button" disabled={Boolean(exportingFormat) || processing} onClick={() => downloadEnhanced('mp3')}><ArrowDownToLine size={14} /> MP3</button>
-                      {isMp4File(file) && <button type="button" className="button button-download export-format-button export-video-button" disabled={Boolean(exportingFormat) || processing} onClick={() => downloadEnhanced('mp4')}><Clapperboard size={14} /> Enhanced MP4 video</button>}
+                      {canExportVideo && <button type="button" className="button button-download export-format-button export-video-button" disabled={Boolean(exportingFormat) || processing} onClick={() => downloadEnhanced(videoExportFormat)}><Clapperboard size={14} /> Enhanced {videoExportLabel} video</button>}
                     </div>
-                    {isMp4File(file) && <small className="export-note">MP4 keeps your original video and replaces its audio with the enhanced track.</small>}
+                    {canExportVideo && <small className="export-note">{videoExportLabel} keeps your original video and replaces its audio with the enhanced track.</small>}
                   </div>}
                   <button className="reset-button" onClick={() => { applyPreset('natural'); setReducePauses(true); setToast('Controls reset to Natural.'); }}><RotateCcw size={13} /> Reset settings</button>
                 </div>

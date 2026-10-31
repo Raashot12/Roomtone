@@ -8,7 +8,7 @@ const extractionPath = resolve(distDirectory, 'extract-audio-from-video', 'index
 const homeHtml = await readFile(homePath, 'utf8');
 const extractionMarkup = await readFile(resolve(root, '.seo-generated/extract.html'), 'utf8');
 const extractionTitle = 'Extract Audio from Video Online | Roomtone';
-const extractionDescription = 'Extract audio from MP4 or WebM videos up to 50 MB in your browser. Reduce background noise and download WAV or MP3; files stay on your device.';
+const extractionDescription = 'Extract audio from MP4, MOV, or WebM videos up to 200 MB in your browser. Reduce background noise and download WAV or MP3; files stay on your device.';
 const extractionUrl = 'https://roomtone-flax.vercel.app/extract-audio-from-video/';
 
 function replaceRootMarkup(html, markup) {

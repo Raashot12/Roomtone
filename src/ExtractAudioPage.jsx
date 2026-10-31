@@ -3,19 +3,14 @@ import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { ArrowDownToLine, Check, Clapperboard, Info, Sparkles, Upload } from 'lucide-react';
+import { isSupportedVideoFile } from './media-import.js';
 
-const MAX_VIDEO_SIZE = 50 * 1024 * 1024;
-const SUPPORTED_VIDEO_EXTENSION = /\.(mp4|m4v|webm)$/i;
-const SUPPORTED_VIDEO_TYPES = new Set(['video/mp4', 'video/webm', 'application/mp4']);
-
-const isSupportedVideo = (file) => (
-  SUPPORTED_VIDEO_TYPES.has(file.type) || SUPPORTED_VIDEO_EXTENSION.test(file.name)
-);
+const MAX_VIDEO_SIZE = 200 * 1024 * 1024;
 
 const videoFileSchema = z.instanceof(File, { message: 'Choose a video file to continue.' })
   .refine((file) => file.size > 0, 'This video file is empty.')
-  .refine((file) => file.size <= MAX_VIDEO_SIZE, 'Video must be 50 MB or smaller.')
-  .refine(isSupportedVideo, 'Choose an MP4 or WebM video.');
+  .refine((file) => file.size <= MAX_VIDEO_SIZE, 'Video must be 200 MB or smaller.')
+  .refine(isSupportedVideoFile, 'Choose an MP4, MOV, or WebM video.');
 
 const extractionSchema = z.object({ video: videoFileSchema });
 
@@ -109,7 +104,7 @@ export default function ExtractAudioPage({
                   className="visually-hidden"
                   type="file"
                   disabled={isLocked}
-                  accept="video/mp4,video/webm,application/mp4,.mp4,.m4v,.webm"
+                  accept="video/mp4,video/quicktime,video/webm,application/mp4,.mp4,.mov,.m4v,.webm"
                   aria-label="Choose a video to extract audio from"
                   aria-invalid={Boolean(videoError)}
                   aria-describedby={videoError ? 'video-upload-error' : 'video-upload-help'}
@@ -119,7 +114,7 @@ export default function ExtractAudioPage({
                 <span className="video-upload-icon"><Upload size={19} /></span>
                 <span className="video-upload-copy">
                   <strong>{selectedVideo?.name || 'Drop a video here or browse your files'}</strong>
-                  <small>{selectedVideo ? `${formatBytes(selectedVideo.size)} · Ready to extract` : 'MP4 or WebM · Maximum file size 50 MB'}</small>
+                  <small>{selectedVideo ? `${formatBytes(selectedVideo.size)} · Ready to extract` : 'MP4, MOV, or WebM · Maximum file size 200 MB'}</small>
                 </span>
                 <span className="button button-dark video-browse-button">{selectedVideo ? 'Choose another' : 'Choose video'}</span>
               </label>
@@ -127,7 +122,7 @@ export default function ExtractAudioPage({
           />
 
           {videoError && <p className="video-form-error" id="video-upload-error" role="alert">{videoError}</p>}
-          {!videoError && <p className="video-form-help" id="video-upload-help">Supported: MP4 or WebM · Maximum: 50 MB · Files stay on this device.</p>}
+          {!videoError && <p className="video-form-help" id="video-upload-help">Supported: MP4, MOV, or WebM · Maximum: 200 MB · Files stay on this device.</p>}
 
           {(submitError || exportError) && <div className="video-notice-error" role="alert"><Info size={15} /><span>{submitError || exportError}</span></div>}
 
@@ -144,7 +139,7 @@ export default function ExtractAudioPage({
             <li><span>2</span><div><strong>Enhance</strong><small>Local noise reduction cleans the voice.</small></div></li>
             <li><span>3</span><div><strong>Download</strong><small>Save the result as WAV or MP3.</small></div></li>
           </ol>
-          <p className="extraction-limit-note"><Info size={13} /> Videos must be 50 MB or smaller.</p>
+          <p className="extraction-limit-note"><Info size={13} /> Videos must be 200 MB or smaller.</p>
         </aside>
       </div>
 

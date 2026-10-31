@@ -1,0 +1,195 @@
+{
+  "ok": true,
+  "strict": false,
+  "browserSkipped": false,
+  "lint": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "filesScanned": 1
+  },
+  "runtime": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": []
+  },
+  "layout": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "duration": 20.75,
+    "samples": [
+      1.153,
+      3.458,
+      5.764,
+      8.069,
+      10.375,
+      12.681,
+      14.986,
+      17.292,
+      19.597
+    ],
+    "transitionSamples": [],
+    "transitionSamplesDropped": 0,
+    "tolerance": 2,
+    "totalIssueCount": 0,
+    "truncated": false
+  },
+  "motion": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": false,
+    "samples": 0
+  },
+  "contrast": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": true,
+    "samples": [
+      1.153,
+      5.764,
+      10.375,
+      14.986,
+      19.597
+    ],
+    "checked": 33,
+    "passed": 33
+  },
+  "craft": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 2,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "text_below_floor",
+        "severity": "warning",
+        "message": "Type floor is 28 px (2.6% of the 1080 px short side, what a phone can read) and 7 text elements stay under it for 0.5 s or more, the smallest \"A simpler voice workflow\" at 16 px: set reading text to at least 28 px, or put data-layout-ignore on text that is texture rather than reading; see references/look.md.",
+        "text": "A simpler voice workflow",
+        "selector": "div.story-kicker",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 136.57,
+          "y": 391.53,
+          "width": 280.05,
+          "height": 21
+        },
+        "time": 3.625,
+        "times": [
+          0,
+          0,
+          3.5,
+          3.625,
+          3.75,
+          6.75,
+          11.625
+        ],
+        "fontPx": 16,
+        "floorPx": 28,
+        "seconds": 13.25,
+        "elements": [
+          {
+            "selector": "div.story-kicker",
+            "text": "A simpler voice workflow",
+            "fontPx": 16,
+            "time": 3.625,
+            "seconds": 13.25
+          },
+          {
+            "selector": "#copy-intake > div:nth-of-type(1) > span:nth-of-type(2)",
+            "text": "Start with your own voice recording.",
+            "fontPx": 17,
+            "time": 3.75,
+            "seconds": 2.875
+          },
+          {
+            "selector": "#copy-clear > div:nth-of-type(1) > span:nth-of-type(2)",
+            "text": "Listen to the difference as you work.",
+            "fontPx": 17,
+            "time": 6.75,
+            "seconds": 4.75
+          },
+          {
+            "selector": "#copy-shape > div:nth-of-type(1) > span:nth-of-type(2)",
+            "text": "Start with a preset, then make it yours.",
+            "fontPx": 17,
+            "time": 11.625,
+            "seconds": 5.25
+          },
+          {
+            "selector": "#intro-eyebrow",
+            "text": "Voice cleanup, right in your browser",
+            "fontPx": 18,
+            "time": 0,
+            "seconds": 3.25
+          },
+          {
+            "selector": "#intro-caption",
+            "text": "Files stay on this device",
+            "fontPx": 18,
+            "time": 0,
+            "seconds": 3.25
+          },
+          {
+            "selector": "div.browser-pill",
+            "text": "Runs in your browser",
+            "fontPx": 18,
+            "time": 3.5,
+            "seconds": 13.375
+          }
+        ]
+      },
+      {
+        "code": "dead_stretch",
+        "severity": "warning",
+        "message": "Nothing on screen changes for 4.00 s (7.13–11.13 s): start the next move within 3 s, or put data-hold on the element whose stillness is deliberate; see references/motion.md.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 7.125,
+        "seconds": 4,
+        "floorSeconds": 3,
+        "until": 11.125
+      }
+    ],
+    "enabled": true,
+    "step": 0.125,
+    "samples": 166
+  },
+  "audio": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": []
+  },
+  "hdr": {
+    "autoPromotion": null,
+    "inspection": "available"
+  },
+  "snapshots": {
+    "enabled": false,
+    "files": [],
+    "times": [],
+    "findingFiles": []
+  }
+}

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html data-composition-variables="[{&quot;id&quot;:&quot;intro-halo-color&quot;,&quot;type&quot;:&quot;color&quot;,&quot;label&quot;:&quot;Intro Halo color&quot;,&quot;default&quot;:&quot;#20332d&quot;}]" lang="en" data-resolution="landscape">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, height=1080">
+  <title>Roomtone — Make room for your voice</title>
+  <script src="assets/js/gsap.min.js"></script>
+  <style>
+    @font-face{font-family:"DM Sans";src:url("assets/fonts/dm-sans-regular.woff2") format("woff2");font-weight:400;font-display:swap}
+    @font-face{font-family:"DM Sans";src:url("assets/fonts/dm-sans-bold.woff2") format("woff2");font-weight:700;font-display:swap}
+    @font-face{font-family:"Space Grotesk";src:url("assets/fonts/space-grotesk-medium.woff2") format("woff2");font-weight:500;font-display:swap}
+    @font-face{font-family:"Space Grotesk";src:url("assets/fonts/space-grotesk-bold.woff2") format("woff2");font-weight:700;font-display:swap}
+    :root{--ground:#f4f6f2;--forest:#17352d;--forest2:#244c3d;--ink:#20332d;--muted:#718078;--line:#e2e7e1;--lime:#c8ea78;--green:#7d9e59;--display:"Space Grotesk",sans-serif;--body:"DM Sans",sans-serif}
+    *{box-sizing:border-box}
+    html,body{width:1920px;height:1080px;margin:0;overflow:hidden;background:var(--forest);color:var(--ink);font-family:var(--body)}
+    #root{position:relative;width:1920px;height:1080px;overflow:hidden;background:var(--forest)}
+    .clip{position:absolute;inset:0;width:100%;height:100%;overflow:hidden}
+    #intro-stage{position:absolute;inset:0;width:100%;height:100%;overflow:hidden;z-index:1;display:flex;align-items:center;justify-content:center;background:var(--forest)}
+    .intro-halo{position:absolute;width:830px;height:830px;left:545px;top:125px;border-radius:50%;background:radial-gradient(circle,rgba(200,234,120,.13),rgba(200,234,120,.035) 44%,transparent 72%);opacity:.12}
+    .intro-inner{position:relative;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:90px;text-align:center}
+    .brand-lockup{display:flex;align-items:center;gap:18px;color:#f5f7f3;font:700 46px var(--display);letter-spacing:-2px}
+    .brand-lockup .brand-mark{width:66px;height:66px}
+    .brand-lockup .dot{color:var(--lime)}
+    
+    .intro-title{max-width:1050px;margin:22px 0 0;color:var(--ground);font:700 92px/1.04 var(--display);letter-spacing:-4px}
+    .intro-subtitle{margin:24px 0 0;color:#cfdbd4;font-size:28px;line-height:1.45}
+    
+    .dot-indicator{width:10px;height:10px;flex:0 0 10px;border-radius:50%;background:var(--lime)}
+    .intro-caption .dot-indicator{box-shadow:0 0 0 5px rgba(200,234,120,.1)}
+    #product-stage{position:absolute;inset:0;width:100%;height:100%;overflow:hidden;z-index:2;background:var(--ground);opacity:0}
+    .product-inner{width:100%;height:100%;display:flex;flex-direction:column;padding:69px 106px 83px}
+    .product-header{height:64px;flex:0 0 64px;display:flex;align-items:center;justify-content:space-between}
+    .product-brand{display:flex;align-items:center;gap:14px;color:var(--forest);font:700 30px var(--display);letter-spacing:-1.2px}
+    .product-brand .brand-mark{width:43px;height:43px}
+    .product-brand .dot{color:#8eb45a}
+    .browser-pill{display:flex;align-items:center;gap:13px;padding:10px 20px;border:1px solid #dce5d7;border-radius:99px;background:#ffffffc9;color:#42634f;font-size:28px;font-weight:700}
+    .browser-pill .dot-indicator{width:9px;height:9px;background:#95c858}
+    .product-layout{flex:1;min-height:0;display:flex;align-items:center;gap:55px;padding-top:54px}
+    .story-column{width:426px;min-width:426px;height:688px;display:flex;flex-direction:column;justify-content:center}
+    
+    
+    .story-rotator{display:grid;margin-top:0}
+    .story-copy{grid-area:1/1;align-self:center;opacity:0}
+    .story-copy h2{margin:0;color:var(--ink);font:700 67px/1.05 var(--display);letter-spacing:-3.1px}
+    .story-copy p{max-width:410px;margin:25px 0 0;color:#4f6258;font-size:28px;line-height:1.42}
+    
+    
+    #app-window{flex:1;min-width:0;height:688px;display:flex;flex-direction:column;overflow:hidden;border:1px solid #dbe3db;border-radius:21px;background:#fff;box-shadow:0 26px 75px rgba(28,55,42,.13),0 4px 12px rgba(28,55,42,.04)}
+    .app-topbar{height:66px;flex:0 0 66px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;border-bottom:1px solid #e6ebe6;background:#fff}
+    .workspace-label{display:flex;align-items:center;gap:12px;color:#314b3e;font-size:18px;font-weight:700}
+    .workspace-label .dot-indicator{background:#9bcc61}
+    .app-top-note{color:#4f6958;font-size:16px}
+    .app-main{flex:1;min-height:0;display:flex}
+    .app-sidebar{width:200px;flex:0 0 200px;display:flex;flex-direction:column;padding:24px 14px 19px;color:#dce9df;background:var(--forest)}
+    .sidebar-logo{display:flex;align-items:center;gap:9px;margin:1px 5px 41px;color:white;font:700 22px var(--display);letter-spacing:-.8px}
+    .sidebar-logo .brand-mark{width:32px;height:32px}
+    .sidebar-logo .dot{color:var(--lime)}
+    .sidebar-heading{margin:0 8px 13px;color:#b3c6b9;font-size:13px;font-weight:700;letter-spacing:1.6px}
+    .nav-item{display:flex;align-items:center;gap:12px;min-height:48px;margin-bottom:8px;padding:0 11px;border-radius:11px;color:#dbe9de;font-size:14px;font-weight:700;white-space:nowrap}
+    .nav-item.active{color:#fff;background:#294d40;box-shadow:inset 3px 0 0 var(--lime)}
+    .nav-icon{width:20px;height:20px;display:grid;place-items:center;color:var(--lime);font-size:17px}
+    .sidebar-spacer{flex:1}
+    .sidebar-local{display:flex;align-items:center;gap:9px;padding:13px 5px 0;border-top:1px solid #ffffff24;color:#d3e1d7;font-size:13px}
+    .sidebar-local .dot-indicator{width:8px;height:8px;flex-basis:8px}
+    .workspace-area{flex:1;min-width:0;display:flex;flex-direction:column;background:#f7f9f6}
+    .workspace-toolbar{height:55px;flex:0 0 55px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;border-bottom:1px solid #e5eae4;color:#3b5347;font-size:14px;font-weight:700}
+    .toolbar-status{display:flex;align-items:center;gap:8px;color:#586c60;font-size:14px;font-weight:400}
+    .toolbar-status .dot-indicator{width:8px;height:8px;flex-basis:8px;background:#9bcc61}
+    .workspace-grid{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 333px}
+    .editor-column{min-width:0;display:flex;flex-direction:column;padding:26px 23px 22px}
+    .editor-heading{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:17px}
+    .editor-title{color:#284336;font:700 20px var(--display);letter-spacing:-.3px}
+    .editor-subtitle{margin-top:4px;color:#63736a;font-size:14px}
+    #file-token{display:flex;align-items:center;gap:10px;padding:9px 13px;border:1px solid #e0e9dc;border-radius:12px;background:#fff;color:#466350;font-size:15px;font-weight:700;opacity:0}
+    .file-type{width:32px;height:32px;display:grid;place-items:center;border-radius:8px;background:#eff5e8;color:#526f3a;font-size:13px;font-weight:700}
+    .audio-card{flex:1;min-height:0;display:flex;flex-direction:column;padding:22px 22px 18px;border:1px solid #e1e8e0;border-radius:16px;background:#fff}
+    .wave-title-row{display:flex;align-items:center;justify-content:space-between;color:#53665b;font-size:15px}
+    .wave-title-row strong{color:#345442;font-size:14px}
+    .wave-art{width:100%;height:144px;margin-top:14px;overflow:visible}
+    .wavebar{fill:#aed488;transform-box:fill-box;transform-origin:center}
+    .wave-baseline{stroke:#e5ede1;stroke-width:1}
+    .wave-time-row{display:flex;justify-content:space-between;margin-top:2px;color:#617168;font-size:14px}
+    .player-row{display:flex;align-items:center;gap:16px;margin-top:auto;padding-top:16px;border-top:1px solid #e9eee8}
+    .play-button{width:43px;height:43px;flex:0 0 43px;display:grid;place-items:center;border:0;border-radius:50%;background:#28523f;color:white;font-size:18px}
+    .player-time{color:#52675d;font-size:15px;white-space:nowrap}
+    .player-spacer{flex:1}
+    .volume-icon{color:#65736b;font-size:16px}
+    .compare-switch{display:flex;align-items:center;gap:4px;padding:4px;border:1px solid #e0e7de;border-radius:11px;background:#f6f8f4}
+    .compare-option{padding:9px 12px;border-radius:8px;color:#586a60;font-size:14px;font-weight:700}
+    #original-option{background:#fff;color:#345442;box-shadow:0 1px 3px rgba(20,45,32,.08)}
+    .settings-panel{display:flex;flex-direction:column;gap:9px;padding:18px 19px 14px;border-left:1px solid #e2e8e1;background:#fff}
+    .settings-title{margin:0;color:#304d3d;font:700 18px var(--display)}
+    .setting-block{padding-bottom:8px;border-bottom:1px solid #edf0ec}
+    .setting-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px;color:#304b3a;font-size:15px;font-weight:700}
+    .setting-head .value{color:#597342;font-size:14px}
+    .preset-row{display:flex;gap:7px}
+    .preset{flex:1;min-width:0;height:48px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:3px;padding:0 8px;border:1px solid #e1e9df;border-radius:9px;background:white;color:#789083}
+    .preset strong{color:#395b44;font-size:14px}
+    .preset span{color:#5d6e63;font-size:12px;white-space:nowrap}
+    .slider-track{position:relative;height:5px;margin:0 3px;border-radius:4px;background:#e7ece5}
+    .slider-fill{position:absolute;inset:0 auto 0 0;width:30%;border-radius:4px;background:#819f61}
+    .slider-knob{position:absolute;top:50%;left:30%;width:16px;height:16px;border:2px solid #77964f;border-radius:50%;background:#fff;box-shadow:0 0 0 2px #fff;transform:translate(-50%,-50%)}
+    .slider-endpoints{display:flex;justify-content:space-between;margin-top:5px;color:#66756c;font-size:12px}
+    .pause-row{display:flex;align-items:center;justify-content:space-between;padding:0 0 8px;border-bottom:1px solid #edf0ec}
+    .pause-label strong{display:block;color:#304b3a;font-size:14px}
+    .pause-label span{display:block;margin-top:4px;color:#66756c;font-size:12px}
+    .toggle{width:35px;height:19px;padding:2px;border-radius:99px;background:#7c9c59}
+    .toggle:after{content:"";display:block;width:15px;height:15px;margin-left:16px;border-radius:50%;background:#fff}
+    .export-heading{display:flex;align-items:center;gap:7px;color:#304b3a;font-size:14px;font-weight:700}
+    #export-buttons{display:flex;gap:8px;margin-top:6px;padding:5px;border:1px solid transparent;border-radius:11px}
+    .download-button{flex:1;height:33px;display:flex;align-items:center;justify-content:center;gap:6px;border:1px solid #dce8d4;border-radius:9px;background:#f2f7ec;color:#3f6144;font-size:14px;font-weight:700}
+    .privacy-note{display:flex;align-items:center;gap:7px;margin-top:2px;color:#5f6d63;font-size:12px;line-height:1.3}
+    .privacy-dot{width:7px;height:7px;flex:0 0 7px;border-radius:50%;background:#95c858}
+    #end-card{position:absolute;inset:0;width:100%;height:100%;overflow:hidden;z-index:5;display:flex;align-items:center;justify-content:center;background:var(--ground);opacity:0}
+    .end-card-content{display:flex;flex-direction:column;align-items:center;text-align:center}
+    .end-card-content .brand-lockup{color:var(--forest)}
+    .end-card-content .brand-lockup .dot{color:#5b7c3d}
+    .end-card-content h2{max-width:1120px;margin:36px 0 0;color:var(--ink);font:700 76px/1.08 var(--display);letter-spacing:-3px}
+    .end-formats{display:flex;gap:14px;margin-top:30px}
+    .end-formats span{min-width:150px;padding:16px 24px;border:1px solid #dce8d4;border-radius:14px;background:#f2f7ec;color:#3f6144;font-size:28px;font-weight:700}
+    .end-caption{margin-top:22px;color:#52675d;font-size:28px}
+    .end-mark{width:70px;height:4px;margin-top:42px;border-radius:4px;background:var(--lime)}
+  </style>
+  <style data-hf-studio-fonts="true">
+@font-face { font-family: "space grotesk"; src: url("assets/fonts/space-grotesk-bold.woff2"); font-display: swap; }
+</style>
+  </head>
+<body>
+  <div style="--intro-halo-color: #20332d" data-motion-blur-samples="64" data-motion-blur-shutter="720" data-hf-id="hf-qf2y" id="root" data-composition-id="main" data-start="0" data-duration="20.75" data-width="1920" data-height="1080">
+    <section data-hf-id="hf-pchq" id="intro-stage" aria-label="Roomtone introduction">
+      <div style="font-family: &quot;space grotesk&quot;, ui-sans-serif, system-ui, sans-serif; color: var(--intro-halo-color)" data-hf-id="hf-okgz" id="intro-halo" class="intro-halo" aria-hidden="true"></div>
+      <div data-hf-id="hf-zfph" class="intro-inner">
+        <div data-hf-id="hf-jlll" id="intro-lockup" class="brand-lockup"><svg data-hf-id="hf-80mo" class="brand-mark" viewBox="0 0 48 48" aria-hidden="true"><rect data-hf-id="hf-yddn" width="48" height="48" rx="15" fill="#c8ea78" /><path data-hf-id="hf-815u" d="M2 13a2 2 0 0 0 2-2V7a2 2 0 0 1 4 0v13a2 2 0 0 0 4 0V4a2 2 0 0 1 4 0v13a2 2 0 0 0 4 0v-4a2 2 0 0 1 2-2" transform="translate(24 24) scale(1.625) translate(-12 -12)" fill="none" stroke="#17352d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg><span data-hf-id="hf-6p4m">roomtone<span data-hf-id="hf-6jgg" class="dot">.</span></span></div>
+        <h1 data-hf-id="hf-9yhh" id="intro-title" class="intro-title">Make room for your voice.</h1>
+        <p data-hf-id="hf-y4qg" id="intro-subtitle" class="intro-subtitle">Voice cleanup, made simple.</p>
+        </div>
+    </section>
+    <section data-hf-id="hf-5npa" id="product-stage" aria-label="Roomtone voice editor">
+      <div data-hf-id="hf-6042" class="product-inner">
+        <header data-hf-id="hf-pfxa" id="product-header" class="product-header">
+          <div data-hf-id="hf-77dt" class="product-brand"><svg data-hf-id="hf-z7rc" class="brand-mark" viewBox="0 0 48 48" aria-hidden="true"><rect data-hf-id="hf-cbuj" width="48" height="48" rx="15" fill="#c8ea78" /><path data-hf-id="hf-86h2" d="M2 13a2 2 0 0 0 2-2V7a2 2 0 0 1 4 0v13a2 2 0 0 0 4 0V4a2 2 0 0 1 4 0v13a2 2 0 0 0 4 0v-4a2 2 0 0 1 2-2" transform="translate(24 24) scale(1.625) translate(-12 -12)" fill="none" stroke="#17352d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg><span data-hf-id="hf-cmqi">roomtone<span data-hf-id="hf-3zzs" class="dot">.</span></span></div>
+          <div data-hf-id="hf-fv38" class="browser-pill"><span data-hf-id="hf-ttxm" class="dot-indicator"></span>Runs in your browser</div>
+        </header>
+        <div data-hf-id="hf-lxjs" class="product-layout">
+          <aside data-hf-id="hf-sg7h" id="story-column" class="story-column">
+            <div data-hf-id="hf-ysw7" class="story-rotator">
+              <article data-hf-id="hf-3ve0" id="copy-intake" class="story-copy"><h2 data-hf-id="hf-4iw4">Bring in<br data-hf-id="hf-x5px">a take.</h2><p data-hf-id="hf-83hw">Choose a recording and start shaping it right in your browser.</p></article>
+              <article data-hf-id="hf-oylc" id="copy-clear" class="story-copy" data-hold=""><h2 data-hf-id="hf-e6vw">Make the<br data-hf-id="hf-rsrt">voice clearer.</h2><p data-hf-id="hf-5hsm">Compare the original and enhanced takes, then tune the noise reduction.</p></article>
+              <article data-hf-id="hf-ncm8" id="copy-shape" class="story-copy" data-hold=""><h2 data-hf-id="hf-hg22">Shape<br data-hf-id="hf-szow">your sound.</h2><p data-hf-id="hf-x1j9">Choose Natural, Bright, or Warm. Fine-tune presence, balance, and pauses.</p></article>
+              
+            </div>
+          </aside>
+          <section data-hf-id="hf-ifyq" id="app-window" data-layout-ignore="" aria-label="Roomtone editor interface">
+            <div data-hf-id="hf-txom" class="app-topbar"><div data-hf-id="hf-mrmx" class="workspace-label"><span data-hf-id="hf-k6fi" class="dot-indicator"></span>Voice workspace</div><div data-hf-id="hf-mij7" class="app-top-note">On this device</div></div>
+            <div data-hf-id="hf-yb6x" class="app-main">
+              <nav data-hf-id="hf-vo3q" class="app-sidebar" aria-label="Workspace navigation">
+                <div data-hf-id="hf-ae5g" class="sidebar-logo"><svg data-hf-id="hf-y0u9" class="brand-mark" viewBox="0 0 48 48" aria-hidden="true"><rect data-hf-id="hf-bxji" width="48" height="48" rx="15" fill="#c8ea78" /><path data-hf-id="hf-8ks3" d="M2 13a2 2 0 0 0 2-2V7a2 2 0 0 1 4 0v13a2 2 0 0 0 4 0V4a2 2 0 0 1 4 0v13a2 2 0 0 0 4 0v-4a2 2 0 0 1 2-2" transform="translate(24 24) scale(1.625) translate(-12 -12)" fill="none" stroke="#17352d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg><span data-hf-id="hf-d11j">roomtone<span data-hf-id="hf-2t2p" class="dot">.</span></span></div>
+                <div data-hf-id="hf-3eiu" class="sidebar-heading">WORKSPACE</div>
+                <div data-hf-id="hf-ieud" class="nav-item active"><span data-hf-id="hf-jaez" class="nav-icon">≋</span>Enhance speech</div>
+                <div data-hf-id="hf-yusc" class="nav-item"><span data-hf-id="hf-hiyh" class="nav-icon">▱</span>Extract audio</div>
+                <div data-hf-id="hf-rsqk" class="nav-item"><span data-hf-id="hf-gbgt" class="nav-icon">▱</span>Your projects</div>
+                <div data-hf-id="hf-kfp1" class="sidebar-spacer"></div><div data-hf-id="hf-tsfl" class="sidebar-local"><span data-hf-id="hf-kkqj" class="dot-indicator"></span>Files stay on this device</div>
+              </nav>
+              <div data-hf-id="hf-6wer" class="workspace-area">
+                <div data-hf-id="hf-uw2x" class="workspace-toolbar"><span data-hf-id="hf-g0vo">Voice workspace</span><span data-hf-id="hf-er99" class="toolbar-status"><span data-hf-id="hf-kz1k" class="dot-indicator"></span>Runs in your browser</span></div>
+                <div data-hf-id="hf-oiqo" class="workspace-grid">
+                  <div data-hf-id="hf-z9ne" class="editor-column">
+                    <div data-hf-id="hf-m7oe" class="editor-heading">
+                      <div data-hf-id="hf-yeow"><div data-hf-id="hf-96s6" class="editor-title">Enhance speech</div><div data-hf-id="hf-f2qr" class="editor-subtitle">Clean up your recording and shape its sound</div></div>
+                      <div data-hf-id="hf-vl2z" id="file-token"><span data-hf-id="hf-12tm" class="file-type">WAV</span><span data-hf-id="hf-gevs">voice-note.wav</span><span data-hf-id="hf-jufc" style="color:#65736b;font-weight:400">· 0:05</span></div>
+                    </div>
+                    <div data-hf-id="hf-ev7x" class="audio-card">
+                      <div data-hf-id="hf-rrk1" class="wave-title-row"><strong data-hf-id="hf-fx7s">Audio preview</strong><span data-hf-id="hf-xeek">0:05</span></div>
+                      <svg data-hf-id="hf-e8w5" class="wave-art" viewBox="0 0 760 144" role="img" aria-label="Audio waveform for voice-note.wav"><line data-hf-id="hf-wxlz" class="wave-baseline" x1="0" y1="72" x2="760" y2="72" /><g data-hf-id="hf-mqt3" id="wave-bars" /></svg>
+                      <div data-hf-id="hf-8ttw" class="wave-time-row"><span data-hf-id="hf-ylbn">0:00</span><span data-hf-id="hf-tkuc">0:05</span></div>
+                      <div data-hf-id="hf-noic" class="player-row"><div data-hf-id="hf-tprm" class="play-button" aria-hidden="true">▶</div><div data-hf-id="hf-1pxv" class="player-time">0:00&#160; / &#160;0:05</div><div data-hf-id="hf-dmx8" class="player-spacer"></div><div data-hf-id="hf-fp93" class="volume-icon" aria-hidden="true">◖</div><div data-hf-id="hf-ix34" class="compare-switch" aria-label="Original and enhanced comparison"><span data-hf-id="hf-mh3o" id="original-option" class="compare-option">Original</span><span data-hf-id="hf-m3ik" id="enhanced-option" class="compare-option">Enhanced</span></div></div>
+                    </div>
+                  </div>
+                  <aside data-hf-id="hf-woro" class="settings-panel" aria-label="Voice enhancement controls">
+                    <h3 data-hf-id="hf-gbqu" class="settings-title">Enhance speech</h3>
+                    <div data-hf-id="hf-23is" class="setting-block">
+                      <div data-hf-id="hf-2o2z" class="setting-head"><span data-hf-id="hf-ezzr">Starting point</span><span data-hf-id="hf-3y5m" style="color:#697665;font-weight:400">Choose a tone</span></div>
+                      <div data-hf-id="hf-z0dq" class="preset-row">
+                        <div data-hf-id="hf-nkty" id="preset-natural" class="preset"><strong data-hf-id="hf-boxb">Natural</strong><span data-hf-id="hf-e5hl">Balanced</span></div>
+                        <div data-hf-id="hf-xv43" id="preset-bright" class="preset"><strong data-hf-id="hf-3wui">Bright</strong><span data-hf-id="hf-jgul">More detail</span></div>
+                        <div data-hf-id="hf-arxg" id="preset-warm" class="preset"><strong data-hf-id="hf-xndj">Warm</strong><span data-hf-id="hf-hqwu">Softer tone</span></div>
+                      </div>
+                    </div>
+                    <div data-hf-id="hf-nrzg" class="setting-block"><div data-hf-id="hf-0r4b" class="setting-head"><span data-hf-id="hf-szmg">AI noise reduction</span><span data-hf-id="hf-cr8f" class="value">48%</span></div><div data-hf-id="hf-t7f1" class="slider-track"><div data-hf-id="hf-ma3x" id="noise-fill" class="slider-fill" style="width:34%"></div><div data-hf-id="hf-zlc0" id="noise-knob" class="slider-knob" style="left:34%"></div></div><div data-hf-id="hf-cyma" class="slider-endpoints"><span data-hf-id="hf-vbh0">Subtle</span><span data-hf-id="hf-yuti">Strong</span></div></div>
+                    <div data-hf-id="hf-ml2d" class="setting-block"><div data-hf-id="hf-0cta" class="setting-head"><span data-hf-id="hf-qbry">Voice presence</span><span data-hf-id="hf-8e22" class="value">34%</span></div><div data-hf-id="hf-dqm9" class="slider-track"><div data-hf-id="hf-faf7" class="slider-fill" style="width:34%"></div><div data-hf-id="hf-flqr" class="slider-knob" style="left:34%"></div></div><div data-hf-id="hf-ewti" class="slider-endpoints"><span data-hf-id="hf-t9mx">Soft</span><span data-hf-id="hf-azwu">Forward</span></div></div>
+                    <div data-hf-id="hf-mzde" class="setting-block"><div data-hf-id="hf-zyi9" class="setting-head"><span data-hf-id="hf-5ruv">Volume balance</span><span data-hf-id="hf-7577" class="value">62%</span></div><div data-hf-id="hf-exjc" class="slider-track"><div data-hf-id="hf-j1aw" class="slider-fill" style="width:62%"></div><div data-hf-id="hf-qkvc" class="slider-knob" style="left:62%"></div></div><div data-hf-id="hf-fb4j" class="slider-endpoints"><span data-hf-id="hf-whi2">Natural</span><span data-hf-id="hf-cu5p">Even</span></div></div>
+                    <div data-hf-id="hf-ai4p" class="pause-row"><div data-hf-id="hf-ti0v" class="pause-label"><strong data-hf-id="hf-qi1s">Quiet the pauses</strong><span data-hf-id="hf-4gcp">Lower room noise between phrases</span></div><div data-hf-id="hf-dxkc" class="toggle" aria-label="Quiet the pauses enabled"></div></div>
+                    <div data-hf-id="hf-y7yw">
+                      <div data-hf-id="hf-2frp" class="export-heading"><span data-hf-id="hf-zvhy" style="font-size:15px">↓</span>Download enhanced as</div>
+                      <div data-hf-id="hf-ksuv" id="export-buttons"><div data-hf-id="hf-y9ht" class="download-button"><span data-hf-id="hf-plbq">↓</span>WAV</div><div data-hf-id="hf-z3q1" class="download-button"><span data-hf-id="hf-9fh6">↓</span>MP3</div></div>
+                      <div data-hf-id="hf-z4wn" class="privacy-note"><span data-hf-id="hf-4ie1" class="privacy-dot"></span>Enhancement and exports stay on this device.</div>
+                    </div>
+                  </aside>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+    <section data-hf-id="hf-wsnc" id="end-card" aria-label="Roomtone privacy promise">
+      <div data-hf-id="hf-z282" id="end-card-content" class="end-card-content">
+        <div data-hf-id="hf-umee" class="brand-lockup"><svg data-hf-id="hf-yf5a" class="brand-mark" viewBox="0 0 48 48" aria-hidden="true"><rect data-hf-id="hf-bj8h" width="48" height="48" rx="15" fill="#c8ea78" /><path data-hf-id="hf-d128" d="M2 13a2 2 0 0 0 2-2V7a2 2 0 0 1 4 0v13a2 2 0 0 0 4 0V4a2 2 0 0 1 4 0v13a2 2 0 0 0 4 0v-4a2 2 0 0 1 2-2" transform="translate(24 24) scale(1.625) translate(-12 -12)" fill="none" stroke="#17352d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg><span data-hf-id="hf-dfck">roomtone<span data-hf-id="hf-37dq" class="dot">.</span></span></div>
+        <h2 data-hf-id="hf-hn9z">Your files stay on this device.</h2><div data-hf-id="hf-lhf2" id="end-formats" class="end-formats"><span data-hf-id="hf-y8ds">↓&#160; WAV</span><span data-hf-id="hf-y24g">↓&#160; MP3</span></div><div data-hf-id="hf-3quu" class="end-caption">Roomtone · WAV + MP3 exports</div><div data-hf-id="hf-s07n" class="end-mark"></div>
+      </div>
+    </section>
+    <audio data-hf-id="hf-capo" id="music" class="clip" data-start="0" data-duration="20.75" data-track-index="10" data-volume="1" src="assets/music/happy-beats-business-moves-vol-12-by-ende-dot-app.mp3"></audio>
+    <audio data-hf-id="hf-v8d8" id="sfx-drop" class="clip" data-start="4.05" data-duration="0.06" data-track-index="11" data-volume="0.24" src="assets/sfx/ui/click2.ogg"></audio>
+    <audio data-hf-id="hf-sjch" id="sfx-enhanced" class="clip" data-start="8.74" data-duration="0.06" data-track-index="11" data-volume="0.22" src="assets/sfx/ui/click2.ogg"></audio>
+    <audio data-hf-id="hf-hw5l" id="sfx-warm" class="clip" data-start="13.11" data-duration="0.06" data-track-index="11" data-volume="0.20" src="assets/sfx/ui/click2.ogg"></audio>
+    <audio data-hf-id="hf-u0o4" id="sfx-end" class="clip" data-start="17.47" data-duration="0.18" data-track-index="12" data-volume="0.20" src="assets/sfx/impact/impactSoft_medium_001.ogg"></audio>
+  </div>
+  <script src="assets/music/audio-data.js"></script>
+  <script>
+    const barHeights=[10,14,20,13,25,18,32,48,35,20,13,18,27,42,29,17,12,19,33,51,39,23,15,21,34,53,42,25,16,21,32,44,30,18,12,15,24,36,49,33,20,13,18,29,43,34,19,12,15,22,37,48,31,18,12,16,25,39,29,17,11,13,21,33,45,30,19,12,15,25,35,24,14,10];
+    const bars=document.getElementById("wave-bars");
+    barHeights.forEach((height,index)=>{const rect=document.createElementNS("http://www.w3.org/2000/svg","rect");rect.setAttribute("x",String(8+index*10.7));rect.setAttribute("y",String((144-height)/2));rect.setAttribute("width","4");rect.setAttribute("height",String(height));rect.setAttribute("rx","2");rect.setAttribute("class","wavebar");bars.appendChild(rect)});
+    window.__timelines=window.__timelines||{};
+    const tl=gsap.timeline({paused:true});
+    window.__timelines["main"]=tl;
+
+    tl.to("#intro-stage",{opacity:0,duration:.32,ease:"power2.inOut"},3.0);
+    tl.fromTo("#product-stage",{opacity:0},{opacity:1,duration:.42,ease:"power2.out",immediateRender:false},3.18);
+    tl.from("#intro-lockup",{y:18,scale:.96,duration:.62,ease:"power3.out"},.15);
+    tl.from("#intro-title",{y:28,duration:.72,ease:"power3.out"},.55);
+    tl.from("#intro-subtitle",{y:16,duration:.48,ease:"power2.out"},.91);
+    tl.to("#intro-halo",{opacity:.17,scale:1.035,duration:2.2,ease:"sine.inOut"},.3);
+
+    tl.from("#product-header",{opacity:0,y:-14,duration:.48,ease:"power2.out"},3.34);
+    tl.from("#story-column",{opacity:0,x:-24,duration:.58,ease:"power3.out"},3.42);
+    tl.from("#app-window",{opacity:0,x:38,scale:.985,duration:.7,ease:"power3.out"},3.34);
+    tl.fromTo("#copy-intake",{opacity:0,y:22},{opacity:1,y:0,duration:.55,ease:"power3.out",immediateRender:false},3.52);
+    tl.fromTo("#file-token",{opacity:0,y:13,scale:.97},{opacity:1,y:0,scale:1,duration:.5,ease:"back.out(1.5)",immediateRender:false},4.02);
+    tl.from("#wave-bars .wavebar",{opacity:0,scaleY:.28,duration:.32,stagger:.012,ease:"power2.out"},4.36);
+
+    // beat-locked: 8.74s — Original/Enhanced comparison and noise reduction settle.
+    tl.to("#original-option",{backgroundColor:"transparent",color:"#586a60",boxShadow:"none",duration:.28,ease:"power2.out"},8.74);
+    tl.to("#enhanced-option",{backgroundColor:"#244c3d",color:"#ffffff",boxShadow:"0 2px 7px rgba(24,58,41,.18)",duration:.28,ease:"power2.out"},8.74);
+    tl.to("#noise-fill",{width:"48%",duration:.62,ease:"power2.out"},8.74);
+    tl.to("#noise-knob",{x:40,duration:.62,ease:"power2.out"},8.74);
+    tl.to("#copy-intake",{opacity:0,y:-12,duration:.26,ease:"power2.in"},6.36);
+    tl.fromTo("#copy-clear",{opacity:0,y:22},{opacity:1,y:0,duration:.55,ease:"power3.out",immediateRender:false},6.56);
+
+    // beat-locked: 13.11s — Select the actual Warm starting point.
+    tl.to("#preset-natural",{borderColor:"#e1e9df",backgroundColor:"#ffffff",duration:.25},13.11);
+    tl.to("#preset-warm",{borderColor:"#91b46d",backgroundColor:"#f2f7eb",boxShadow:"0 0 0 1px #91b46d",duration:.28},13.11);
+    tl.to("#copy-clear",{opacity:0,y:-12,duration:.26,ease:"power2.in"},11.18);
+    tl.fromTo("#copy-shape",{opacity:0,y:22},{opacity:1,y:0,duration:.55,ease:"power3.out",immediateRender:false},11.42);
+
+    // beat-locked: 17.47s — WAV/MP3 choices receive focus.
+    tl.to("#copy-shape",{opacity:0,y:-12,duration:.26,ease:"power2.in"},16.69);
+tl.to("#product-stage",{opacity:0,duration:.20,ease:"power2.in"},16.69);
+tl.fromTo("#end-card",{opacity:0},{opacity:1,duration:.35,ease:"power2.out",immediateRender:false},16.93);
+tl.fromTo("#end-card-content",{opacity:0,y:16,scale:.985},{opacity:1,y:0,scale:1,duration:.5,ease:"power3.out",immediateRender:false},16.93);
+tl.from("#end-formats span",{opacity:0,y:12,scale:.96,duration:.35,stagger:.16,ease:"back.out(1.4)"},17.47);
+    tl.fromTo("#music",{volume:0},{volume:.28,duration:.9,ease:"power2.out",immediateRender:false},0);
+    tl.to("#music",{volume:0,duration:.85,ease:"power2.inOut"},19.9);
+
+    // Subtle music-reactive warmth, sampled on the same seekable timeline.
+    const audioData=window.ROOMTONE_AUDIO_DATA;
+    if(audioData&&audioData.frames){for(let frameIndex=0;frameIndex<Math.min(audioData.totalFrames,99);frameIndex++){const frame=audioData.frames[frameIndex];tl.call(()=>{gsap.set("#intro-halo",{opacity:.1+frame.rms*.08,scale:1+frame.bands[0]*.012})},[],frameIndex/audioData.fps)}}
+  </script>
+</body>
+</html>

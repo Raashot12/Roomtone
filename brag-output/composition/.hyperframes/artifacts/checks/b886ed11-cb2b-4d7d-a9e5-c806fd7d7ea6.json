@@ -1,0 +1,4251 @@
+{
+  "ok": false,
+  "strict": false,
+  "browserSkipped": false,
+  "lint": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "filesScanned": 1
+  },
+  "runtime": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": []
+  },
+  "layout": {
+    "ok": false,
+    "errorCount": 6,
+    "warningCount": 1,
+    "infoCount": 66,
+    "findings": [
+      {
+        "code": "text_box_overflow",
+        "severity": "error",
+        "time": 5.764,
+        "selector": "#preset-natural > span:nth-of-type(1)",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 1509,
+          "top": 483.5,
+          "right": 1604.59,
+          "bottom": 499.5,
+          "width": 95.59,
+          "height": 16
+        },
+        "containerSelector": "#preset-natural",
+        "text": "Clear & balanced",
+        "fixHint": "Text is 96px x 16px inside 93px x 48px and overflows by up to 11px; widen the container to at least ~105px or shrink font-size from 12px to ~12px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 1500,
+          "top": 457,
+          "right": 1593.33,
+          "bottom": 505,
+          "width": 93.33,
+          "height": 48
+        },
+        "overflow": {
+          "right": 11.26
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1509,
+          "y": 483.5,
+          "width": 95.59,
+          "height": 16
+        },
+        "firstSeen": 3.458,
+        "lastSeen": 19.597,
+        "occurrences": 8,
+        "heldMs": 0,
+        "times": [
+          3.458,
+          5.764,
+          8.069,
+          10.375,
+          12.681,
+          14.986,
+          17.292,
+          19.597
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "error",
+        "time": 19.597,
+        "selector": "nav.app-sidebar > div:nth-of-type(4)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 645,
+          "top": 514,
+          "right": 737.3,
+          "bottom": 532,
+          "width": 92.3,
+          "height": 18
+        },
+        "containerSelector": "#end-card-content > h2:nth-of-type(1)",
+        "text": "▱ Extract audio",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 645,
+          "y": 514,
+          "width": 92.3,
+          "height": 18
+        },
+        "firstSeen": 19.25,
+        "lastSeen": 20.75,
+        "occurrences": 14,
+        "heldMs": 1500,
+        "times": [
+          19.25,
+          19.375,
+          19.5,
+          19.597,
+          19.625,
+          19.75,
+          19.875,
+          20,
+          20.125,
+          20.25,
+          20.375,
+          20.5,
+          20.625,
+          20.75
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "error",
+        "time": 19.597,
+        "selector": "nav.app-sidebar > div:nth-of-type(4) > span:nth-of-type(1)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 614,
+          "top": 513,
+          "right": 632,
+          "bottom": 535,
+          "width": 18,
+          "height": 22
+        },
+        "containerSelector": "#end-card-content > h2:nth-of-type(1)",
+        "text": "▱",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 614,
+          "y": 513,
+          "width": 18,
+          "height": 22
+        },
+        "firstSeen": 19.25,
+        "lastSeen": 20.75,
+        "occurrences": 14,
+        "heldMs": 1500,
+        "times": [
+          19.25,
+          19.375,
+          19.5,
+          19.597,
+          19.625,
+          19.75,
+          19.875,
+          20,
+          20.125,
+          20.25,
+          20.375,
+          20.5,
+          20.625,
+          20.75
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "error",
+        "time": 19.597,
+        "selector": "nav.app-sidebar > div:nth-of-type(5)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 645,
+          "top": 570,
+          "right": 736.33,
+          "bottom": 588,
+          "width": 91.33,
+          "height": 18
+        },
+        "containerSelector": "#end-card-content > h2:nth-of-type(1)",
+        "text": "▱ Your projects",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 645,
+          "y": 570,
+          "width": 91.33,
+          "height": 18
+        },
+        "firstSeen": 19.25,
+        "lastSeen": 20.75,
+        "occurrences": 14,
+        "heldMs": 1500,
+        "times": [
+          19.25,
+          19.375,
+          19.5,
+          19.597,
+          19.625,
+          19.75,
+          19.875,
+          20,
+          20.125,
+          20.25,
+          20.375,
+          20.5,
+          20.625,
+          20.75
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "error",
+        "time": 19.597,
+        "selector": "nav.app-sidebar > div:nth-of-type(5) > span:nth-of-type(1)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 614,
+          "top": 569,
+          "right": 632,
+          "bottom": 591,
+          "width": 18,
+          "height": 22
+        },
+        "containerSelector": "#end-card-content > h2:nth-of-type(1)",
+        "text": "▱",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 614,
+          "y": 569,
+          "width": 18,
+          "height": 22
+        },
+        "firstSeen": 19.25,
+        "lastSeen": 20.75,
+        "occurrences": 14,
+        "heldMs": 1500,
+        "times": [
+          19.25,
+          19.375,
+          19.5,
+          19.597,
+          19.625,
+          19.75,
+          19.875,
+          20,
+          20.125,
+          20.25,
+          20.375,
+          20.5,
+          20.625,
+          20.75
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "error",
+        "time": 19.597,
+        "selector": "div.editor-subtitle",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 811,
+          "top": 426,
+          "right": 1101.22,
+          "bottom": 444,
+          "width": 290.22,
+          "height": 18
+        },
+        "containerSelector": "#end-card-content > div:nth-of-type(1) > span:nth-of-type(1)",
+        "text": "Clean up your recording and shape its sound",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 811,
+          "y": 426,
+          "width": 290.22,
+          "height": 18
+        },
+        "firstSeen": 19.25,
+        "lastSeen": 20.75,
+        "occurrences": 14,
+        "heldMs": 1500,
+        "times": [
+          19.25,
+          19.375,
+          19.5,
+          19.597,
+          19.625,
+          19.75,
+          19.875,
+          20,
+          20.125,
+          20.25,
+          20.375,
+          20.5,
+          20.625,
+          20.75
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "warning",
+        "time": 5.764,
+        "selector": "#preset-natural > span:nth-of-type(1)",
+        "message": "Nowrap text is wider than its container.",
+        "rect": {
+          "left": 1509,
+          "top": 483.5,
+          "right": 1604.59,
+          "bottom": 499.5,
+          "width": 95.59,
+          "height": 16
+        },
+        "containerSelector": "#preset-natural",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 1500,
+          "top": 457,
+          "right": 1593.33,
+          "bottom": 505,
+          "width": 93.33,
+          "height": 48
+        },
+        "overflow": {
+          "right": 11.26
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1509,
+          "y": 483.5,
+          "width": 95.59,
+          "height": 16
+        },
+        "firstSeen": 3.458,
+        "lastSeen": 19.597,
+        "occurrences": 8,
+        "heldMs": 0,
+        "times": [
+          3.458,
+          5.764,
+          8.069,
+          10.375,
+          12.681,
+          14.986,
+          17.292,
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "div.product-brand > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 163,
+          "top": 81.5,
+          "right": 293.78,
+          "bottom": 120.5,
+          "width": 130.78,
+          "height": 39
+        },
+        "containerSelector": "#end-card",
+        "text": "roomtone",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 163,
+          "y": 81.5,
+          "width": 130.78,
+          "height": 39
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "div.product-brand > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 293.78,
+          "top": 81.5,
+          "right": 301.53,
+          "bottom": 120.5,
+          "width": 7.75,
+          "height": 39
+        },
+        "containerSelector": "#end-card",
+        "text": ".",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 293.78,
+          "y": 81.5,
+          "width": 7.75,
+          "height": 39
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "div.browser-pill",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1609.39,
+          "top": 89,
+          "right": 1793,
+          "bottom": 113,
+          "width": 183.61,
+          "height": 24
+        },
+        "containerSelector": "#end-card",
+        "text": "Runs in your browser",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1609.39,
+          "y": 89,
+          "width": 183.61,
+          "height": 24
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "div.story-kicker",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 142,
+          "top": 417.13,
+          "right": 422.05,
+          "bottom": 438.13,
+          "width": 280.05,
+          "height": 21
+        },
+        "containerSelector": "#end-card",
+        "text": "A simpler voice workflow",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 142,
+          "y": 417.13,
+          "width": 280.05,
+          "height": 21
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "#copy-export > h2:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 106,
+          "top": 454.13,
+          "right": 519.3,
+          "bottom": 610.47,
+          "width": 413.3,
+          "height": 156.34
+        },
+        "containerSelector": "#end-card",
+        "text": "Readywhen you are.",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 106,
+          "y": 454.13,
+          "width": 413.3,
+          "height": 156.34
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "#copy-export > p:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 106,
+          "top": 629.81,
+          "right": 472.13,
+          "bottom": 693.84,
+          "width": 366.13,
+          "height": 64.03
+        },
+        "containerSelector": "#end-card",
+        "text": "Download a WAV or MP3. Your files stay on this device.",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 106,
+          "y": 629.81,
+          "width": 366.13,
+          "height": 64.03
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "#copy-export > div:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 115.28,
+          "top": 737.17,
+          "right": 130.72,
+          "bottom": 761.17,
+          "width": 15.44,
+          "height": 24
+        },
+        "containerSelector": "#end-card",
+        "text": "↓",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 115.28,
+          "y": 737.17,
+          "width": 15.44,
+          "height": 24
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "#copy-export > div:nth-of-type(1) > span:nth-of-type(2)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 152,
+          "top": 738.83,
+          "right": 473.34,
+          "bottom": 760.83,
+          "width": 321.34,
+          "height": 22
+        },
+        "containerSelector": "#end-card",
+        "text": "Keep your finished voice recording close.",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 152,
+          "y": 738.83,
+          "width": 321.34,
+          "height": 22
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "div.workspace-label",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 638,
+          "top": 269.5,
+          "right": 787.98,
+          "bottom": 293.5,
+          "width": 149.98,
+          "height": 24
+        },
+        "containerSelector": "#end-card",
+        "text": "Voice workspace",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 638,
+          "y": 269.5,
+          "width": 149.98,
+          "height": 24
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "div.app-top-note",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1678.25,
+          "top": 271,
+          "right": 1785,
+          "bottom": 292,
+          "width": 106.75,
+          "height": 21
+        },
+        "containerSelector": "#end-card",
+        "text": "On this device",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1678.25,
+          "y": 271,
+          "width": 106.75,
+          "height": 21
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "div.sidebar-logo > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 648,
+          "top": 342,
+          "right": 744.55,
+          "bottom": 370,
+          "width": 96.55,
+          "height": 28
+        },
+        "containerSelector": "#end-card",
+        "text": "roomtone",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 648,
+          "y": 342,
+          "width": 96.55,
+          "height": 28
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "div.sidebar-logo > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 744.55,
+          "top": 342,
+          "right": 750.31,
+          "bottom": 370,
+          "width": 5.77,
+          "height": 28
+        },
+        "containerSelector": "#end-card",
+        "text": ".",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 744.55,
+          "y": 342,
+          "width": 5.77,
+          "height": 28
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "div.sidebar-heading",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 610,
+          "top": 413,
+          "right": 704.89,
+          "bottom": 430,
+          "width": 94.89,
+          "height": 17
+        },
+        "containerSelector": "#end-card",
+        "text": "WORKSPACE",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 610,
+          "y": 413,
+          "width": 94.89,
+          "height": 17
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "div.nav-item.active",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 645,
+          "top": 458,
+          "right": 758.14,
+          "bottom": 476,
+          "width": 113.14,
+          "height": 18
+        },
+        "containerSelector": "#end-card",
+        "text": "Enhance speech",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 645,
+          "y": 458,
+          "width": 113.14,
+          "height": 18
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "div.nav-item.active > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 616,
+          "top": 457,
+          "right": 630,
+          "bottom": 479,
+          "width": 14,
+          "height": 22
+        },
+        "containerSelector": "#end-card",
+        "text": "≋",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 616,
+          "y": 457,
+          "width": 14,
+          "height": 22
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "nav.app-sidebar > div:nth-of-type(4)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 645,
+          "top": 514,
+          "right": 737.3,
+          "bottom": 532,
+          "width": 92.3,
+          "height": 18
+        },
+        "containerSelector": "#end-card",
+        "text": "Extract audio",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 645,
+          "y": 514,
+          "width": 92.3,
+          "height": 18
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "nav.app-sidebar > div:nth-of-type(4) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 614,
+          "top": 513,
+          "right": 632,
+          "bottom": 535,
+          "width": 18,
+          "height": 22
+        },
+        "containerSelector": "#end-card",
+        "text": "▱",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 614,
+          "y": 513,
+          "width": 18,
+          "height": 22
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "nav.app-sidebar > div:nth-of-type(5)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 645,
+          "top": 570,
+          "right": 736.33,
+          "bottom": 588,
+          "width": 91.33,
+          "height": 18
+        },
+        "containerSelector": "#end-card",
+        "text": "Your projects",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 645,
+          "y": 570,
+          "width": 91.33,
+          "height": 18
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "nav.app-sidebar > div:nth-of-type(5) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 614,
+          "top": 569,
+          "right": 632,
+          "bottom": 591,
+          "width": 18,
+          "height": 22
+        },
+        "containerSelector": "#end-card",
+        "text": "▱",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 614,
+          "y": 569,
+          "width": 18,
+          "height": 22
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "div.sidebar-local",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 624,
+          "top": 899,
+          "right": 767.63,
+          "bottom": 916,
+          "width": 143.63,
+          "height": 17
+        },
+        "containerSelector": "#end-card",
+        "text": "Files stay on this device",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 624,
+          "y": 899,
+          "width": 143.63,
+          "height": 17
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "div.workspace-toolbar > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 810,
+          "top": 333,
+          "right": 926.66,
+          "bottom": 351,
+          "width": 116.66,
+          "height": 18
+        },
+        "containerSelector": "#end-card",
+        "text": "Voice workspace",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 810,
+          "y": 333,
+          "width": 116.66,
+          "height": 18
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "span.toolbar-status",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1655.84,
+          "top": 333,
+          "right": 1791,
+          "bottom": 351,
+          "width": 135.16,
+          "height": 18
+        },
+        "containerSelector": "#end-card",
+        "text": "Runs in your browser",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1655.84,
+          "y": 333,
+          "width": 135.16,
+          "height": 18
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "div.editor-title",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 811,
+          "top": 396,
+          "right": 965.11,
+          "bottom": 422,
+          "width": 154.11,
+          "height": 26
+        },
+        "containerSelector": "#end-card",
+        "text": "Enhance speech",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 811,
+          "y": 396,
+          "width": 154.11,
+          "height": 26
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "div.editor-subtitle",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 811,
+          "top": 426,
+          "right": 1101.22,
+          "bottom": 444,
+          "width": 290.22,
+          "height": 18
+        },
+        "containerSelector": "#end-card",
+        "text": "Clean up your recording and shape its sound",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 811,
+          "y": 426,
+          "width": 290.22,
+          "height": 18
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "span.file-type",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1238.41,
+          "top": 413.5,
+          "right": 1268,
+          "bottom": 430.5,
+          "width": 29.59,
+          "height": 17
+        },
+        "containerSelector": "#end-card",
+        "text": "WAV",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1238.41,
+          "y": 413.5,
+          "width": 29.59,
+          "height": 17
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "#file-token > span:nth-of-type(2)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1279.2,
+          "top": 412,
+          "right": 1393.33,
+          "bottom": 432,
+          "width": 114.13,
+          "height": 20
+        },
+        "containerSelector": "#end-card",
+        "text": "voice-note.wav",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1279.2,
+          "y": 412,
+          "width": 114.13,
+          "height": 20
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "#file-token > span:nth-of-type(3)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1403.33,
+          "top": 412,
+          "right": 1443,
+          "bottom": 432,
+          "width": 39.67,
+          "height": 20
+        },
+        "containerSelector": "#end-card",
+        "text": "· 0:05",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1403.33,
+          "y": 412,
+          "width": 39.67,
+          "height": 20
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "div.wave-title-row > strong:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 834,
+          "top": 489,
+          "right": 931.58,
+          "bottom": 507,
+          "width": 97.58,
+          "height": 18
+        },
+        "containerSelector": "#end-card",
+        "text": "Audio preview",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 834,
+          "y": 489,
+          "width": 97.58,
+          "height": 18
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "div.wave-title-row > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1401.3,
+          "top": 488,
+          "right": 1434,
+          "bottom": 508,
+          "width": 32.7,
+          "height": 20
+        },
+        "containerSelector": "#end-card",
+        "text": "0:05",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1401.3,
+          "y": 488,
+          "width": 32.7,
+          "height": 20
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "div.wave-time-row > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 834,
+          "top": 668,
+          "right": 865.56,
+          "bottom": 686,
+          "width": 31.56,
+          "height": 18
+        },
+        "containerSelector": "#end-card",
+        "text": "0:00",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 834,
+          "y": 668,
+          "width": 31.56,
+          "height": 18
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "div.wave-time-row > span:nth-of-type(2)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1403.47,
+          "top": 668,
+          "right": 1434,
+          "bottom": 686,
+          "width": 30.53,
+          "height": 18
+        },
+        "containerSelector": "#end-card",
+        "text": "0:05",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1403.47,
+          "y": 668,
+          "width": 30.53,
+          "height": 18
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "div.play-button",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 847.73,
+          "top": 880.09,
+          "right": 863.25,
+          "bottom": 904.09,
+          "width": 15.52,
+          "height": 24
+        },
+        "containerSelector": "#end-card",
+        "text": "▶",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 847.73,
+          "y": 880.09,
+          "width": 15.52,
+          "height": 24
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "div.player-time",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 893,
+          "top": 881.59,
+          "right": 981.36,
+          "bottom": 901.59,
+          "width": 88.36,
+          "height": 20
+        },
+        "containerSelector": "#end-card",
+        "text": "0:00 / 0:05",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 893,
+          "y": 881.59,
+          "width": 88.36,
+          "height": 20
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "div.volume-icon",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1221.3,
+          "top": 880.59,
+          "right": 1234.3,
+          "bottom": 901.59,
+          "width": 13,
+          "height": 21
+        },
+        "containerSelector": "#end-card",
+        "text": "◖",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1221.3,
+          "y": 880.59,
+          "width": 13,
+          "height": 21
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "#original-option",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1267.3,
+          "top": 882.59,
+          "right": 1320.61,
+          "bottom": 900.59,
+          "width": 53.31,
+          "height": 18
+        },
+        "containerSelector": "#end-card",
+        "text": "Original",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1267.3,
+          "y": 882.59,
+          "width": 53.31,
+          "height": 18
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "#enhanced-option",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1348.61,
+          "top": 882.59,
+          "right": 1417,
+          "bottom": 900.59,
+          "width": 68.39,
+          "height": 18
+        },
+        "containerSelector": "#end-card",
+        "text": "Enhanced",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1348.61,
+          "y": 882.59,
+          "width": 68.39,
+          "height": 18
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "h3.settings-title",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1500,
+          "top": 391,
+          "right": 1642.48,
+          "bottom": 414,
+          "width": 142.48,
+          "height": 23
+        },
+        "containerSelector": "#end-card",
+        "text": "Enhance speech",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1500,
+          "y": 391,
+          "width": 142.48,
+          "height": 23
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "aside.settings-panel > div:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1500,
+          "top": 427,
+          "right": 1601.64,
+          "bottom": 447,
+          "width": 101.64,
+          "height": 20
+        },
+        "containerSelector": "#end-card",
+        "text": "Starting point",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1500,
+          "y": 427,
+          "width": 101.64,
+          "height": 20
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "aside.settings-panel > div:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(2)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1692.94,
+          "top": 427,
+          "right": 1794,
+          "bottom": 447,
+          "width": 101.06,
+          "height": 20
+        },
+        "containerSelector": "#end-card",
+        "text": "Choose a tone",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1692.94,
+          "y": 427,
+          "width": 101.06,
+          "height": 20
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "#preset-natural > strong:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1509,
+          "top": 462.5,
+          "right": 1559.69,
+          "bottom": 480.5,
+          "width": 50.69,
+          "height": 18
+        },
+        "containerSelector": "#end-card",
+        "text": "Natural",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1509,
+          "y": 462.5,
+          "width": 50.69,
+          "height": 18
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "#preset-natural > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1509,
+          "top": 483.5,
+          "right": 1604.59,
+          "bottom": 499.5,
+          "width": 95.59,
+          "height": 16
+        },
+        "containerSelector": "#end-card",
+        "text": "Clear & balanced",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1509,
+          "y": 483.5,
+          "width": 95.59,
+          "height": 16
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "#preset-bright > strong:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1609.33,
+          "top": 462.5,
+          "right": 1650.89,
+          "bottom": 480.5,
+          "width": 41.56,
+          "height": 18
+        },
+        "containerSelector": "#end-card",
+        "text": "Bright",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1609.33,
+          "y": 462.5,
+          "width": 41.56,
+          "height": 18
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "#preset-bright > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1609.33,
+          "top": 483.5,
+          "right": 1671.69,
+          "bottom": 499.5,
+          "width": 62.36,
+          "height": 16
+        },
+        "containerSelector": "#end-card",
+        "text": "More detail",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1609.33,
+          "y": 483.5,
+          "width": 62.36,
+          "height": 16
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "#preset-warm > strong:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1709.67,
+          "top": 462.5,
+          "right": 1750.2,
+          "bottom": 480.5,
+          "width": 40.53,
+          "height": 18
+        },
+        "containerSelector": "#end-card",
+        "text": "Warm",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1709.67,
+          "y": 462.5,
+          "width": 40.53,
+          "height": 18
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "#preset-warm > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1709.67,
+          "top": 483.5,
+          "right": 1772.17,
+          "bottom": 499.5,
+          "width": 62.5,
+          "height": 16
+        },
+        "containerSelector": "#end-card",
+        "text": "Softer tone",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1709.67,
+          "y": 483.5,
+          "width": 62.5,
+          "height": 16
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "aside.settings-panel > div:nth-of-type(2) > div:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1500,
+          "top": 530,
+          "right": 1633.44,
+          "bottom": 550,
+          "width": 133.44,
+          "height": 20
+        },
+        "containerSelector": "#end-card",
+        "text": "AI noise reduction",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1500,
+          "y": 530,
+          "width": 133.44,
+          "height": 20
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "aside.settings-panel > div:nth-of-type(2) > div:nth-of-type(1) > span:nth-of-type(2)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1763.41,
+          "top": 531,
+          "right": 1794,
+          "bottom": 549,
+          "width": 30.59,
+          "height": 18
+        },
+        "containerSelector": "#end-card",
+        "text": "48%",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1763.41,
+          "y": 531,
+          "width": 30.59,
+          "height": 18
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "aside.settings-panel > div:nth-of-type(2) > div:nth-of-type(3) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1500,
+          "top": 572,
+          "right": 1535.31,
+          "bottom": 588,
+          "width": 35.31,
+          "height": 16
+        },
+        "containerSelector": "#end-card",
+        "text": "Subtle",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1500,
+          "y": 572,
+          "width": 35.31,
+          "height": 16
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "aside.settings-panel > div:nth-of-type(2) > div:nth-of-type(3) > span:nth-of-type(2)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1757.42,
+          "top": 572,
+          "right": 1794,
+          "bottom": 588,
+          "width": 36.58,
+          "height": 16
+        },
+        "containerSelector": "#end-card",
+        "text": "Strong",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1757.42,
+          "y": 572,
+          "width": 36.58,
+          "height": 16
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "aside.settings-panel > div:nth-of-type(3) > div:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1500,
+          "top": 613,
+          "right": 1613.89,
+          "bottom": 633,
+          "width": 113.89,
+          "height": 20
+        },
+        "containerSelector": "#end-card",
+        "text": "Voice presence",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1500,
+          "y": 613,
+          "width": 113.89,
+          "height": 20
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "aside.settings-panel > div:nth-of-type(3) > div:nth-of-type(1) > span:nth-of-type(2)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1764.09,
+          "top": 614,
+          "right": 1794,
+          "bottom": 632,
+          "width": 29.91,
+          "height": 18
+        },
+        "containerSelector": "#end-card",
+        "text": "34%",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1764.09,
+          "y": 614,
+          "width": 29.91,
+          "height": 18
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "aside.settings-panel > div:nth-of-type(3) > div:nth-of-type(3) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1500,
+          "top": 655,
+          "right": 1522.88,
+          "bottom": 671,
+          "width": 22.88,
+          "height": 16
+        },
+        "containerSelector": "#end-card",
+        "text": "Soft",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1500,
+          "y": 655,
+          "width": 22.88,
+          "height": 16
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "aside.settings-panel > div:nth-of-type(3) > div:nth-of-type(3) > span:nth-of-type(2)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1749.06,
+          "top": 655,
+          "right": 1794,
+          "bottom": 671,
+          "width": 44.94,
+          "height": 16
+        },
+        "containerSelector": "#end-card",
+        "text": "Forward",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1749.06,
+          "y": 655,
+          "width": 44.94,
+          "height": 16
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "aside.settings-panel > div:nth-of-type(4) > div:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1500,
+          "top": 696,
+          "right": 1617.56,
+          "bottom": 716,
+          "width": 117.56,
+          "height": 20
+        },
+        "containerSelector": "#end-card",
+        "text": "Volume balance",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1500,
+          "y": 696,
+          "width": 117.56,
+          "height": 20
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "aside.settings-panel > div:nth-of-type(4) > div:nth-of-type(1) > span:nth-of-type(2)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1764.56,
+          "top": 697,
+          "right": 1794,
+          "bottom": 715,
+          "width": 29.44,
+          "height": 18
+        },
+        "containerSelector": "#end-card",
+        "text": "62%",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1764.56,
+          "y": 697,
+          "width": 29.44,
+          "height": 18
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "aside.settings-panel > div:nth-of-type(4) > div:nth-of-type(3) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1500,
+          "top": 738,
+          "right": 1539.89,
+          "bottom": 754,
+          "width": 39.89,
+          "height": 16
+        },
+        "containerSelector": "#end-card",
+        "text": "Natural",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1500,
+          "y": 738,
+          "width": 39.89,
+          "height": 16
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "aside.settings-panel > div:nth-of-type(4) > div:nth-of-type(3) > span:nth-of-type(2)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1767.48,
+          "top": 738,
+          "right": 1794,
+          "bottom": 754,
+          "width": 26.52,
+          "height": 16
+        },
+        "containerSelector": "#end-card",
+        "text": "Even",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1767.48,
+          "y": 738,
+          "width": 26.52,
+          "height": 16
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "div.pause-label > strong:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1500,
+          "top": 779,
+          "right": 1616.88,
+          "bottom": 797,
+          "width": 116.88,
+          "height": 18
+        },
+        "containerSelector": "#end-card",
+        "text": "Quiet the pauses",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1500,
+          "y": 779,
+          "width": 116.88,
+          "height": 18
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "div.pause-label > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1500,
+          "top": 801,
+          "right": 1697.3,
+          "bottom": 817,
+          "width": 197.3,
+          "height": 16
+        },
+        "containerSelector": "#end-card",
+        "text": "Lower room noise between phrases",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1500,
+          "y": 801,
+          "width": 197.3,
+          "height": 16
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "div.export-heading",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1520.36,
+          "top": 844,
+          "right": 1679.22,
+          "bottom": 862,
+          "width": 158.86,
+          "height": 18
+        },
+        "containerSelector": "#end-card",
+        "text": "Download enhanced as",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1520.36,
+          "y": 844,
+          "width": 158.86,
+          "height": 18
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "div.export-heading > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1500,
+          "top": 843,
+          "right": 1513.36,
+          "bottom": 863,
+          "width": 13.36,
+          "height": 20
+        },
+        "containerSelector": "#end-card",
+        "text": "↓",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1500,
+          "y": 843,
+          "width": 13.36,
+          "height": 20
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "#export-buttons > div:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1565.54,
+          "top": 886.68,
+          "right": 1598.53,
+          "bottom": 905.32,
+          "width": 32.99,
+          "height": 18.63
+        },
+        "containerSelector": "#end-card",
+        "text": "WAV",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1565.54,
+          "y": 886.68,
+          "width": 32.99,
+          "height": 18.63
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "#export-buttons > div:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1546.43,
+          "top": 886.68,
+          "right": 1559.33,
+          "bottom": 905.32,
+          "width": 12.91,
+          "height": 18.63
+        },
+        "containerSelector": "#end-card",
+        "text": "↓",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1546.43,
+          "y": 886.68,
+          "width": 12.91,
+          "height": 18.63
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "#export-buttons > div:nth-of-type(2)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1715.83,
+          "top": 886.68,
+          "right": 1746.31,
+          "bottom": 905.32,
+          "width": 30.48,
+          "height": 18.63
+        },
+        "containerSelector": "#end-card",
+        "text": "MP3",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1715.83,
+          "y": 886.68,
+          "width": 30.48,
+          "height": 18.63
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "#export-buttons > div:nth-of-type(2) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1696.71,
+          "top": 886.68,
+          "right": 1709.62,
+          "bottom": 905.32,
+          "width": 12.91,
+          "height": 18.63
+        },
+        "containerSelector": "#end-card",
+        "text": "↓",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1696.71,
+          "y": 886.68,
+          "width": 12.91,
+          "height": 18.63
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 19.597,
+        "selector": "div.privacy-note",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1514,
+          "top": 922,
+          "right": 1770.5,
+          "bottom": 938,
+          "width": 256.5,
+          "height": 16
+        },
+        "containerSelector": "#end-card",
+        "text": "Enhancement and exports stay on this device.",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "lifetime": {
+          "start": 0,
+          "end": 20.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1514,
+          "y": 922,
+          "width": 256.5,
+          "height": 16
+        },
+        "firstSeen": 19.597,
+        "lastSeen": 19.597,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.597
+        ]
+      }
+    ],
+    "duration": 20.75,
+    "samples": [
+      1.153,
+      3.458,
+      5.764,
+      8.069,
+      10.375,
+      12.681,
+      14.986,
+      17.292,
+      19.597
+    ],
+    "transitionSamples": [],
+    "transitionSamplesDropped": 0,
+    "tolerance": 2,
+    "totalIssueCount": 73,
+    "truncated": false
+  },
+  "motion": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": false,
+    "samples": 0
+  },
+  "contrast": {
+    "ok": false,
+    "errorCount": 4,
+    "warningCount": 25,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "contrast_aa_failure",
+        "severity": "error",
+        "message": "Contrast is 3.57:1; WCAG AA requires 4.5:1.",
+        "text": "A simpler voice workflow",
+        "fg": "rgb(102,140,74)",
+        "bg": "rgb(244,246,242)",
+        "ratio": 3.57,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(89,122,65)",
+        "large": false,
+        "selector": "div > section:nth-of-type(2) > div > div > aside > div:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 106,
+          "y": 417.125,
+          "width": 426,
+          "height": 21
+        },
+        "time": 5.764,
+        "times": [
+          5.764,
+          10.375,
+          14.986,
+          19.597
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 3.61:1; WCAG AA requires 4.5:1.",
+        "text": "↳",
+        "fg": "rgb(101,139,73)",
+        "bg": "rgb(244,246,242)",
+        "ratio": 3.61,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(89,122,64)",
+        "large": false,
+        "selector": "div > section:nth-of-type(2) > div > div > aside > div:nth-of-type(2) > article:nth-of-type(1) > div > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 106,
+          "y": 732.875,
+          "width": 34,
+          "height": 34
+        },
+        "time": 5.764,
+        "times": [
+          5.764
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 3.8:1; WCAG AA requires 4.5:1.",
+        "text": "Start with your own voice recording.",
+        "fg": "rgb(115,128,120)",
+        "bg": "rgb(244,246,242)",
+        "ratio": 3.8,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(104,115,108)",
+        "large": false,
+        "selector": "div > section:nth-of-type(2) > div > div > aside > div:nth-of-type(2) > article:nth-of-type(1) > div > span:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 152,
+          "y": 738.828125,
+          "width": 282.90625,
+          "height": 22.09375
+        },
+        "time": 5.764,
+        "times": [
+          5.764
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "error",
+        "message": "Contrast is 3.09:1; WCAG AA requires 4.5:1.",
+        "text": "◖",
+        "fg": "rgb(128,144,135)",
+        "bg": "rgb(244,246,242)",
+        "ratio": 3.09,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(102,115,108)",
+        "large": false,
+        "selector": "div > section:nth-of-type(2) > div > div > section > div:nth-of-type(2) > div > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(4)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1221.296875,
+          "y": 880.59375,
+          "width": 13,
+          "height": 22
+        },
+        "time": 19.597,
+        "times": [
+          5.764,
+          10.375,
+          14.986,
+          19.597
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "error",
+        "message": "Contrast is 2.99:1; WCAG AA requires 4.5:1.",
+        "text": "Choose a tone",
+        "fg": "rgb(132,147,127)",
+        "bg": "rgb(244,246,242)",
+        "ratio": 2.99,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(105,116,101)",
+        "large": false,
+        "selector": "div > section:nth-of-type(2) > div > div > section > div:nth-of-type(2) > div > div:nth-of-type(2) > aside > div:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1692.9375,
+          "y": 427,
+          "width": 101.0625,
+          "height": 20
+        },
+        "time": 19.597,
+        "times": [
+          5.764,
+          10.375,
+          14.986,
+          19.597
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 3.61:1; WCAG AA requires 4.5:1.",
+        "text": "◉",
+        "fg": "rgb(101,139,73)",
+        "bg": "rgb(244,246,242)",
+        "ratio": 3.61,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(89,122,64)",
+        "large": false,
+        "selector": "div > section:nth-of-type(2) > div > div > aside > div:nth-of-type(2) > article:nth-of-type(2) > div > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 106,
+          "y": 732.875,
+          "width": 34,
+          "height": 34
+        },
+        "time": 10.375,
+        "times": [
+          10.375
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 3.8:1; WCAG AA requires 4.5:1.",
+        "text": "Listen to the difference as you work.",
+        "fg": "rgb(115,128,120)",
+        "bg": "rgb(244,246,242)",
+        "ratio": 3.8,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(104,115,108)",
+        "large": false,
+        "selector": "div > section:nth-of-type(2) > div > div > aside > div:nth-of-type(2) > article:nth-of-type(2) > div > span:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 152,
+          "y": 738.828125,
+          "width": 284.359375,
+          "height": 22.09375
+        },
+        "time": 10.375,
+        "times": [
+          10.375
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "error",
+        "message": "Contrast is 3.82:1; WCAG AA requires 4.5:1.",
+        "text": "Original",
+        "fg": "rgb(113,128,120)",
+        "bg": "rgb(244,246,242)",
+        "ratio": 3.82,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(102,116,109)",
+        "large": false,
+        "selector": "#original-option",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1255.296875,
+          "y": 873.59375,
+          "width": 77.3125,
+          "height": 36
+        },
+        "time": 19.597,
+        "times": [
+          10.375,
+          14.986,
+          19.597
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 3.61:1; WCAG AA requires 4.5:1.",
+        "text": "⌁",
+        "fg": "rgb(101,139,73)",
+        "bg": "rgb(244,246,242)",
+        "ratio": 3.61,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(89,122,64)",
+        "large": false,
+        "selector": "div > section:nth-of-type(2) > div > div > aside > div:nth-of-type(2) > article:nth-of-type(3) > div > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 106,
+          "y": 732.875,
+          "width": 34,
+          "height": 34
+        },
+        "time": 14.986,
+        "times": [
+          14.986
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 3.8:1; WCAG AA requires 4.5:1.",
+        "text": "Start with a preset, then make it yours.",
+        "fg": "rgb(115,128,120)",
+        "bg": "rgb(244,246,242)",
+        "ratio": 3.8,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(104,115,108)",
+        "large": false,
+        "selector": "div > section:nth-of-type(2) > div > div > aside > div:nth-of-type(2) > article:nth-of-type(3) > div > span:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 152,
+          "y": 738.828125,
+          "width": 303.203125,
+          "height": 22.09375
+        },
+        "time": 14.986,
+        "times": [
+          14.986
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 3.61:1; WCAG AA requires 4.5:1.",
+        "text": "↓",
+        "fg": "rgb(101,139,73)",
+        "bg": "rgb(244,246,242)",
+        "ratio": 3.61,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(89,122,64)",
+        "large": false,
+        "selector": "div > section:nth-of-type(2) > div > div > aside > div:nth-of-type(2) > article:nth-of-type(4) > div > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 106,
+          "y": 732.875,
+          "width": 34,
+          "height": 34
+        },
+        "time": 19.597,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 3.8:1; WCAG AA requires 4.5:1.",
+        "text": "Keep your finished voice recording close.",
+        "fg": "rgb(115,128,120)",
+        "bg": "rgb(244,246,242)",
+        "ratio": 3.8,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(104,115,108)",
+        "large": false,
+        "selector": "div > section:nth-of-type(2) > div > div > aside > div:nth-of-type(2) > article:nth-of-type(4) > div > span:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 152,
+          "y": 738.828125,
+          "width": 321.34375,
+          "height": 22.09375
+        },
+        "time": 19.597,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 1.09:1; WCAG AA requires 3:1.",
+        "text": "roomtone.",
+        "fg": "rgb(255,255,255)",
+        "bg": "rgb(244,246,242)",
+        "ratio": 1.09,
+        "requiredRatio": 3,
+        "suggestedColor": "rgb(142,142,142)",
+        "large": true,
+        "selector": "div > section:nth-of-type(2) > div > div > section > div:nth-of-type(2) > nav > div:nth-of-type(1) > span",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 648,
+          "y": 342,
+          "width": 102.3125,
+          "height": 28
+        },
+        "time": 19.597,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 1.65:1; WCAG AA requires 4.5:1.",
+        "text": "WORKSPACE",
+        "fg": "rgb(179,198,185)",
+        "bg": "rgb(244,246,242)",
+        "ratio": 1.65,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(104,115,107)",
+        "large": false,
+        "selector": "div > section:nth-of-type(2) > div > div > section > div:nth-of-type(2) > nav > div:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 610,
+          "y": 413,
+          "width": 156,
+          "height": 17
+        },
+        "time": 19.597,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 1.25:1; WCAG AA requires 4.5:1.",
+        "text": "≋",
+        "fg": "rgb(200,234,120)",
+        "bg": "rgb(244,246,242)",
+        "ratio": 1.25,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(102,119,61)",
+        "large": false,
+        "selector": "div > section:nth-of-type(2) > div > div > section > div:nth-of-type(2) > nav > div:nth-of-type(3) > span",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 613,
+          "y": 457,
+          "width": 20,
+          "height": 20
+        },
+        "time": 19.597,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 1.15:1; WCAG AA requires 4.5:1.",
+        "text": "▱Extract audio",
+        "fg": "rgb(219,233,222)",
+        "bg": "rgb(244,246,242)",
+        "ratio": 1.15,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(107,114,109)",
+        "large": false,
+        "selector": "div > section:nth-of-type(2) > div > div > section > div:nth-of-type(2) > nav > div:nth-of-type(4)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 602,
+          "y": 499,
+          "width": 172,
+          "height": 48
+        },
+        "time": 19.597,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 1.25:1; WCAG AA requires 4.5:1.",
+        "text": "▱",
+        "fg": "rgb(200,234,120)",
+        "bg": "rgb(244,246,242)",
+        "ratio": 1.25,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(102,119,61)",
+        "large": false,
+        "selector": "div > section:nth-of-type(2) > div > div > section > div:nth-of-type(2) > nav > div:nth-of-type(4) > span",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 613,
+          "y": 513,
+          "width": 20,
+          "height": 20
+        },
+        "time": 19.597,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 1.15:1; WCAG AA requires 4.5:1.",
+        "text": "▱Your projects",
+        "fg": "rgb(219,233,222)",
+        "bg": "rgb(244,246,242)",
+        "ratio": 1.15,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(107,114,109)",
+        "large": false,
+        "selector": "div > section:nth-of-type(2) > div > div > section > div:nth-of-type(2) > nav > div:nth-of-type(5)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 602,
+          "y": 555,
+          "width": 172,
+          "height": 48
+        },
+        "time": 19.597,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 1.25:1; WCAG AA requires 4.5:1.",
+        "text": "▱",
+        "fg": "rgb(200,234,120)",
+        "bg": "rgb(244,246,242)",
+        "ratio": 1.25,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(102,119,61)",
+        "large": false,
+        "selector": "div > section:nth-of-type(2) > div > div > section > div:nth-of-type(2) > nav > div:nth-of-type(5) > span",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 613,
+          "y": 569,
+          "width": 20,
+          "height": 20
+        },
+        "time": 19.597,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 1.24:1; WCAG AA requires 4.5:1.",
+        "text": "Files stay on this device",
+        "fg": "rgb(211,225,215)",
+        "bg": "rgb(244,246,242)",
+        "ratio": 1.24,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(107,114,109)",
+        "large": false,
+        "selector": "div > section:nth-of-type(2) > div > div > section > div:nth-of-type(2) > nav > div:nth-of-type(7)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 602,
+          "y": 885,
+          "width": 172,
+          "height": 31
+        },
+        "time": 19.597,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 4.46:1; WCAG AA requires 4.5:1.",
+        "text": "Subtle",
+        "fg": "rgb(102,117,108)",
+        "bg": "rgb(244,246,242)",
+        "ratio": 4.46,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(101,116,107)",
+        "large": false,
+        "selector": "div > section:nth-of-type(2) > div > div > section > div:nth-of-type(2) > div > div:nth-of-type(2) > aside > div:nth-of-type(2) > div:nth-of-type(3) > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1500,
+          "y": 572,
+          "width": 35.3125,
+          "height": 16
+        },
+        "time": 19.597,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 4.46:1; WCAG AA requires 4.5:1.",
+        "text": "Strong",
+        "fg": "rgb(102,117,108)",
+        "bg": "rgb(244,246,242)",
+        "ratio": 4.46,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(101,116,107)",
+        "large": false,
+        "selector": "div > section:nth-of-type(2) > div > div > section > div:nth-of-type(2) > div > div:nth-of-type(2) > aside > div:nth-of-type(2) > div:nth-of-type(3) > span:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1757.421875,
+          "y": 572,
+          "width": 36.578125,
+          "height": 16
+        },
+        "time": 19.597,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 4.46:1; WCAG AA requires 4.5:1.",
+        "text": "Soft",
+        "fg": "rgb(102,117,108)",
+        "bg": "rgb(244,246,242)",
+        "ratio": 4.46,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(101,116,107)",
+        "large": false,
+        "selector": "div > section:nth-of-type(2) > div > div > section > div:nth-of-type(2) > div > div:nth-of-type(2) > aside > div:nth-of-type(3) > div:nth-of-type(3) > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1500,
+          "y": 655,
+          "width": 22.875,
+          "height": 16
+        },
+        "time": 19.597,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 4.46:1; WCAG AA requires 4.5:1.",
+        "text": "Forward",
+        "fg": "rgb(102,117,108)",
+        "bg": "rgb(244,246,242)",
+        "ratio": 4.46,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(101,116,107)",
+        "large": false,
+        "selector": "div > section:nth-of-type(2) > div > div > section > div:nth-of-type(2) > div > div:nth-of-type(2) > aside > div:nth-of-type(3) > div:nth-of-type(3) > span:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1749.0625,
+          "y": 655,
+          "width": 44.9375,
+          "height": 16
+        },
+        "time": 19.597,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 4.46:1; WCAG AA requires 4.5:1.",
+        "text": "Natural",
+        "fg": "rgb(102,117,108)",
+        "bg": "rgb(244,246,242)",
+        "ratio": 4.46,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(101,116,107)",
+        "large": false,
+        "selector": "div > section:nth-of-type(2) > div > div > section > div:nth-of-type(2) > div > div:nth-of-type(2) > aside > div:nth-of-type(4) > div:nth-of-type(3) > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1500,
+          "y": 738,
+          "width": 39.890625,
+          "height": 16
+        },
+        "time": 19.597,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 4.46:1; WCAG AA requires 4.5:1.",
+        "text": "Even",
+        "fg": "rgb(102,117,108)",
+        "bg": "rgb(244,246,242)",
+        "ratio": 4.46,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(101,116,107)",
+        "large": false,
+        "selector": "div > section:nth-of-type(2) > div > div > section > div:nth-of-type(2) > div > div:nth-of-type(2) > aside > div:nth-of-type(4) > div:nth-of-type(3) > span:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1767.484375,
+          "y": 738,
+          "width": 26.515625,
+          "height": 16
+        },
+        "time": 19.597,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 4.46:1; WCAG AA requires 4.5:1.",
+        "text": "Lower room noise between phrases",
+        "fg": "rgb(102,117,108)",
+        "bg": "rgb(244,246,242)",
+        "ratio": 4.46,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(101,116,107)",
+        "large": false,
+        "selector": "div > section:nth-of-type(2) > div > div > section > div:nth-of-type(2) > div > div:nth-of-type(2) > aside > div:nth-of-type(5) > div:nth-of-type(1) > span",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1500,
+          "y": 801,
+          "width": 197.296875,
+          "height": 16
+        },
+        "time": 19.597,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 2.19:1; WCAG AA requires 3:1.",
+        "text": ".",
+        "fg": "rgb(142,180,90)",
+        "bg": "rgb(244,246,242)",
+        "ratio": 2.19,
+        "requiredRatio": 3,
+        "suggestedColor": "rgb(120,152,76)",
+        "large": true,
+        "selector": "div > section:nth-of-type(3) > div > div:nth-of-type(1) > span > span",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1095.75,
+          "y": 401.453125,
+          "width": 11.71875,
+          "height": 58
+        },
+        "time": 19.597,
+        "times": [
+          19.597
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 3.82:1; WCAG AA requires 4.5:1.",
+        "text": "Roomtone · Voice workspace",
+        "fg": "rgb(113,128,120)",
+        "bg": "rgb(244,246,242)",
+        "ratio": 3.82,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(102,116,109)",
+        "large": false,
+        "selector": "div > section:nth-of-type(3) > div > div:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 806.796875,
+          "y": 606.53125,
+          "width": 306.390625,
+          "height": 30
+        },
+        "time": 19.597,
+        "times": [
+          19.597
+        ]
+      }
+    ],
+    "enabled": true,
+    "samples": [
+      1.153,
+      5.764,
+      10.375,
+      14.986,
+      19.597
+    ],
+    "checked": 254,
+    "passed": 214
+  },
+  "craft": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 4,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "text_below_floor",
+        "severity": "warning",
+        "message": "Type floor is 28 px (2.6% of the 1080 px short side, what a phone can read) and 62 text elements stay under it for 0.5 s or more, the smallest \"Clear & balanced\" at 12 px: set reading text to at least 28 px, or put data-layout-ignore on text that is texture rather than reading; see references/look.md.",
+        "text": "Clear & balanced",
+        "selector": "#preset-natural > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1520.82,
+          "y": 484.08,
+          "width": 95.09,
+          "height": 15.91
+        },
+        "time": 3.5,
+        "times": [
+          0,
+          0,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.625,
+          3.75,
+          3.75,
+          4.125,
+          4.125,
+          4.125,
+          6.75,
+          6.75,
+          11.625,
+          11.625,
+          17.125,
+          17.125,
+          19.25
+        ],
+        "fontPx": 11.94,
+        "floorPx": 28,
+        "seconds": 17.25,
+        "elements": [
+          {
+            "selector": "#preset-natural > span:nth-of-type(1)",
+            "text": "Clear & balanced",
+            "fontPx": 11.94,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "#preset-bright > span:nth-of-type(1)",
+            "text": "More detail",
+            "fontPx": 11.94,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "#preset-warm > span:nth-of-type(1)",
+            "text": "Softer tone",
+            "fontPx": 11.94,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "aside.settings-panel > div:nth-of-type(2) > div:nth-of-type(3) > span:nth-of-type(1)",
+            "text": "Subtle",
+            "fontPx": 11.94,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "aside.settings-panel > div:nth-of-type(2) > div:nth-of-type(3) > span:nth-of-type(2)",
+            "text": "Strong",
+            "fontPx": 11.94,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "aside.settings-panel > div:nth-of-type(3) > div:nth-of-type(3) > span:nth-of-type(1)",
+            "text": "Soft",
+            "fontPx": 11.94,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "aside.settings-panel > div:nth-of-type(3) > div:nth-of-type(3) > span:nth-of-type(2)",
+            "text": "Forward",
+            "fontPx": 11.94,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "aside.settings-panel > div:nth-of-type(4) > div:nth-of-type(3) > span:nth-of-type(1)",
+            "text": "Natural",
+            "fontPx": 11.94,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "aside.settings-panel > div:nth-of-type(4) > div:nth-of-type(3) > span:nth-of-type(2)",
+            "text": "Even",
+            "fontPx": 11.94,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "div.pause-label > span:nth-of-type(1)",
+            "text": "Lower room noise between phrases",
+            "fontPx": 11.94,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "div.privacy-note",
+            "text": "Enhancement and exports stay on this device.",
+            "fontPx": 11.94,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "span.file-type",
+            "text": "WAV",
+            "fontPx": 12.83,
+            "time": 4.125,
+            "seconds": 16.625
+          },
+          {
+            "selector": "div.sidebar-heading",
+            "text": "WORKSPACE",
+            "fontPx": 12.93,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "div.sidebar-local",
+            "text": "Files stay on this device",
+            "fontPx": 12.93,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "div.nav-item.active",
+            "text": "Enhance speech",
+            "fontPx": 13.93,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "nav.app-sidebar > div:nth-of-type(4)",
+            "text": "Extract audio",
+            "fontPx": 13.93,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "nav.app-sidebar > div:nth-of-type(5)",
+            "text": "Your projects",
+            "fontPx": 13.93,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "div.workspace-toolbar > span:nth-of-type(1)",
+            "text": "Voice workspace",
+            "fontPx": 13.93,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "span.toolbar-status",
+            "text": "Runs in your browser",
+            "fontPx": 13.93,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "div.editor-subtitle",
+            "text": "Clean up your recording and shape its sound",
+            "fontPx": 13.93,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "div.wave-title-row > strong:nth-of-type(1)",
+            "text": "Audio preview",
+            "fontPx": 13.93,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "div.wave-time-row > span:nth-of-type(1)",
+            "text": "0:00",
+            "fontPx": 13.93,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "div.wave-time-row > span:nth-of-type(2)",
+            "text": "0:05",
+            "fontPx": 13.93,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "#original-option",
+            "text": "Original",
+            "fontPx": 13.93,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "#enhanced-option",
+            "text": "Enhanced",
+            "fontPx": 13.93,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "#preset-natural > strong:nth-of-type(1)",
+            "text": "Natural",
+            "fontPx": 13.93,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "#preset-bright > strong:nth-of-type(1)",
+            "text": "Bright",
+            "fontPx": 13.93,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "#preset-warm > strong:nth-of-type(1)",
+            "text": "Warm",
+            "fontPx": 13.93,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "aside.settings-panel > div:nth-of-type(2) > div:nth-of-type(1) > span:nth-of-type(2)",
+            "text": "48%",
+            "fontPx": 13.93,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "aside.settings-panel > div:nth-of-type(3) > div:nth-of-type(1) > span:nth-of-type(2)",
+            "text": "34%",
+            "fontPx": 13.93,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "aside.settings-panel > div:nth-of-type(4) > div:nth-of-type(1) > span:nth-of-type(2)",
+            "text": "62%",
+            "fontPx": 13.93,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "div.pause-label > strong:nth-of-type(1)",
+            "text": "Quiet the pauses",
+            "fontPx": 13.93,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "div.export-heading",
+            "text": "Download enhanced as",
+            "fontPx": 13.93,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "#export-buttons > div:nth-of-type(1)",
+            "text": "WAV",
+            "fontPx": 13.93,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "#export-buttons > div:nth-of-type(2)",
+            "text": "MP3",
+            "fontPx": 13.93,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "#file-token > span:nth-of-type(2)",
+            "text": "voice-note.wav",
+            "fontPx": 14.81,
+            "time": 4.125,
+            "seconds": 16.625
+          },
+          {
+            "selector": "#file-token > span:nth-of-type(3)",
+            "text": "· 0:05",
+            "fontPx": 14.81,
+            "time": 4.125,
+            "seconds": 16.625
+          },
+          {
+            "selector": "div.wave-title-row > span:nth-of-type(1)",
+            "text": "0:05",
+            "fontPx": 14.92,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "div.player-time",
+            "text": "0:00 / 0:05",
+            "fontPx": 14.92,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "aside.settings-panel > div:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(1)",
+            "text": "Starting point",
+            "fontPx": 14.92,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "aside.settings-panel > div:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(2)",
+            "text": "Choose a tone",
+            "fontPx": 14.92,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "aside.settings-panel > div:nth-of-type(2) > div:nth-of-type(1) > span:nth-of-type(1)",
+            "text": "AI noise reduction",
+            "fontPx": 14.92,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "aside.settings-panel > div:nth-of-type(3) > div:nth-of-type(1) > span:nth-of-type(1)",
+            "text": "Voice presence",
+            "fontPx": 14.92,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "aside.settings-panel > div:nth-of-type(4) > div:nth-of-type(1) > span:nth-of-type(1)",
+            "text": "Volume balance",
+            "fontPx": 14.92,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "div.app-top-note",
+            "text": "On this device",
+            "fontPx": 15.92,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "div.story-kicker",
+            "text": "A simpler voice workflow",
+            "fontPx": 16,
+            "time": 3.625,
+            "seconds": 17.125
+          },
+          {
+            "selector": "#copy-intake > div:nth-of-type(1) > span:nth-of-type(2)",
+            "text": "Start with your own voice recording.",
+            "fontPx": 17,
+            "time": 3.75,
+            "seconds": 2.875
+          },
+          {
+            "selector": "#copy-clear > div:nth-of-type(1) > span:nth-of-type(2)",
+            "text": "Listen to the difference as you work.",
+            "fontPx": 17,
+            "time": 6.75,
+            "seconds": 4.75
+          },
+          {
+            "selector": "#copy-shape > div:nth-of-type(1) > span:nth-of-type(2)",
+            "text": "Start with a preset, then make it yours.",
+            "fontPx": 17,
+            "time": 11.625,
+            "seconds": 5.375
+          },
+          {
+            "selector": "#copy-export > div:nth-of-type(1) > span:nth-of-type(2)",
+            "text": "Keep your finished voice recording close.",
+            "fontPx": 17,
+            "time": 17.125,
+            "seconds": 3.625
+          },
+          {
+            "selector": "div.workspace-label",
+            "text": "Voice workspace",
+            "fontPx": 17.9,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "h3.settings-title",
+            "text": "Enhance speech",
+            "fontPx": 17.9,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "#intro-eyebrow",
+            "text": "Voice cleanup, right in your browser",
+            "fontPx": 18,
+            "time": 0,
+            "seconds": 3.25
+          },
+          {
+            "selector": "#intro-caption",
+            "text": "Files stay on this device",
+            "fontPx": 18,
+            "time": 0,
+            "seconds": 3.25
+          },
+          {
+            "selector": "div.browser-pill",
+            "text": "Runs in your browser",
+            "fontPx": 18,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "div.editor-title",
+            "text": "Enhance speech",
+            "fontPx": 19.89,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "div.sidebar-logo > span:nth-of-type(1)",
+            "text": "roomtone",
+            "fontPx": 21.88,
+            "time": 3.5,
+            "seconds": 17.25
+          },
+          {
+            "selector": "div.end-caption",
+            "text": "Roomtone · Voice workspace",
+            "fontPx": 22.94,
+            "time": 19.25,
+            "seconds": 1.5
+          },
+          {
+            "selector": "#copy-intake > p:nth-of-type(1)",
+            "text": "Choose a recording and start shaping it right in your browser.",
+            "fontPx": 23,
+            "time": 3.75,
+            "seconds": 2.875
+          },
+          {
+            "selector": "#copy-clear > p:nth-of-type(1)",
+            "text": "Compare the original and enhanced takes, then tune the noise reduction.",
+            "fontPx": 23,
+            "time": 6.75,
+            "seconds": 4.75
+          },
+          {
+            "selector": "#copy-shape > p:nth-of-type(1)",
+            "text": "Choose Natural, Bright, or Warm. Fine-tune presence, balance, and pauses.",
+            "fontPx": 23,
+            "time": 11.625,
+            "seconds": 5.375
+          },
+          {
+            "selector": "#copy-export > p:nth-of-type(1)",
+            "text": "Download a WAV or MP3. Your files stay on this device.",
+            "fontPx": 23,
+            "time": 17.125,
+            "seconds": 3.625
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "The film's last line \"roomtone.\" (1 word) is on screen 1.55 s (±0.01 s), under the 2.00 s a closing line needs: hold it about 0.5 s + 0.3 s a word and at least 2 s before the film ends; see references/motion.md.",
+        "text": "roomtone.",
+        "selector": "#end-card-content > div:nth-of-type(1) > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 896.67,
+          "y": 404.36,
+          "width": 210.44000000000017,
+          "height": 57.860000000000014
+        },
+        "time": 19.203,
+        "words": 1,
+        "seconds": 1.551,
+        "floorSeconds": 2
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "The film's last line \"Your files stay on this device.\" (6 words) is on screen 1.55 s (±0.01 s), under the 2.00 s a closing line needs: hold it about 0.5 s + 0.3 s a word and at least 2 s before the film ends; see references/motion.md.",
+        "text": "Your files stay on this device.",
+        "selector": "#end-card-content > h2:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 468.79,
+          "y": 494.14,
+          "width": 982.4000000000001,
+          "height": 96.76999999999998
+        },
+        "time": 19.203,
+        "words": 6,
+        "seconds": 1.551,
+        "floorSeconds": 2
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "The film's last line \"Roomtone · Voice workspace\" (3 words) is on screen 1.35 s (±0.01 s), under the 2.00 s a closing line needs: hold it about 0.5 s + 0.3 s a word and at least 2 s before the film ends; see references/motion.md.",
+        "text": "Roomtone · Voice workspace",
+        "selector": "div.end-caption",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 806.8,
+          "y": 606.53,
+          "width": 306.3900000000001,
+          "height": 30
+        },
+        "time": 19.406,
+        "words": 3,
+        "seconds": 1.348,
+        "floorSeconds": 2
+      }
+    ],
+    "enabled": true,
+    "step": 0.125,
+    "samples": 166
+  },
+  "audio": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": []
+  },
+  "hdr": {
+    "autoPromotion": null,
+    "inspection": "available"
+  },
+  "snapshots": {
+    "enabled": false,
+    "files": [],
+    "times": [],
+    "findingFiles": []
+  }
+}

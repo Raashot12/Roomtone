@@ -1,0 +1,681 @@
+{
+  "ok": true,
+  "strict": false,
+  "browserSkipped": false,
+  "lint": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "filesScanned": 1
+  },
+  "runtime": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": []
+  },
+  "layout": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "duration": 20.75,
+    "samples": [
+      1.153,
+      3.458,
+      5.764,
+      8.069,
+      10.375,
+      12.681,
+      14.986,
+      17.292,
+      19.597
+    ],
+    "transitionSamples": [],
+    "transitionSamplesDropped": 0,
+    "tolerance": 2,
+    "totalIssueCount": 0,
+    "truncated": false
+  },
+  "motion": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": false,
+    "samples": 0
+  },
+  "contrast": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 1,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 2.19:1; WCAG AA requires 3:1.",
+        "text": ".",
+        "fg": "rgb(142,180,90)",
+        "bg": "rgb(244,246,242)",
+        "ratio": 2.19,
+        "requiredRatio": 3,
+        "suggestedColor": "rgb(120,152,76)",
+        "large": true,
+        "selector": "div > section:nth-of-type(3) > div > div:nth-of-type(1) > span > span",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1095.75,
+          "y": 401.453125,
+          "width": 11.71875,
+          "height": 58
+        },
+        "time": 19.597,
+        "times": [
+          19.597
+        ]
+      }
+    ],
+    "enabled": true,
+    "samples": [
+      1.153,
+      5.764,
+      10.375,
+      14.986,
+      19.597
+    ],
+    "checked": 193,
+    "passed": 192
+  },
+  "craft": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 3,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "text_below_floor",
+        "severity": "warning",
+        "message": "Type floor is 28 px (2.6% of the 1080 px short side, what a phone can read) and 62 text elements stay under it for 0.5 s or more, the smallest \"Balanced\" at 12 px: set reading text to at least 28 px, or put data-layout-ignore on text that is texture rather than reading; see references/look.md.",
+        "text": "Balanced",
+        "selector": "#preset-natural > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1520.82,
+          "y": 484.08,
+          "width": 50.79,
+          "height": 15.91
+        },
+        "time": 3.5,
+        "times": [
+          0,
+          0,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.625,
+          3.75,
+          3.75,
+          4.125,
+          4.125,
+          4.125,
+          6.75,
+          6.75,
+          11.625,
+          11.625,
+          17.125,
+          17.125,
+          18.25
+        ],
+        "fontPx": 11.94,
+        "floorPx": 28,
+        "seconds": 14.5,
+        "elements": [
+          {
+            "selector": "#preset-natural > span:nth-of-type(1)",
+            "text": "Balanced",
+            "fontPx": 11.94,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "#preset-bright > span:nth-of-type(1)",
+            "text": "More detail",
+            "fontPx": 11.94,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "#preset-warm > span:nth-of-type(1)",
+            "text": "Softer tone",
+            "fontPx": 11.94,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "aside.settings-panel > div:nth-of-type(2) > div:nth-of-type(3) > span:nth-of-type(1)",
+            "text": "Subtle",
+            "fontPx": 11.94,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "aside.settings-panel > div:nth-of-type(2) > div:nth-of-type(3) > span:nth-of-type(2)",
+            "text": "Strong",
+            "fontPx": 11.94,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "aside.settings-panel > div:nth-of-type(3) > div:nth-of-type(3) > span:nth-of-type(1)",
+            "text": "Soft",
+            "fontPx": 11.94,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "aside.settings-panel > div:nth-of-type(3) > div:nth-of-type(3) > span:nth-of-type(2)",
+            "text": "Forward",
+            "fontPx": 11.94,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "aside.settings-panel > div:nth-of-type(4) > div:nth-of-type(3) > span:nth-of-type(1)",
+            "text": "Natural",
+            "fontPx": 11.94,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "aside.settings-panel > div:nth-of-type(4) > div:nth-of-type(3) > span:nth-of-type(2)",
+            "text": "Even",
+            "fontPx": 11.94,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "div.pause-label > span:nth-of-type(1)",
+            "text": "Lower room noise between phrases",
+            "fontPx": 11.94,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "div.privacy-note",
+            "text": "Enhancement and exports stay on this device.",
+            "fontPx": 11.94,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "span.file-type",
+            "text": "WAV",
+            "fontPx": 12.83,
+            "time": 4.125,
+            "seconds": 13.875
+          },
+          {
+            "selector": "div.sidebar-heading",
+            "text": "WORKSPACE",
+            "fontPx": 12.93,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "div.sidebar-local",
+            "text": "Files stay on this device",
+            "fontPx": 12.93,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "div.nav-item.active",
+            "text": "Enhance speech",
+            "fontPx": 13.93,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "nav.app-sidebar > div:nth-of-type(4)",
+            "text": "Extract audio",
+            "fontPx": 13.93,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "nav.app-sidebar > div:nth-of-type(5)",
+            "text": "Your projects",
+            "fontPx": 13.93,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "div.workspace-toolbar > span:nth-of-type(1)",
+            "text": "Voice workspace",
+            "fontPx": 13.93,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "span.toolbar-status",
+            "text": "Runs in your browser",
+            "fontPx": 13.93,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "div.editor-subtitle",
+            "text": "Clean up your recording and shape its sound",
+            "fontPx": 13.93,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "div.wave-title-row > strong:nth-of-type(1)",
+            "text": "Audio preview",
+            "fontPx": 13.93,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "div.wave-time-row > span:nth-of-type(1)",
+            "text": "0:00",
+            "fontPx": 13.93,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "div.wave-time-row > span:nth-of-type(2)",
+            "text": "0:05",
+            "fontPx": 13.93,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "#original-option",
+            "text": "Original",
+            "fontPx": 13.93,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "#enhanced-option",
+            "text": "Enhanced",
+            "fontPx": 13.93,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "#preset-natural > strong:nth-of-type(1)",
+            "text": "Natural",
+            "fontPx": 13.93,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "#preset-bright > strong:nth-of-type(1)",
+            "text": "Bright",
+            "fontPx": 13.93,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "#preset-warm > strong:nth-of-type(1)",
+            "text": "Warm",
+            "fontPx": 13.93,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "aside.settings-panel > div:nth-of-type(2) > div:nth-of-type(1) > span:nth-of-type(2)",
+            "text": "48%",
+            "fontPx": 13.93,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "aside.settings-panel > div:nth-of-type(3) > div:nth-of-type(1) > span:nth-of-type(2)",
+            "text": "34%",
+            "fontPx": 13.93,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "aside.settings-panel > div:nth-of-type(4) > div:nth-of-type(1) > span:nth-of-type(2)",
+            "text": "62%",
+            "fontPx": 13.93,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "div.pause-label > strong:nth-of-type(1)",
+            "text": "Quiet the pauses",
+            "fontPx": 13.93,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "div.export-heading",
+            "text": "Download enhanced as",
+            "fontPx": 13.93,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "#export-buttons > div:nth-of-type(1)",
+            "text": "WAV",
+            "fontPx": 13.93,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "#export-buttons > div:nth-of-type(2)",
+            "text": "MP3",
+            "fontPx": 13.93,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "#file-token > span:nth-of-type(2)",
+            "text": "voice-note.wav",
+            "fontPx": 14.81,
+            "time": 4.125,
+            "seconds": 13.875
+          },
+          {
+            "selector": "#file-token > span:nth-of-type(3)",
+            "text": "· 0:05",
+            "fontPx": 14.81,
+            "time": 4.125,
+            "seconds": 13.875
+          },
+          {
+            "selector": "div.wave-title-row > span:nth-of-type(1)",
+            "text": "0:05",
+            "fontPx": 14.92,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "div.player-time",
+            "text": "0:00 / 0:05",
+            "fontPx": 14.92,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "aside.settings-panel > div:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(1)",
+            "text": "Starting point",
+            "fontPx": 14.92,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "aside.settings-panel > div:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(2)",
+            "text": "Choose a tone",
+            "fontPx": 14.92,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "aside.settings-panel > div:nth-of-type(2) > div:nth-of-type(1) > span:nth-of-type(1)",
+            "text": "AI noise reduction",
+            "fontPx": 14.92,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "aside.settings-panel > div:nth-of-type(3) > div:nth-of-type(1) > span:nth-of-type(1)",
+            "text": "Voice presence",
+            "fontPx": 14.92,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "aside.settings-panel > div:nth-of-type(4) > div:nth-of-type(1) > span:nth-of-type(1)",
+            "text": "Volume balance",
+            "fontPx": 14.92,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "div.app-top-note",
+            "text": "On this device",
+            "fontPx": 15.92,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "div.story-kicker",
+            "text": "A simpler voice workflow",
+            "fontPx": 16,
+            "time": 3.625,
+            "seconds": 14.375
+          },
+          {
+            "selector": "#copy-intake > div:nth-of-type(1) > span:nth-of-type(2)",
+            "text": "Start with your own voice recording.",
+            "fontPx": 17,
+            "time": 3.75,
+            "seconds": 2.875
+          },
+          {
+            "selector": "#copy-clear > div:nth-of-type(1) > span:nth-of-type(2)",
+            "text": "Listen to the difference as you work.",
+            "fontPx": 17,
+            "time": 6.75,
+            "seconds": 4.75
+          },
+          {
+            "selector": "#copy-shape > div:nth-of-type(1) > span:nth-of-type(2)",
+            "text": "Start with a preset, then make it yours.",
+            "fontPx": 17,
+            "time": 11.625,
+            "seconds": 5.375
+          },
+          {
+            "selector": "#copy-export > div:nth-of-type(1) > span:nth-of-type(2)",
+            "text": "Keep your finished voice recording close.",
+            "fontPx": 17,
+            "time": 17.125,
+            "seconds": 0.875
+          },
+          {
+            "selector": "div.workspace-label",
+            "text": "Voice workspace",
+            "fontPx": 17.9,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "h3.settings-title",
+            "text": "Enhance speech",
+            "fontPx": 17.9,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "#intro-eyebrow",
+            "text": "Voice cleanup, right in your browser",
+            "fontPx": 18,
+            "time": 0,
+            "seconds": 3.25
+          },
+          {
+            "selector": "#intro-caption",
+            "text": "Files stay on this device",
+            "fontPx": 18,
+            "time": 0,
+            "seconds": 3.25
+          },
+          {
+            "selector": "div.browser-pill",
+            "text": "Runs in your browser",
+            "fontPx": 18,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "div.editor-title",
+            "text": "Enhance speech",
+            "fontPx": 19.89,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "div.sidebar-logo > span:nth-of-type(1)",
+            "text": "roomtone",
+            "fontPx": 21.88,
+            "time": 3.5,
+            "seconds": 14.5
+          },
+          {
+            "selector": "div.end-caption",
+            "text": "WAV + MP3 exports",
+            "fontPx": 22.97,
+            "time": 18.25,
+            "seconds": 2.5
+          },
+          {
+            "selector": "#copy-intake > p:nth-of-type(1)",
+            "text": "Choose a recording and start shaping it right in your browser.",
+            "fontPx": 23,
+            "time": 3.75,
+            "seconds": 2.875
+          },
+          {
+            "selector": "#copy-clear > p:nth-of-type(1)",
+            "text": "Compare the original and enhanced takes, then tune the noise reduction.",
+            "fontPx": 23,
+            "time": 6.75,
+            "seconds": 4.75
+          },
+          {
+            "selector": "#copy-shape > p:nth-of-type(1)",
+            "text": "Choose Natural, Bright, or Warm. Fine-tune presence, balance, and pauses.",
+            "fontPx": 23,
+            "time": 11.625,
+            "seconds": 5.375
+          },
+          {
+            "selector": "#copy-export > p:nth-of-type(1)",
+            "text": "Download a WAV or MP3. Your files stay on this device.",
+            "fontPx": 23,
+            "time": 17.125,
+            "seconds": 0.875
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"Ready when you are.\" (4 words) is on screen 0.93 s (±0.01 s), under its 1.27 s floor: hold it about 0.5 s + 0.3 s a word (1.70 s here) before it leaves or changes; see references/motion.md.",
+        "text": "Ready when you are.",
+        "selector": "#copy-export > h2:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 106,
+          "y": 459.14,
+          "width": 413.29999999999995,
+          "height": 156.34000000000003
+        },
+        "time": 17.039,
+        "words": 4,
+        "seconds": 0.93,
+        "floorSeconds": 1.275
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"Download a WAV or MP3. Your files stay on this device.\" (11 words) is on screen 0.93 s (±0.01 s), under its 2.85 s floor: hold it about 0.5 s + 0.3 s a word (3.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "Download a WAV or MP3. Your files stay on this device.",
+        "selector": "#copy-export > p:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 106,
+          "y": 634.83,
+          "width": 366.13,
+          "height": 64.02999999999997
+        },
+        "time": 17.039,
+        "words": 11,
+        "seconds": 0.93,
+        "floorSeconds": 2.85
+      }
+    ],
+    "enabled": true,
+    "step": 0.125,
+    "samples": 166
+  },
+  "audio": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": []
+  },
+  "hdr": {
+    "autoPromotion": null,
+    "inspection": "available"
+  },
+  "snapshots": {
+    "enabled": false,
+    "files": [],
+    "times": [],
+    "findingFiles": []
+  }
+}

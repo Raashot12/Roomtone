@@ -1,6 +1,4 @@
-export function isMp4File(file) {
-  return Boolean(file && (file.type === 'video/mp4' || file.type === 'application/mp4' || /\.mp4$/i.test(file.name)));
-}
+import { isMovFile, isMp4File } from './media-import.js';
 
 export async function encodeEnhancedMedia({ audioBuffer, sourceFile, format, onProgress }) {
   const {
@@ -12,6 +10,7 @@ export async function encodeEnhancedMedia({ audioBuffer, sourceFile, format, onP
     Input,
     Mp3OutputFormat,
     Mp4OutputFormat,
+    MovOutputFormat,
     Output,
     Quality,
   } = await import('mediabunny');
@@ -23,13 +22,15 @@ export async function encodeEnhancedMedia({ audioBuffer, sourceFile, format, onP
     registerMp3Encoder();
     outputFormat = new Mp3OutputFormat();
     audioCodec = 'mp3';
-  } else if (format === 'mp4') {
+  } else if (format === 'mp4' || format === 'mov') {
     const { registerAacEncoder } = await import('@mediabunny/aac-encoder');
     registerAacEncoder();
-    outputFormat = new Mp4OutputFormat({ fastStart: 'in-memory' });
+    outputFormat = format === 'mov'
+      ? new MovOutputFormat({ fastStart: 'in-memory' })
+      : new Mp4OutputFormat({ fastStart: 'in-memory' });
     audioCodec = 'aac';
   } else {
-    throw new Error('Choose WAV, MP3, or MP4 as the download format.');
+    throw new Error('Choose WAV, MP3, MP4, or MOV as the download format.');
   }
 
   const target = new BufferTarget();
@@ -43,7 +44,9 @@ export async function encodeEnhancedMedia({ audioBuffer, sourceFile, format, onP
   let input = null;
   let conversion = null;
   try {
-    if (format === 'mp4' && sourceFile && isMp4File(sourceFile)) {
+    const preserveVideo = (format === 'mp4' && isMp4File(sourceFile))
+      || (format === 'mov' && isMovFile(sourceFile));
+    if (preserveVideo) {
       input = new Input({ source: new BlobSource(sourceFile), formats: ALL_FORMATS });
       const videoTrack = await input.getPrimaryVideoTrack();
       if (videoTrack) {
@@ -60,7 +63,8 @@ export async function encodeEnhancedMedia({ audioBuffer, sourceFile, format, onP
         if (!videoWasKept) {
           const reason = conversion.discardedTracks.find(({ track }) => track === videoTrack)?.reason;
           const detail = reason ? ` (${reason.replaceAll('_', ' ')})` : '';
-          throw new Error(`This MP4 video codec cannot be copied into the enhanced file${detail}.`);
+          const container = format.toUpperCase();
+          throw new Error(`This video codec cannot be copied into the enhanced ${container} file${detail}.`);
         }
       }
     }
@@ -72,7 +76,10 @@ export async function encodeEnhancedMedia({ audioBuffer, sourceFile, format, onP
     await output.finalize();
 
     if (!target.buffer) throw new Error('The enhanced file could not be created.');
-    return new Blob([target.buffer], { type: format === 'mp3' ? 'audio/mpeg' : 'video/mp4' });
+    const mimeType = format === 'mp3'
+      ? 'audio/mpeg'
+      : format === 'mov' ? 'video/quicktime' : 'video/mp4';
+    return new Blob([target.buffer], { type: mimeType });
   } catch (error) {
     if (output.state !== 'finalized' && output.state !== 'canceled') {
       await output.cancel().catch(() => {});
