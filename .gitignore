@@ -1,5 +1,6 @@
 node_modules/
 dist/
 .seo-generated/
+public/wasmpeg/
 .env*
 !.env.example

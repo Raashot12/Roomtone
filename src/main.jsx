@@ -38,17 +38,56 @@ import {
 import './style.css';
 import { SUPPORT_EMAIL } from './support-config.js';
 import { encodeEnhancedMedia } from './media-export.js';
-import { decodeVideoAudio, isMovFile, isMp4File, isSupportedVideoFile } from './media-import.js';
+import { decodeVideoAudio, isMovFile, isMp4AudioFile, isMp4File, isSupportedVideoFile } from './media-import.js';
 import AppLoader from './AppLoader.jsx';
 import PWAControls from './PWAControls.jsx';
 import { loadLocalProjects, saveLocalProject } from './project-storage.js';
 import ExtractAudioPage from './ExtractAudioPage.jsx';
 
 const presets = {
-  natural: { label: 'Natural', description: 'Clear and balanced', presence: 54, leveling: 48, noiseReduction: 62 },
-  bright: { label: 'Bright', description: 'More detail up front', presence: 76, leveling: 42, noiseReduction: 68 },
-  warm: { label: 'Warm', description: 'Softer, fuller tone', presence: 34, leveling: 62, noiseReduction: 48 },
+  natural: { label: 'Natural', description: 'Clear and balanced', presence: 54, leveling: 48, noiseReduction: 62, roomReduction: 30 },
+  bright: { label: 'Bright', description: 'More detail up front', presence: 76, leveling: 42, noiseReduction: 68, roomReduction: 26 },
+  warm: { label: 'Warm', description: 'Softer, fuller tone', presence: 34, leveling: 62, noiseReduction: 48, roomReduction: 34 },
 };
+
+function reduceRoomTails(buffer, amount) {
+  if (amount <= 0) return;
+
+  const sampleRate = buffer.sampleRate;
+  const frameSize = Math.max(1, Math.round(sampleRate * 0.01));
+  const channels = Array.from({ length: buffer.numberOfChannels }, (_, index) => buffer.getChannelData(index));
+  const maxQuietGain = 10 ** (-(amount / 100) * 30 / 20);
+  const attackSeconds = 0.012;
+  const releaseSeconds = 0.18 - (amount / 100) * 0.08;
+  const holdFrames = Math.ceil(0.12 * sampleRate / frameSize);
+  let referenceLevel = 0;
+  let hold = 0;
+  let gain = maxQuietGain;
+
+  for (let start = 0; start < buffer.length; start += frameSize) {
+    const end = Math.min(buffer.length, start + frameSize);
+    let energy = 0;
+    for (const channel of channels) {
+      for (let index = start; index < end; index += 1) energy += channel[index] * channel[index];
+    }
+    const rms = Math.sqrt(energy / Math.max(1, (end - start) * channels.length));
+    referenceLevel = Math.max(rms, referenceLevel * 0.9995);
+    const openThreshold = Math.max(0.00025, referenceLevel * 0.02);
+    const closeThreshold = openThreshold * 0.62;
+
+    if (rms >= openThreshold) hold = holdFrames;
+    else if (hold > 0) hold -= 1;
+
+    const targetGain = rms >= closeThreshold || hold > 0 ? 1 : maxQuietGain;
+    const timeConstant = targetGain > gain ? attackSeconds : releaseSeconds;
+    const smoothing = 1 - Math.exp(-1 / (timeConstant * sampleRate));
+
+    for (let index = start; index < end; index += 1) {
+      gain += (targetGain - gain) * smoothing;
+      for (const channel of channels) channel[index] *= gain;
+    }
+  }
+}
 
 const PUBLIC_PAGE_METADATA = {
   enhance: {
@@ -379,13 +418,14 @@ export function App({ initialView = 'enhance', showLoader = true } = {}) {
   const [exportingFormat, setExportingFormat] = useState('');
   const [exportProgress, setExportProgress] = useState(0);
   const [loadingFile, setLoadingFile] = useState(false);
+  const [fileLoadingStage, setFileLoadingStage] = useState('Reading audio…');
   const [loadError, setLoadError] = useState('');
   const [playbackError, setPlaybackError] = useState('');
   const [preset, setPreset] = useState('natural');
   const [presence, setPresence] = useState(presets.natural.presence);
   const [leveling, setLeveling] = useState(presets.natural.leveling);
   const [noiseReduction, setNoiseReduction] = useState(presets.natural.noiseReduction);
-  const [reducePauses, setReducePauses] = useState(true);
+  const [roomReduction, setRoomReduction] = useState(presets.natural.roomReduction);
   const [playing, setPlaying] = useState(false);
   const [preview, setPreview] = useState('original');
   const [currentTime, setCurrentTime] = useState(0);
@@ -496,7 +536,9 @@ export function App({ initialView = 'enhance', showLoader = true } = {}) {
   const setNewFile = useCallback(async (nextFile, savedProject = null) => {
     audioRef.current?.pause();
     if (fileUrlRef.current) URL.revokeObjectURL(fileUrlRef.current);
-    const url = URL.createObjectURL(nextFile);
+    // MP4 audio is decoded in-app, then previewed as WAV. This avoids asking
+    // the browser's audio element to play a stream it may not support.
+    const url = isMp4AudioFile(nextFile) ? '' : URL.createObjectURL(nextFile);
     fileUrlRef.current = url;
     setFile(nextFile);
     setFileUrl(url);
@@ -508,7 +550,7 @@ export function App({ initialView = 'enhance', showLoader = true } = {}) {
       setPresence(Number(savedProject.settings.presence ?? presets.natural.presence));
       setLeveling(Number(savedProject.settings.leveling ?? presets.natural.leveling));
       setNoiseReduction(Number(savedProject.settings.noiseReduction ?? presets.natural.noiseReduction));
-      setReducePauses(savedProject.settings.reducePauses ?? true);
+      setRoomReduction(Number(savedProject.settings.roomReduction ?? (savedProject.settings.reducePauses === false ? 0 : presets.natural.roomReduction)));
     }
     setDecoded(null);
     setPreview(savedProject?.url ? 'enhanced' : 'original');
@@ -517,15 +559,21 @@ export function App({ initialView = 'enhance', showLoader = true } = {}) {
     setLoadError('');
     setPlaybackError('');
     setLoadingFile(true);
+    setFileLoadingStage('Reading audio…');
     navigateToView('editor');
     let context;
     try {
       let audioBuffer;
-      if (isSupportedVideoFile(nextFile)) {
-        audioBuffer = await decodeVideoAudio(nextFile);
+      if (isSupportedVideoFile(nextFile) || isMp4AudioFile(nextFile)) {
+        audioBuffer = await decodeVideoAudio(nextFile, setFileLoadingStage);
       } else {
         context = safeAudioContext();
         audioBuffer = await context.decodeAudioData((await nextFile.arrayBuffer()).slice(0));
+      }
+      if (isMp4AudioFile(nextFile)) {
+        const previewUrl = URL.createObjectURL(writeWav(audioBuffer));
+        fileUrlRef.current = previewUrl;
+        setFileUrl(previewUrl);
       }
       setDecoded(audioBuffer);
       setDuration(audioBuffer.duration);
@@ -545,6 +593,7 @@ export function App({ initialView = 'enhance', showLoader = true } = {}) {
     setPresence(presets[key].presence);
     setLeveling(presets[key].leveling);
     setNoiseReduction(presets[key].noiseReduction);
+    setRoomReduction(presets[key].roomReduction);
   };
 
   const projectKeyFor = (audioFile) => `${audioFile.name}:${audioFile.size}:${audioFile.lastModified}`;
@@ -601,7 +650,7 @@ export function App({ initialView = 'enhance', showLoader = true } = {}) {
 
     const highPass = offline.createBiquadFilter();
     highPass.type = 'highpass';
-    highPass.frequency.value = 65 + (presence / 100) * 55;
+    highPass.frequency.value = 55 + (presence / 100) * 30;
     highPass.Q.value = 0.68;
 
     const lowShelf = offline.createBiquadFilter();
@@ -630,29 +679,13 @@ export function App({ initialView = 'enhance', showLoader = true } = {}) {
     source.start(0);
     const result = await offline.startRendering();
 
-    if (reducePauses) {
-      for (let channel = 0; channel < result.numberOfChannels; channel += 1) {
-        const data = result.getChannelData(channel);
-        const windowSize = Math.max(1, Math.floor(rate * 0.012));
-        let envelope = 0;
-        const threshold = 0.0025 + (leveling / 100) * 0.0015;
-        for (let start = 0; start < data.length; start += windowSize) {
-          let energy = 0;
-          const end = Math.min(data.length, start + windowSize);
-          for (let i = start; i < end; i += 1) energy += data[i] * data[i];
-          const rms = Math.sqrt(energy / Math.max(1, end - start));
-          const target = rms < threshold ? 0.28 : 1;
-          const smoothing = target < envelope ? 0.42 : 0.12;
-          for (let i = start; i < end; i += 1) {
-            envelope += (target - envelope) * smoothing;
-            data[i] *= envelope;
-          }
-        }
-      }
+    if (roomReduction > 0) {
+      setProcessingStage('Reducing room tails…');
+      reduceRoomTails(result, roomReduction);
     }
 
     return result;
-  }, [leveling, noiseReduction, presence, preset, reducePauses, runNeuralEnhancement]);
+  }, [leveling, noiseReduction, presence, preset, roomReduction, runNeuralEnhancement]);
 
   const togglePlayback = async () => {
     const audio = audioRef.current;
@@ -711,7 +744,7 @@ export function App({ initialView = 'enhance', showLoader = true } = {}) {
         size: blob.size,
         url,
         blob,
-        settings: { preset, presence, leveling, noiseReduction, reducePauses },
+        settings: { preset, presence, leveling, noiseReduction, roomReduction },
         createdAt: new Date(),
       };
       setProjects((current) => [project, ...current.filter((item) => item.key !== key)]);
@@ -978,7 +1011,7 @@ export function App({ initialView = 'enhance', showLoader = true } = {}) {
 
                 <section className="seo-guide-card" aria-labelledby="seo-limits-title">
                   <h3 id="seo-limits-title">What noise reduction can do</h3>
-                  <p>Roomtone uses RNNoise to reduce background noise around speech and provides local voice shaping controls. Noise reduction can make speech easier to hear, but it does not recreate a voice or repair every recording artifact.</p>
+                  <p>Roomtone uses RNNoise to reduce background noise around speech, then shapes voice tone and can lower quiet room tails between phrases. This tail control cannot remove reflections that overlap active speech or recreate a studio recording, and strong settings can soften quiet words.</p>
                 </section>
               </div>
 
@@ -1010,7 +1043,7 @@ export function App({ initialView = 'enhance', showLoader = true } = {}) {
           <div className="page-content editor-page">
             <button className="back-link" disabled={Boolean(exportingFormat)} onClick={() => navigateToView('enhance')}><ArrowLeft size={15} /> All recordings</button>
             <div className="editor-heading">
-              <div><div className="heading-kicker"><span className="heading-kicker-line" /> Voice cleanup</div><h1>{file?.name.replace(/\.[^.]+$/, '') || 'Untitled recording'}</h1><p>{file ? `${formatBytes(file.size)} · ${duration ? formatTime(duration) : 'Loading duration'}` : 'Add a recording to start.'}</p></div>
+              <div><div className="heading-kicker"><span className="heading-kicker-line" /> Voice cleanup</div><h1>{file?.name.replace(/\.[^.]+$/, '') || 'Untitled recording'}</h1><p>{file ? `${formatBytes(file.size)} · ${duration ? formatTime(duration) : loadingFile ? fileLoadingStage : loadError ? 'Audio unavailable' : 'Loading duration'}` : 'Add a recording to start.'}</p></div>
               <FilePicker compact disabled={processing || loadingFile || Boolean(exportingFormat)} onFile={setNewFile} />
             </div>
 
@@ -1039,7 +1072,7 @@ export function App({ initialView = 'enhance', showLoader = true } = {}) {
               </section>
 
               <aside className="controls-card">
-                <div className="controls-heading"><div className="controls-icon"><Sparkles size={17} /></div><div><h2>Shape your voice</h2><p>AI noise removal with local voice shaping.</p></div></div>
+                <div className="controls-heading"><div className="controls-icon"><Sparkles size={17} /></div><div><h2>Shape your voice</h2><p>Noise cleanup, room tail control, and voice shaping.</p></div></div>
                 <div className="control-divider" />
                 <div className="field-label-row"><span>Starting point</span><span className="current-preset">{presets[preset]?.label || 'Custom'}</span></div>
                 <div className="preset-list">
@@ -1048,8 +1081,8 @@ export function App({ initialView = 'enhance', showLoader = true } = {}) {
                 <div className="range-field"><div className="field-label-row"><label htmlFor="noise-reduction">AI noise reduction</label><span>{noiseReduction}%</span></div><input id="noise-reduction" type="range" min="0" max="100" value={noiseReduction} onChange={(event) => { setNoiseReduction(Number(event.target.value)); setPreset('custom'); }} style={{ '--range-value': `${noiseReduction}%` }} /><div className="range-captions"><span>Subtle</span><span>Strong</span></div></div>
                 <div className="range-field"><div className="field-label-row"><label htmlFor="presence">Voice presence</label><span>{presence}%</span></div><input id="presence" type="range" min="0" max="100" value={presence} onChange={(event) => { setPresence(Number(event.target.value)); setPreset('custom'); }} style={{ '--range-value': `${presence}%` }} /><div className="range-captions"><span>Soft</span><span>Forward</span></div></div>
                 <div className="range-field"><div className="field-label-row"><label htmlFor="leveling">Volume balance</label><span>{leveling}%</span></div><input id="leveling" type="range" min="0" max="100" value={leveling} onChange={(event) => { setLeveling(Number(event.target.value)); setPreset('custom'); }} style={{ '--range-value': `${leveling}%` }} /><div className="range-captions"><span>Natural</span><span>Even</span></div></div>
-                <label className="toggle-row"><span className="toggle-copy"><strong>Quiet the pauses</strong><small>Lower room noise between phrases</small></span><input type="checkbox" checked={reducePauses} onChange={(event) => setReducePauses(event.target.checked)} /><span className="toggle-track" aria-hidden="true" /></label>
-                <div className="local-processing-note"><Info size={14} /><span>Enhancement and exports stay on this device.</span><a href="/licenses/neural-denoise-NOTICE.txt" target="_blank" rel="noreferrer">RNNoise notice</a><a href="/licenses/mediabunny-LICENSE.txt" target="_blank" rel="noreferrer">Export license</a></div>
+                <div className="range-field"><div className="field-label-row"><label htmlFor="room-reduction">Room echo tails</label><span>{roomReduction}%</span></div><input id="room-reduction" type="range" min="0" max="100" value={roomReduction} aria-describedby="room-reduction-help" onChange={(event) => { setRoomReduction(Number(event.target.value)); setPreset('custom'); }} style={{ '--range-value': `${roomReduction}%` }} /><div className="range-captions"><span>Off</span><span>Strong</span></div><p id="room-reduction-help" className="range-help">Lowers lingering room sound between phrases. Strong settings can soften quiet words.</p></div>
+                <div className="local-processing-note"><Info size={14} /><span>Enhancement and exports stay on this device.</span><a href="/licenses/neural-denoise-NOTICE.txt" target="_blank" rel="noreferrer">RNNoise notice</a><a href="/licenses/mediabunny-LICENSE.txt" target="_blank" rel="noreferrer">Export license</a><a href="/licenses/wasmpeg-NOTICE.txt" target="_blank" rel="noreferrer">MP4 decoder notice</a></div>
                 <div className="controls-actions">
                   <button className="button button-primary enhance-button" onClick={processAudio} disabled={!decoded || processing || loadingFile || Boolean(exportingFormat)}>{processing ? <><span className="button-spinner" /> {processingStage}</> : <><Sparkles size={16} /> {processedUrl ? 'Enhance again' : 'Enhance voice'}</>}</button>
                   {processedBlob && <div className="export-group">
@@ -1061,7 +1094,7 @@ export function App({ initialView = 'enhance', showLoader = true } = {}) {
                     </div>
                     {canExportVideo && <small className="export-note">{videoExportLabel} keeps your original video and replaces its audio with the enhanced track.</small>}
                   </div>}
-                  <button className="reset-button" onClick={() => { applyPreset('natural'); setReducePauses(true); setToast('Controls reset to Natural.'); }}><RotateCcw size={13} /> Reset settings</button>
+                  <button className="reset-button" onClick={() => { applyPreset('natural'); setToast('Controls reset to Natural.'); }}><RotateCcw size={13} /> Reset settings</button>
                 </div>
               </aside>
             </div>

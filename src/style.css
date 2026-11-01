@@ -217,6 +217,7 @@ input[type="range"] { appearance: none; width: 100%; height: 3px; display: block
 input[type="range"]::-webkit-slider-thumb { appearance: none; width: 12px; height: 12px; border: 2px solid white; border-radius: 50%; background: #6e9052; box-shadow: 0 0 0 1px #6e9052; }
 input[type="range"]::-moz-range-thumb { width: 9px; height: 9px; border: 2px solid white; border-radius: 50%; background: #6e9052; box-shadow: 0 0 0 1px #6e9052; }
 .range-captions { display: flex; justify-content: space-between; color: #a0aaa2; font-size: 8px; margin-top: 7px; }
+.range-help { color: #949f96; font-size: 8px; line-height: 1.45; margin: 7px 0 0; }
 .toggle-row { display: flex; align-items: center; gap: 10px; margin-top: 15px; padding: 10px 0; border-top: 1px solid #edf0eb; border-bottom: 1px solid #edf0eb; cursor: pointer; position: relative; }
 .toggle-copy { flex: 1; }
 .toggle-copy strong, .toggle-copy small { display: block; }

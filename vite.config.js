@@ -41,7 +41,18 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2,bin,wasm,txt,webmanifest}'],
+        globIgnores: ['**/wasmpeg/**'],
         maximumFileSizeToCacheInBytes: 8 * 1024 * 1024,
+        runtimeCaching: [
+          {
+            urlPattern: ({ url }) => /\/wasmpeg\/(cpu\.js|cpu\.wasm)$/.test(url.pathname),
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'roomtone-mp4-decoder',
+              expiration: { maxEntries: 2, maxAgeSeconds: 60 * 60 * 24 * 365 },
+            },
+          },
+        ],
       },
     }),
   ],

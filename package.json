@@ -4,7 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "predev": "node scripts/prepare-wasm-decoder.mjs",
     "dev": "vite",
+    "prebuild": "node scripts/prepare-wasm-decoder.mjs",
     "build": "node scripts/prerender.mjs && vite build && node scripts/finalize-routes.mjs",
     "preview": "vite preview"
   },
@@ -15,6 +17,7 @@
     "@hookform/resolvers": "^6.0.2",
     "@mediabunny/aac-encoder": "^1.63.0",
     "@mediabunny/mp3-encoder": "^1.63.0",
+    "@wasmpeg/cpu": "1.0.1",
     "gsap": "^3.15.0",
     "lucide-react": "^0.468.0",
     "mediabunny": "^1.63.0",
