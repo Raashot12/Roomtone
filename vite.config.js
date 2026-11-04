@@ -41,7 +41,9 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2,bin,wasm,txt,webmanifest}'],
-        globIgnores: ['**/wasmpeg/**'],
+        // ONNX Runtime ships several large WASM variants. Cache the selected
+        // variant on demand instead of making every install precache all of them.
+        globIgnores: ['**/wasmpeg/**', '**/assets/ort-wasm*.wasm'],
         maximumFileSizeToCacheInBytes: 8 * 1024 * 1024,
         runtimeCaching: [
           {
@@ -50,6 +52,14 @@ export default defineConfig({
             options: {
               cacheName: 'roomtone-mp4-decoder',
               expiration: { maxEntries: 2, maxAgeSeconds: 60 * 60 * 24 * 365 },
+            },
+          },
+          {
+            urlPattern: ({ url }) => /\/assets\/ort-wasm[^/]*\.wasm$/.test(url.pathname),
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'roomtone-onnx-runtime',
+              expiration: { maxEntries: 4, maxAgeSeconds: 60 * 60 * 24 * 365 },
             },
           },
         ],

@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1920,height=1080,initial-scale=1" />
+  <title>Roomtone — Make room for the voice</title>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+  <script src="assets/music/audio-data.js"></script>
+  <style>
+    @font-face { font-family: "DM Sans"; src: url("assets/fonts/dm-sans-regular.woff2") format("woff2"); font-style: normal; font-weight: 400; }
+    @font-face { font-family: "DM Sans"; src: url("assets/fonts/dm-sans-bold.woff2") format("woff2"); font-style: normal; font-weight: 700; }
+    @font-face { font-family: "Space Grotesk"; src: url("assets/fonts/space-grotesk-medium.woff2") format("woff2"); font-style: normal; font-weight: 500; }
+    @font-face { font-family: "Space Grotesk"; src: url("assets/fonts/space-grotesk-bold.woff2") format("woff2"); font-style: normal; font-weight: 700; }
+    :root {
+      --canvas: #f4f6f2;
+      --green: #17352d;
+      --green-2: #244c3d;
+      --ink: #20332d;
+      --lime: #c8ea78;
+      --white: #fff;
+      --line: #e2e7e1;
+      --muted: #647268;
+      --font-display: "Space Grotesk", sans-serif;
+      --font-body: "DM Sans", sans-serif;
+      --font-mono: ui-monospace, Consolas, monospace;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; }
+    body { background: var(--canvas); color: var(--ink); font-family: var(--font-body); -webkit-font-smoothing: antialiased; }
+    #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: var(--canvas); }
+    .scene { position: absolute; inset: 0; width: 1920px; height: 1080px; overflow: hidden; transform-style: preserve-3d; backface-visibility: hidden; }
+    #scene1 { z-index: 1; background: var(--canvas); }
+    #scene2 { z-index: 2; background: var(--canvas); opacity: 0; }
+    #scene3 { z-index: 3; background: var(--canvas); opacity: 0; }
+    #scene4 { z-index: 4; background: var(--canvas); opacity: 0; }
+    #scene5 { z-index: 5; background: var(--green); opacity: 0; }
+    h1, h2, h3, p { margin: 0; }
+    .display { font-family: var(--font-display); font-weight: 650; letter-spacing: -0.055em; }
+    .eyebrow { font: 700 17px/1 var(--font-body); letter-spacing: .18em; text-transform: uppercase; }
+    .brand-lockup { display: flex; align-items: center; gap: 15px; color: var(--white); }
+    .brand-lockup .word { font: 650 39px/1 var(--font-display); letter-spacing: -.075em; }
+    .brand-lockup .dot { color: var(--lime); }
+    .brand-mark { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 17px; background: var(--lime); flex: none; }
+    .brand-mark svg { width: 45px; height: 45px; }
+
+    /* Scene 1: brand field with the real workspace as its visual anchor. */
+    .s1-left { position: absolute; inset: 0 auto 0 0; width: 665px; background: var(--green); }
+    .s1-left-rule { position: absolute; top: 92px; right: -1px; width: 1px; height: 855px; background: #c8ea7833; }
+    .s1-brand { position: absolute; left: 112px; top: 92px; }
+    .s1-copy { position: absolute; left: 108px; top: 337px; width: 715px; color: #f7faf4; z-index: 2; }
+    .s1-copy .eyebrow { color: #c3d3ad; margin-bottom: 28px; }
+    .s1-copy h1 { font: 650 102px/.99 var(--font-display); letter-spacing: -.07em; max-width: 735px; }
+    .s1-copy h1 span { color: var(--lime); }
+    .s1-copy .subline { margin-top: 29px; color: #d3ddd5; font-size: 25px; line-height: 1.35; letter-spacing: -.02em; }
+    .s1-rail-note { position: absolute; left: 112px; bottom: 84px; color: #c3d0c6; font-size: 18px; letter-spacing: .06em; }
+    .s1-rail-note b { color: var(--lime); font: 700 16px var(--font-mono); margin-right: 12px; }
+    .hero-window { position: absolute; left: 785px; top: 180px; width: 1000px; height: 710px; border: 1px solid #dfe5de; border-radius: 24px; overflow: hidden; background: var(--white); box-shadow: 0 42px 100px #10271e2b, 0 6px 16px #17352d12; transform-origin: 15% 60%; }
+    .window-chrome { height: 54px; display: flex; align-items: center; gap: 11px; padding: 0 21px; border-bottom: 1px solid var(--line); background: #fbfcfa; color: #627168; font-size: 16px; }
+    .window-dots { display: flex; gap: 8px; margin-right: 9px; }
+    .window-dots i { display: block; width: 10px; height: 10px; border-radius: 50%; background: #d4dbd4; }
+    .window-dots i:first-child { background: #b5c979; }
+    .window-path { padding: 9px 18px; border: 1px solid #e3e8e2; border-radius: 7px; background: #f4f6f2; min-width: 365px; }
+    .window-body { display: flex; height: calc(100% - 54px); }
+    .window-side { width: 220px; flex: none; padding: 27px 18px; background: var(--green); color: #dbe4dc; }
+    .window-brand { display: flex; align-items: center; gap: 9px; margin: 0 0 55px 5px; color: #f7faf4; font: 650 22px/1 var(--font-display); letter-spacing: -.06em; }
+    .window-brand .mini-mark { display: grid; place-items: center; width: 31px; height: 31px; border-radius: 9px; background: var(--lime); color: var(--green); }
+    .mini-mark svg { width: 26px; height: 26px; }
+    .window-side .nav-caption { margin: 0 0 13px 12px; color: #b8c8bd; font-size: 14px; text-transform: uppercase; letter-spacing: .13em; }
+    .window-side .nav-row { display: flex; align-items: center; gap: 12px; height: 48px; margin-bottom: 7px; padding: 0 12px; border-radius: 8px; color: #c8d4cb; font-size: 16px; }
+    .window-side .nav-row.active { color: #fff; background: #294a3d; box-shadow: inset 3px 0 var(--lime); }
+    .nav-glyph { width: 18px; height: 18px; display: grid; place-items: center; color: var(--lime); font-size: 19px; }
+    .window-side .local-chip { position: absolute; bottom: 98px; left: 26px; color: #c2d0c5; font-size: 15px; }
+    .window-side .local-chip i, .status-dot { display: inline-block; width: 8px; height: 8px; margin-right: 9px; border-radius: 50%; background: #b1d968; }
+    .window-main { flex: 1; padding: 36px 42px; background: var(--canvas); }
+    .window-topline { display: flex; align-items: center; justify-content: space-between; color: #56675d; font-size: 16px; }
+    .browser-pill { padding: 9px 14px; border: 1px solid #e0e7dd; border-radius: 100px; background: #fff; color: #46574d; font-size: 15px; }
+    .window-main h2 { margin-top: 45px; font: 620 42px/1.1 var(--font-display); letter-spacing: -.05em; }
+    .window-main .window-desc { margin-top: 12px; color: #596960; font-size: 18px; }
+    .upload-card { margin-top: 34px; padding: 25px; border: 1px solid var(--line); border-radius: 15px; background: #fff; }
+    .upload-card-head { display: flex; align-items: flex-start; gap: 14px; }
+    .upload-number { display: grid; place-items: center; width: 37px; height: 37px; border-radius: 11px; background: #eff5df; color: #49623c; font: 700 16px var(--font-mono); }
+    .upload-card-head h3 { font: 620 22px/1.2 var(--font-display); letter-spacing: -.03em; }
+    .upload-card-head p { margin-top: 7px; color: #596960; font-size: 16px; }
+    .dropzone { display: flex; align-items: center; gap: 18px; height: 112px; margin-top: 24px; padding: 0 20px; border: 1px dashed #b6c5b5; border-radius: 11px; background: #fafcf8; }
+    .upload-icon { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 13px; background: var(--green); color: var(--lime); font-size: 24px; }
+    .dropzone strong { display: block; font-size: 18px; }
+    .dropzone small { display: block; margin-top: 5px; color: #627168; font-size: 15px; }
+    .file-pill { display: flex; align-items: center; gap: 12px; width: 100%; margin-top: 20px; padding: 14px 16px; border-radius: 10px; background: #f4f7f1; color: var(--ink); }
+    .file-square { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 9px; background: var(--green); color: var(--lime); font-size: 14px; font-weight: 700; }
+    .file-copy { flex: 1; }
+    .file-copy strong { display: block; font-size: 17px; }
+    .file-copy small { display: block; margin-top: 3px; color: #5e6d63; font-size: 14px; }
+    .file-ready { color: #496c44; font-size: 14px; font-weight: 700; }
+    .signal-preview { display: flex; align-items: center; justify-content: flex-end; gap: 4px; width: 116px; height: 28px; }
+    .signal-preview i { width: 3px; min-height: 4px; border-radius: 3px; background: #9fbd6b; }
+
+    /* Shared Roomtone workspace shell. */
+    .app-frame { position: absolute; left: 132px; top: 96px; width: 1656px; height: 888px; border: 1px solid #dce3dc; border-radius: 22px; overflow: hidden; background: var(--canvas); box-shadow: 0 38px 110px #10271e22, 0 4px 12px #17352d0c; transform-origin: center center; }
+    .app-shell { display: flex; width: 100%; height: 100%; background: var(--canvas); }
+    .sidebar { display: flex; flex-direction: column; width: 260px; flex: none; padding: 28px 16px 20px; background: var(--green); color: #f4f7f1; }
+    .sidebar-brand { display: flex; align-items: center; gap: 10px; margin: 0 0 55px 8px; color: #f7faf4; font: 650 24px/1 var(--font-display); letter-spacing: -.065em; }
+    .sidebar-brand .small-mark { width: 34px; height: 34px; border-radius: 10px; }
+    .sidebar-brand .small-mark svg { width: 29px; height: 29px; }
+    .sidebar-brand .dot { color: var(--lime); }
+    .side-label { padding: 0 12px; margin-bottom: 13px; color: #bac9be; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; }
+    .side-item { display: flex; align-items: center; gap: 12px; height: 48px; margin-bottom: 5px; padding: 0 12px; border-radius: 8px; color: #c6d1ca; font-size: 17px; }
+    .side-item.active { background: #294a3d; color: #f7faf4; box-shadow: inset 3px 0 var(--lime); }
+    .side-icon { display: grid; place-items: center; width: 20px; height: 20px; color: var(--lime); font-size: 21px; }
+    .sidebar-footer { margin-top: auto; padding: 0 9px; color: #c2d0c5; font-size: 15px; }
+    .sidebar-footer .privacy { margin-bottom: 20px; }
+    .sidebar-footer .profile { display: flex; align-items: center; gap: 11px; padding-top: 18px; border-top: 1px solid #ffffff2b; color: #f1f5f0; }
+    .avatar { display: grid; place-items: center; width: 38px; height: 38px; border: 1px solid #78907f; border-radius: 50%; background: #375d4c; font-weight: 700; }
+    .profile small { display: block; margin-top: 3px; color: #c2d0c5; font-size: 14px; }
+    .workspace { min-width: 0; flex: 1; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; height: 68px; padding: 0 34px; border-bottom: 1px solid var(--line); background: #fff; color: #53645a; font-size: 16px; }
+    .topbar-context { display: flex; align-items: center; gap: 11px; }
+    .topbar-pill { padding: 9px 13px; border: 1px solid var(--line); border-radius: 100px; color: #4b5d52; background: #fff; font-size: 14px; }
+    .page { height: calc(100% - 68px); padding: 27px 34px 25px; overflow: hidden; }
+    .page-heading { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 23px; }
+    .kicker { display: flex; align-items: center; gap: 10px; color: #56675d; font-size: 15px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
+    .kicker::before { content: ""; display: block; width: 25px; height: 2px; background: #91b65a; }
+    .page-heading h1 { margin-top: 8px; font: 630 46px/1.02 var(--font-display); letter-spacing: -.055em; }
+    .page-heading p { margin-top: 8px; color: #596960; font-size: 17px; }
+    .file-meta { padding: 10px 14px; border: 1px solid var(--line); border-radius: 9px; background: #fff; color: #4c5e53; font-size: 15px; }
+    .editor-grid { display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, .88fr); gap: 21px; height: 628px; }
+    .player-card, .controls-card, .subtitle-card, .review-card { min-width: 0; border: 1px solid var(--line); border-radius: 15px; background: #fff; box-shadow: 0 5px 16px #17352d08; }
+    .player-card { padding: 24px 26px; display: flex; flex-direction: column; }
+    .player-head { display: flex; align-items: center; justify-content: space-between; }
+    .player-eyebrow { color: #596960; font-size: 14px; letter-spacing: .12em; font-weight: 700; }
+    .player-kind { position: relative; margin-top: 8px; font-size: 18px; font-weight: 600; }
+    .more { color: #66756b; font-size: 24px; }
+    .wave-panel { position: relative; display: flex; align-items: center; height: 258px; margin: 27px 0 14px; padding: 18px 16px; overflow: hidden; border: 1px solid #e8ede6; border-radius: 10px; background: #f8faf6; }
+    .waveform { display: flex; align-items: center; justify-content: space-around; gap: 2px; width: 100%; min-width: 0; height: 100%; overflow: hidden; }
+    .waveform i { display: block; width: 4px; min-width: 0; height: var(--bar); min-height: 5px; border-radius: 4px; background: #b7ca94; }
+    .waveform i:nth-child(3n) { background: #829e67; }
+    .waveform i:nth-child(5n) { background: #d1dfa9; }
+    .wave-playhead { position: absolute; top: 18px; bottom: 18px; left: 38%; width: 2px; background: var(--green-2); box-shadow: 0 0 0 5px #244c3d0d; }
+    .wave-playhead::before { content: ""; position: absolute; top: -5px; left: -4px; width: 10px; height: 10px; border-radius: 50%; background: var(--green-2); }
+    .timeline-row { display: flex; justify-content: space-between; color: #53645a; font: 15px var(--font-mono); }
+    .player-controls { display: flex; align-items: center; gap: 14px; margin-top: 21px; }
+    .play-button { display: grid; place-items: center; width: 48px; height: 48px; border: 0; border-radius: 50%; background: var(--green); color: var(--lime); font-size: 22px; }
+    .play-time { color: #4f6156; font: 16px var(--font-mono); }
+    .player-spacer { flex: 1; }
+    .ab-switch { position: relative; display: flex; align-items: center; padding: 4px; border: 1px solid var(--line); border-radius: 9px; background: #f5f7f3; }
+    .ab-switch .ab-thumb { position: absolute; top: 4px; left: 4px; width: 114px; height: 37px; border: 1px solid #d8e4c2; border-radius: 6px; background: #eaf3d8; }
+    .ab-switch span { position: relative; z-index: 1; display: grid; place-items: center; width: 114px; height: 37px; color: #53645a; font-size: 16px; }
+    .ab-switch span.selected { color: #39533a; font-weight: 700; }
+    .player-download { display: flex; align-items: center; justify-content: space-between; margin-top: auto; padding-top: 20px; border-top: 1px solid var(--line); }
+    .player-download-label { color: #4e5f55; font-size: 16px; font-weight: 600; }
+    .format-row { display: flex; gap: 9px; }
+    .format-button { display: inline-flex; align-items: center; gap: 7px; padding: 10px 17px; border: 1px solid #d7e1d3; border-radius: 8px; background: #fff; color: #38523e; font-size: 15px; font-weight: 700; }
+    .controls-card { display: flex; flex-direction: column; padding: 23px 24px; }
+    .controls-title { display: flex; align-items: center; gap: 13px; }
+    .spark { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 12px; background: #eff5df; color: #435d37; font-size: 21px; }
+    .controls-title h2 { font: 620 22px/1.15 var(--font-display); letter-spacing: -.03em; }
+    .controls-title p { margin-top: 5px; color: #586960; font-size: 15px; }
+    .control-rule { height: 1px; margin: 18px 0; background: var(--line); }
+    .label-row { display: flex; justify-content: space-between; align-items: center; color: #4e6055; font-size: 15px; }
+    .preset-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin: 10px 0 19px; }
+    .preset { display: flex; flex-direction: column; gap: 6px; min-height: 65px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 9px; color: #4e5f55; background: #fff; }
+    .preset strong { font-size: 16px; }
+    .preset small { color: #53645a; font-size: 13px; }
+    .preset.active { border-color: #bdcf9d; background: #f3f7e9; color: #365039; box-shadow: inset 0 0 0 1px #d8e5c1; }
+    .range-block { margin: 0 0 15px; }
+    .range-head { display: flex; justify-content: space-between; margin-bottom: 9px; color: #4e5f55; font-size: 15px; }
+    .range-head b { color: #324a38; font: 600 15px var(--font-mono); }
+    .range-track { height: 7px; overflow: hidden; border-radius: 8px; background: #edf1eb; }
+    .range-fill { height: 100%; width: var(--fill); border-radius: inherit; background: #8fac64; transform-origin: left center; }
+    .range-caps { display: flex; justify-content: space-between; margin-top: 5px; color: #53645a; font-size: 13px; }
+    .local-note { margin-top: auto; padding: 11px 12px; border-radius: 8px; background: #f5f8ef; color: #43583c; font-size: 14px; }
+    .controls-actions { display: flex; align-items: center; gap: 10px; margin-top: 13px; }
+    .primary-button { display: flex; align-items: center; justify-content: center; gap: 9px; height: 45px; padding: 0 20px; border: 0; border-radius: 8px; background: var(--green); color: #fff; font-size: 16px; font-weight: 700; }
+    .primary-button .button-glyph { color: var(--lime); font-size: 18px; }
+    .enhance-state { margin-left: auto; color: #4e6055; font-size: 13px; }
+
+    /* Scene 3: quality options stay visible long enough to compare. */
+    .subtitle-page { display: grid; grid-template-rows: 118px 280px 1fr; gap: 17px; }
+    .subtitle-heading { display: flex; align-items: center; justify-content: space-between; }
+    .subtitle-heading .kicker { margin-bottom: 10px; }
+    .subtitle-heading h1 { font: 630 42px/1.02 var(--font-display); letter-spacing: -.055em; }
+    .subtitle-heading p { margin-top: 8px; color: #596960; font-size: 16px; }
+    .subtitle-symbol { display: grid; place-items: center; width: 78px; height: 78px; border: 1px solid #dce6d2; border-radius: 21px; background: #f0f5e5; color: var(--green-2); font: 600 38px var(--font-display); }
+    .subtitle-card { padding: 20px 22px; }
+    .subtitle-card-head { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .subtitle-card-head .spark { width: 38px; height: 38px; }
+    .subtitle-card-head h2 { font: 620 20px/1.1 var(--font-display); letter-spacing: -.025em; }
+    .subtitle-card-head p { margin-top: 4px; color: #586960; font-size: 14px; }
+    .source-file { display: flex; align-items: center; gap: 11px; width: 100%; padding: 11px 14px; border: 1px solid #dfe7dc; border-radius: 8px; background: #f9fbf7; color: var(--ink); }
+    .source-file .file-square { width: 32px; height: 32px; font-size: 12px; }
+    .source-file strong { font-size: 15px; }
+    .source-file small { margin-left: auto; color: #53645a; font-size: 13px; }
+    .subtitle-settings { display: grid; grid-template-columns: 220px 1fr 222px; gap: 16px; align-items: end; margin-top: 15px; }
+    .language-box { height: 76px; padding: 10px 13px; border: 1px solid var(--line); border-radius: 9px; background: #fff; }
+    .language-box label, .quality-label { display: block; margin-bottom: 8px; color: #53645a; font-size: 16px; font-weight: 700; }
+    .language-value { display: flex; align-items: center; justify-content: space-between; font-size: 16px; font-weight: 600; }
+    .quality-options { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
+    .quality-option { height: 76px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 9px; background: #fff; color: #4d5e54; }
+    .quality-option strong { display: block; font-size: 28px; }
+    .quality-option small { display: block; margin-top: 5px; color: #53645a; font-size: 16px; }
+    .quality-option.recommended { border-color: #cbd9b8; }
+    .quality-option.selected { border-color: #8ea95d; background: #f0f6df; box-shadow: inset 0 0 0 1px #d7e5bd; color: #354c35; }
+    .generate-button { height: 76px; }
+    .quality-topline { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+    .quality-topline .quality-label { margin: 0; }
+    .sample-tag { color: #53645a; font: 700 16px var(--font-mono); letter-spacing: .08em; }
+    .review-panel { display: grid; grid-template-columns: .74fr 1.26fr; gap: 17px; min-height: 0; }
+    .review-media { padding: 19px 21px; border: 1px solid var(--line); border-radius: 14px; background: #fff; }
+    .review-media h3 { font: 620 17px var(--font-display); letter-spacing: -.02em; }
+    .review-media p { margin-top: 6px; color: #53645a; font-size: 14px; }
+    .mini-player { display: flex; align-items: center; gap: 13px; height: 88px; margin-top: 14px; padding: 0 15px; border-radius: 10px; background: #f6f8f4; }
+    .mini-play { display: grid; place-items: center; width: 39px; height: 39px; border-radius: 50%; background: var(--green); color: var(--lime); font-size: 17px; }
+    .mini-wave { display: flex; align-items: center; justify-content: space-between; gap: 4px; flex: 1; height: 45px; }
+    .mini-wave i { display: block; width: 4px; height: var(--bar); border-radius: 4px; background: #78945e; }
+    .review-right { display: flex; flex-direction: column; padding: 17px 20px 14px; border: 1px solid var(--line); border-radius: 14px; background: #fff; }
+    .review-title { display: flex; align-items: center; justify-content: space-between; }
+    .review-title h3 { font: 620 18px var(--font-display); letter-spacing: -.02em; }
+    .review-title p { margin-top: 4px; color: #53645a; font-size: 14px; }
+    .ready-pill { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 100px; background: #eff6e4; color: #405c38; font-size: 13px; font-weight: 700; }
+    .cue-list { display: grid; gap: 8px; margin-top: 12px; }
+    .cue-row { display: grid; grid-template-columns: 145px 1fr; align-items: center; min-height: 51px; padding: 6px 10px; border: 1px solid #e7ece5; border-radius: 8px; background: #fbfcfa; }
+    .cue-time { color: #465c4b; font: 16px var(--font-mono); }
+    .cue-text { color: #34463c; font-size: 18px; }
+    .export-row { display: flex; align-items: center; gap: 9px; margin-top: auto; padding-top: 10px; border-top: 1px solid var(--line); }
+    .export-label { flex: 1; color: #4e6055; font-size: 14px; font-weight: 600; }
+    .download-button { display: inline-flex; align-items: center; gap: 7px; padding: 9px 14px; border: 1px solid #d6e1d2; border-radius: 8px; background: #fff; color: #38513d; font-size: 14px; font-weight: 700; }
+    .download-button.active { border-color: var(--green); background: var(--green); color: white; }
+
+    /* Scene 4: close review crop and the two real output formats. */
+    .s4-backdrop { position: absolute; inset: 0; background: #eaf0e6; }
+    .s4-topline { position: absolute; left: 145px; top: 89px; right: 145px; display: flex; justify-content: space-between; align-items: center; color: #53645a; font-size: 16px; letter-spacing: .04em; }
+    .s4-topline .eyebrow { color: #42554a; }
+    .s4-heading { position: absolute; left: 150px; top: 178px; width: 680px; }
+    .s4-heading .eyebrow { color: #53645a; margin-bottom: 20px; }
+    .s4-heading h2 { font: 640 76px/.98 var(--font-display); letter-spacing: -.065em; }
+    .s4-heading p { max-width: 530px; margin-top: 20px; color: #4f6157; font-size: 23px; line-height: 1.35; }
+    .review-focus { position: absolute; left: 850px; top: 150px; width: 930px; height: 680px; padding: 22px; border: 1px solid #dce4da; border-radius: 20px; background: #fff; box-shadow: 0 34px 90px #10271e22; }
+    .focus-toolbar { display: flex; align-items: center; justify-content: space-between; padding-bottom: 17px; border-bottom: 1px solid var(--line); color: #4e6055; font-size: 15px; }
+    .focus-toolbar strong { color: var(--ink); font-size: 17px; }
+    .focus-grid { display: grid; grid-template-columns: .78fr 1.22fr; gap: 16px; height: 538px; padding-top: 17px; }
+    .focus-player { padding: 19px; border: 1px solid var(--line); border-radius: 12px; background: #f9fbf7; }
+    .focus-player .mini-player { height: 165px; flex-direction: column; justify-content: center; align-items: stretch; gap: 15px; padding: 17px; background: #fff; border: 1px solid #e7ece5; }
+    .focus-player .mini-wave { width: 100%; }
+    .focus-player .play-time { display: block; margin-top: 18px; color: #4f6157; font: 14px var(--font-mono); }
+    .focus-player .file-pill { margin-top: 21px; }
+    .focus-review { display: flex; flex-direction: column; padding: 18px; border: 1px solid var(--line); border-radius: 12px; }
+    .focus-review .cue-row { min-height: 68px; grid-template-columns: 155px 1fr; margin-top: 8px; }
+    .focus-review .cue-time { font-size: 16px; }
+    .focus-review .cue-text { font-size: 20px; }
+    .focus-review .export-row { margin-top: auto; padding-top: 15px; }
+    .output-pair { position: absolute; left: 150px; bottom: 157px; display: flex; align-items: center; gap: 12px; }
+    .output-pair .output-label { align-self: flex-start; margin-right: 14px; padding-top: 16px; color: #43574a; font-size: 15px; text-transform: uppercase; letter-spacing: .12em; }
+    .output-card { display: flex; align-items: center; gap: 13px; min-width: 258px; padding: 13px 17px; border: 1px solid #dce5d8; border-radius: 11px; background: #fff; box-shadow: 0 8px 20px #17352d0b; }
+    .output-card .file-square { width: 43px; height: 43px; }
+    .output-card strong { display: block; font-size: 16px; }
+    .output-card small { display: block; margin-top: 4px; color: #53645a; font-size: 13px; }
+    .output-check { margin-left: auto; color: #537348; font-size: 20px; }
+
+    /* Scene 5: quiet brand finish. */
+    .s5-grain { position: absolute; inset: 0; background: radial-gradient(ellipse at 77% 50%, #244c3d 0, #17352d 51%, #122b24 100%); }
+    .s5-rule { position: absolute; left: 162px; top: 175px; bottom: 175px; width: 1px; background: #c8ea7833; }
+    .s5-index { position: absolute; left: 205px; top: 180px; color: #c2d0c5; font: 700 15px var(--font-mono); letter-spacing: .12em; }
+    .s5-brand { position: absolute; left: 205px; top: 328px; display: flex; align-items: center; gap: 24px; color: #f7faf4; }
+    .s5-brand .brand-mark { width: 94px; height: 94px; border-radius: 25px; }
+    .s5-brand .brand-mark svg { width: 78px; height: 78px; }
+    .s5-brand .word { font: 650 88px/1 var(--font-display); letter-spacing: -.08em; }
+    .s5-brand .dot { color: var(--lime); }
+    .s5-tagline { position: absolute; left: 205px; top: 505px; width: 980px; color: #f2f6ef; font: 630 82px/1.01 var(--font-display); letter-spacing: -.065em; }
+    .s5-tagline span { color: var(--lime); }
+    .s5-privacy { position: absolute; left: 205px; top: 730px; display: flex; align-items: center; gap: 13px; color: #d0dbd2; font-size: 28px; }
+    .s5-privacy i { display: block; width: 10px; height: 10px; border-radius: 50%; background: var(--lime); }
+    .s5-files { position: absolute; right: 182px; bottom: 178px; display: grid; gap: 13px; width: 370px; }
+    .s5-file { display: flex; align-items: center; gap: 13px; padding: 16px 17px; border: 1px solid #ffffff30; border-radius: 12px; background: #ffffff0b; color: #edf2eb; }
+    .s5-file .file-square { width: 45px; height: 45px; border: 1px solid #ffffff30; background: #244c3d; color: var(--lime); }
+    .s5-file strong { display: block; font-size: 17px; }
+    .s5-file small { display: block; margin-top: 4px; color: #c2d0c5; font-size: 14px; }
+    .s5-file .check { margin-left: auto; color: var(--lime); font-size: 20px; }
+    .s5-footer { position: absolute; left: 205px; right: 182px; bottom: 82px; display: flex; justify-content: space-between; align-items: center; color: #c2d0c5; font-size: 15px; letter-spacing: .08em; text-transform: uppercase; }
+    .s5-footer span:last-child { color: #c8d3ca; font: 14px var(--font-mono); letter-spacing: .04em; }
+    .subtle-glint { position: absolute; right: -220px; top: -250px; width: 680px; height: 680px; border: 1px solid #c8ea781c; border-radius: 50%; }
+    .subtle-glint::before, .subtle-glint::after { content: ""; position: absolute; inset: 34px; border: 1px solid #c8ea7812; border-radius: 50%; }
+    .subtle-glint::after { inset: 90px; }
+  </style>
+</head>
+<body>
+  <div data-hf-id="hf-9d6m" id="root" data-composition-id="main" data-start="0" data-duration="21.29" data-width="1920" data-height="1080">
+    <section data-hf-id="hf-lk79" id="scene1" class="scene" data-layout-allow-overflow="true" aria-label="Roomtone workspace introduction">
+      <div data-hf-id="hf-91q2" class="s1-left"></div><div data-hf-id="hf-08g5" class="s1-left-rule"></div>
+      <div data-hf-id="hf-ibs7" id="s1Brand" class="brand-lockup s1-brand"><span data-hf-id="hf-zrnb" class="brand-mark" id="markPulse1"><svg data-hf-id="hf-z0ps" viewBox="0 0 48 48" fill="none" aria-hidden="true"><rect data-hf-id="hf-yddn" width="48" height="48" rx="15" fill="#c8ea78"/><path data-hf-id="hf-vj4u" d="M2 13a2 2 0 0 0 2-2V7a2 2 0 0 1 4 0v13a2 2 0 0 0 4 0V4a2 2 0 0 1 4 0v13a2 2 0 0 0 4 0v-4a2 2 0 0 1 2-2" transform="translate(24 24) scale(1.625) translate(-12 -12)" stroke="#17352d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span data-hf-id="hf-nk4m" class="word">roomtone<span data-hf-id="hf-6jgg" class="dot">.</span></span></div>
+      <div data-hf-id="hf-z0iv" id="s1Copy" class="s1-copy"><div data-hf-id="hf-t6ps" class="eyebrow">Local-first voice workspace</div><h1 data-hf-id="hf-mnv9" class="display">Make room<br data-hf-id="hf-x5px" /><span data-hf-id="hf-enu5">for the voice.</span></h1><p data-hf-id="hf-p5x9" class="subline">A recording, shaped with care.</p></div>
+      <div data-hf-id="hf-e84t" class="s1-rail-note"><b data-hf-id="hf-27a2">01</b> FROM RECORDING TO READY</div><div data-hf-id="hf-v0kd" class="subtle-glint" data-layout-ignore></div>
+      <div data-hf-id="hf-re42" id="heroWindow" class="hero-window" data-layout-ignore>
+        <div data-hf-id="hf-opjz" class="window-chrome"><span data-hf-id="hf-38wu" class="window-dots"><i data-hf-id="hf-wt6k"></i><i data-hf-id="hf-zeb8"></i><i data-hf-id="hf-y7e5"></i></span><span data-hf-id="hf-8kpm" class="window-path">roomtone / voice workspace</span></div>
+        <div data-hf-id="hf-2rdl" class="window-body">
+          <aside data-hf-id="hf-yz15" class="window-side">
+            <div data-hf-id="hf-67pn" class="window-brand"><span data-hf-id="hf-6z3y" class="mini-mark"><svg data-hf-id="hf-d1zs" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path data-hf-id="hf-jkaq" d="M2 13a2 2 0 0 0 2-2V7a2 2 0 0 1 4 0v13a2 2 0 0 0 4 0V4a2 2 0 0 1 4 0v13a2 2 0 0 0 4 0v-4a2 2 0 0 1 2-2" transform="translate(24 24) scale(1.625) translate(-12 -12)" stroke="#17352d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>roomtone<span data-hf-id="hf-ptuc" style="color:#c8ea78">.</span></div>
+            <div data-hf-id="hf-yjnb" class="nav-caption">Workspace</div><div data-hf-id="hf-1q0a" class="nav-row active"><span data-hf-id="hf-q5r8" class="nav-glyph">⌁</span>Enhance speech</div><div data-hf-id="hf-bu5m" class="nav-row"><span data-hf-id="hf-i1r2" class="nav-glyph">▧</span>Generate subtitles</div><div data-hf-id="hf-gcrr" class="nav-row"><span data-hf-id="hf-ig23" class="nav-glyph">▤</span>Your projects</div><div data-hf-id="hf-79qv" class="local-chip"><i data-hf-id="hf-ylp6"></i>Files stay on this device</div>
+          </aside>
+          <div data-hf-id="hf-7klq" class="window-main">
+            <div data-hf-id="hf-2l74" class="window-topline"><span data-hf-id="hf-g0vo">Voice workspace</span><span data-hf-id="hf-pjod" class="browser-pill"><i data-hf-id="hf-pwto" class="status-dot"></i>Runs in your browser</span></div>
+            <h2 data-hf-id="hf-2fc0">Bring in your recording</h2><p data-hf-id="hf-enxl" class="window-desc">Start with a voice memo, podcast take, or interview.</p>
+            <div data-hf-id="hf-spie" class="upload-card"><div data-hf-id="hf-mj6p" class="upload-card-head"><span data-hf-id="hf-6pqj" class="upload-number">01</span><div data-hf-id="hf-yeow"><h3 data-hf-id="hf-yna2">Add a file</h3><p data-hf-id="hf-9ili">Drop in any voice recording</p></div></div><div data-hf-id="hf-wx65" class="dropzone"><span data-hf-id="hf-9ha3" class="upload-icon">↑</span><div data-hf-id="hf-y7yw"><strong data-hf-id="hf-sbbf">Choose a recording</strong><small data-hf-id="hf-uelm">WAV, MP3, M4A, or video</small></div></div><div data-hf-id="hf-mc62" id="heroFile" class="file-pill"><span data-hf-id="hf-mje5" class="file-square">WAV</span><span data-hf-id="hf-n1gr" class="file-copy"><strong data-hf-id="hf-585r">voice-note.wav</strong><small data-hf-id="hf-6nud">00:34 · sample recording</small></span><span data-hf-id="hf-hhyr" id="heroSignal" class="signal-preview" aria-hidden="true"></span><span data-hf-id="hf-5fdc" class="file-ready">Ready</span></div></div>
+          </div>
+        </div>
+      </div>
+      <div data-hf-id="hf-5ce2" class="s1-rail-note" style="left:auto;right:150px;bottom:89px;color:#53665a"><b data-hf-id="hf-kwa7" style="color:#4d6e3d">01 / 05</b> ROOMTONE</div>
+    </section>
+
+    <section data-hf-id="hf-jgks" id="scene2" class="scene" data-layout-allow-overflow="true" aria-label="Roomtone voice enhancement editor">
+      <div data-hf-id="hf-1i6s" id="scene2Frame" class="app-frame"><div data-hf-id="hf-4acs" class="app-shell">
+        <aside data-hf-id="hf-842t" class="sidebar">
+          <div data-hf-id="hf-nr43" class="sidebar-brand"><span data-hf-id="hf-6woj" class="brand-mark small-mark"><svg data-hf-id="hf-bv2p" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path data-hf-id="hf-jylr" d="M2 13a2 2 0 0 0 2-2V7a2 2 0 0 1 4 0v13a2 2 0 0 0 4 0V4a2 2 0 0 1 4 0v13a2 2 0 0 0 4 0v-4a2 2 0 0 1 2-2" transform="translate(24 24) scale(1.625) translate(-12 -12)" stroke="#17352d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>roomtone<span data-hf-id="hf-3zzs" class="dot">.</span></div>
+          <div data-hf-id="hf-3yud" class="side-label">Workspace</div><div data-hf-id="hf-ak2z" class="side-item active"><span data-hf-id="hf-7rul" class="side-icon">⌁</span>Enhance speech</div><div data-hf-id="hf-z8j1" class="side-item"><span data-hf-id="hf-h7xn" class="side-icon">▧</span>Extract audio from video</div><div data-hf-id="hf-eull" class="side-item"><span data-hf-id="hf-gtmm" class="side-icon">▤</span>Generate subtitles</div><div data-hf-id="hf-hlo2" class="side-item"><span data-hf-id="hf-fmpj" class="side-icon">▣</span>Your projects</div>
+          <div data-hf-id="hf-ij5c" class="sidebar-footer"><div data-hf-id="hf-cyi7" class="privacy"><i data-hf-id="hf-1g5g" class="status-dot"></i>Files stay on this device</div><div data-hf-id="hf-jvb3" class="profile"><span data-hf-id="hf-xrig" class="avatar">R</span><span data-hf-id="hf-h0d2">My workspace<small data-hf-id="hf-89nn">On this device</small></span></div></div>
+        </aside>
+        <main data-hf-id="hf-afu7" class="workspace"><header data-hf-id="hf-6f4s" class="topbar"><span data-hf-id="hf-g5we" class="topbar-context"><i data-hf-id="hf-098d" class="status-dot"></i>Voice workspace</span><span data-hf-id="hf-b5k7" class="topbar-pill">Runs in your browser</span></header>
+          <div data-hf-id="hf-9tvl" class="page">
+            <div data-hf-id="hf-is09" id="s2Heading" class="page-heading"><div data-hf-id="hf-x11t"><div data-hf-id="hf-1b8j" class="kicker">Voice cleanup</div><h1 data-hf-id="hf-go31" class="display">voice-note</h1><p data-hf-id="hf-bktn">18.4 MB · 00:34</p></div><span data-hf-id="hf-dw3z" class="file-meta">Original file stays untouched</span></div>
+            <div data-hf-id="hf-a4ks" class="editor-grid">
+              <section data-hf-id="hf-yhq0" id="s2Player" class="player-card">
+                <div data-hf-id="hf-8b9a" class="player-head"><div data-hf-id="hf-xfcu"><div data-hf-id="hf-ewgi" class="player-eyebrow">LISTEN</div><div data-hf-id="hf-3wkr" class="player-kind">Voice recording</div></div><span data-hf-id="hf-5jco" class="more">•••</span></div>
+                <div data-hf-id="hf-ihjy" class="wave-panel"><div data-hf-id="hf-dp8g" id="editorWave" class="waveform" aria-label="Voice recording waveform"></div><div data-hf-id="hf-4zeg" class="wave-playhead"></div></div>
+                <div data-hf-id="hf-e3oi" class="timeline-row"><span data-hf-id="hf-2nbl">00:00</span><span data-hf-id="hf-m30u">00:34</span></div>
+                <div data-hf-id="hf-gx2e" class="player-controls"><button data-hf-id="hf-3z0b" class="play-button" aria-label="Play">▶</button><span data-hf-id="hf-ulh9" class="play-time">00:12 <span data-hf-id="hf-zrki" style="color:#526158">/</span> 00:34</span><span data-hf-id="hf-jxdn" class="player-spacer"></span><div data-hf-id="hf-zvzp" id="abSwitch" class="ab-switch"><i data-hf-id="hf-4z5n" id="abThumb" class="ab-thumb"></i><span data-hf-id="hf-58qv" id="abOriginal" class="selected">Original</span><span data-hf-id="hf-0vyb" id="abEnhanced">Enhanced</span></div></div>
+                <div data-hf-id="hf-6174" class="player-download"><span data-hf-id="hf-2mqc" class="player-download-label">Download enhanced as</span><span data-hf-id="hf-z2nb" class="format-row"><span data-hf-id="hf-tf81" class="format-button">WAV</span><span data-hf-id="hf-bc9l" class="format-button">MP3</span></span></div>
+              </section>
+              <aside data-hf-id="hf-809n" id="s2Controls" class="controls-card">
+                <div data-hf-id="hf-o4r7" class="controls-title"><span data-hf-id="hf-jeh2" class="spark">✦</span><div data-hf-id="hf-w8fr"><h2 data-hf-id="hf-q0st">Shape your voice</h2><p data-hf-id="hf-9a8a">Noise cleanup, room tail control, and voice shaping.</p></div></div><div data-hf-id="hf-xvnm" class="control-rule"></div>
+                <div data-hf-id="hf-4785" class="label-row"><span data-hf-id="hf-ezzr">Starting point</span><strong data-hf-id="hf-svbs" style="color:#506641">Natural</strong></div>
+                <div data-hf-id="hf-z0dq" class="preset-row"><div data-hf-id="hf-fwnp" class="preset active"><strong data-hf-id="hf-boxb">Natural</strong><small data-hf-id="hf-0g6a">Keep it close</small></div><div data-hf-id="hf-ur7h" class="preset"><strong data-hf-id="hf-3wui">Bright</strong><small data-hf-id="hf-ytee">Open it up</small></div><div data-hf-id="hf-xmj5" class="preset"><strong data-hf-id="hf-xndj">Warm</strong><small data-hf-id="hf-uof9">Round the edges</small></div></div>
+                <div data-hf-id="hf-olnn" class="range-block"><div data-hf-id="hf-8e8e" class="range-head"><span data-hf-id="hf-szmg">AI noise reduction</span><b data-hf-id="hf-06cs">62%</b></div><div data-hf-id="hf-x191" class="range-track"><div data-hf-id="hf-j66k" id="noiseFill" class="range-fill" style="--fill:62%"></div></div><div data-hf-id="hf-ssp7" class="range-caps"><span data-hf-id="hf-vbh0">Subtle</span><span data-hf-id="hf-yuti">Strong</span></div></div>
+                <div data-hf-id="hf-mkkj" class="range-block"><div data-hf-id="hf-pjpu" class="range-head"><span data-hf-id="hf-qbry">Voice presence</span><b data-hf-id="hf-uyrw">48%</b></div><div data-hf-id="hf-lkg9" class="range-track"><div data-hf-id="hf-jxmj" class="range-fill" style="--fill:48%"></div></div><div data-hf-id="hf-07fv" class="range-caps"><span data-hf-id="hf-t9mx">Soft</span><span data-hf-id="hf-azwu">Forward</span></div></div>
+                <div data-hf-id="hf-m69i" class="range-block"><div data-hf-id="hf-py0v" class="range-head"><span data-hf-id="hf-5ruv">Volume balance</span><b data-hf-id="hf-4w4m">64%</b></div><div data-hf-id="hf-mrdc" class="range-track"><div data-hf-id="hf-j4h9" class="range-fill" style="--fill:64%"></div></div><div data-hf-id="hf-zt4u" class="range-caps"><span data-hf-id="hf-whi2">Natural</span><span data-hf-id="hf-cu5p">Even</span></div></div>
+                <div data-hf-id="hf-lryh" class="range-block"><div data-hf-id="hf-qcbw" class="range-head"><span data-hf-id="hf-750k">Room echo tails</span><b data-hf-id="hf-z51y">28%</b></div><div data-hf-id="hf-md2b" class="range-track"><div data-hf-id="hf-9925" class="range-fill" style="--fill:28%"></div></div><div data-hf-id="hf-zett" class="range-caps"><span data-hf-id="hf-mnae">Off</span><span data-hf-id="hf-ygsq">Strong</span></div></div>
+                <div data-hf-id="hf-ttgo" class="local-note">Enhancement and exports stay on this device.</div>
+                <div data-hf-id="hf-fkys" class="controls-actions"><button data-hf-id="hf-gb0q" id="enhanceButton" class="primary-button"><span data-hf-id="hf-gmxf" class="button-glyph" aria-hidden="true"><svg data-hf-id="hf-uonu" viewBox="0 0 20 20" width="17" height="17"><path data-hf-id="hf-oorl" d="M10 1.5 12 8l6.5 2-6.5 2-2 6.5L8 12l-6.5-2L8 8l2-6.5Z" fill="#c8ea78"/></svg></span>Enhance voice</button><span data-hf-id="hf-dmje" id="enhanceState" class="enhance-state">Ready when you are</span></div>
+              </aside>
+            </div>
+          </div>
+        </main>
+      </div></div>
+    </section>
+
+    <section data-hf-id="hf-savz" id="scene3" class="scene" data-layout-allow-overflow="true" aria-label="Roomtone subtitle generation quality options">
+      <div data-hf-id="hf-m1pn" id="scene3Frame" class="app-frame"><div data-hf-id="hf-kf0k" class="app-shell">
+        <aside data-hf-id="hf-cfzt" class="sidebar">
+          <div data-hf-id="hf-zhxf" class="sidebar-brand"><span data-hf-id="hf-298z" class="brand-mark small-mark"><svg data-hf-id="hf-c9dq" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path data-hf-id="hf-kcws" d="M2 13a2 2 0 0 0 2-2V7a2 2 0 0 1 4 0v13a2 2 0 0 0 4 0V4a2 2 0 0 1 4 0v13a2 2 0 0 0 4 0v-4a2 2 0 0 1 2-2" transform="translate(24 24) scale(1.625) translate(-12 -12)" stroke="#17352d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>roomtone<span data-hf-id="hf-2t2p" class="dot">.</span></div>
+          <div data-hf-id="hf-cvw9" class="side-label">Workspace</div><div data-hf-id="hf-l0i7" class="side-item"><span data-hf-id="hf-la6p" class="side-icon">⌁</span>Enhance speech</div><div data-hf-id="hf-9ew1" class="side-item"><span data-hf-id="hf-rx0e" class="side-icon">▧</span>Extract audio from video</div><div data-hf-id="hf-yu9p" class="side-item active"><span data-hf-id="hf-st7m" class="side-icon">▤</span>Generate subtitles</div><div data-hf-id="hf-cjw6" class="side-item"><span data-hf-id="hf-p9yv" class="side-icon">▣</span>Your projects</div>
+          <div data-hf-id="hf-4ax4" class="sidebar-footer"><div data-hf-id="hf-xk9b" class="privacy"><i data-hf-id="hf-0nje" class="status-dot"></i>Files stay on this device</div><div data-hf-id="hf-3upr" class="profile"><span data-hf-id="hf-8lq8" class="avatar">R</span><span data-hf-id="hf-gf7e">My workspace<small data-hf-id="hf-qtpf">On this device</small></span></div></div>
+        </aside>
+        <main data-hf-id="hf-qrbj" class="workspace"><header data-hf-id="hf-687o" class="topbar"><span data-hf-id="hf-39av" class="topbar-context"><i data-hf-id="hf-2n2j" class="status-dot"></i>Subtitle generation</span><span data-hf-id="hf-0io7" class="topbar-pill">Runs in your browser</span></header>
+          <div data-hf-id="hf-hpqp" class="page subtitle-page">
+            <div data-hf-id="hf-brct" id="s3Heading" class="subtitle-heading"><div data-hf-id="hf-wmqs"><div data-hf-id="hf-zhqr" class="kicker">Subtitles from your media</div><h1 data-hf-id="hf-72zn" class="display">Every word, right on time.</h1><p data-hf-id="hf-txgw">Turn speech into editable, time-coded subtitles.</p></div><div data-hf-id="hf-3mjj" class="subtitle-symbol">CC</div></div>
+            <section data-hf-id="hf-zvig" id="s3Source" class="subtitle-card">
+              <div data-hf-id="hf-svfa" class="subtitle-card-head"><span data-hf-id="hf-m2xr" class="spark">⌁</span><div data-hf-id="hf-vftp"><h2 data-hf-id="hf-wejj">Start with a recording</h2><p data-hf-id="hf-0iiq">Choose the language spoken in the recording for better recognition.</p></div></div>
+              <div data-hf-id="hf-p1qa" class="source-file"><span data-hf-id="hf-7iw1" class="file-square">WAV</span><strong data-hf-id="hf-zdf8">voice-note-enhanced.wav</strong><small data-hf-id="hf-tczm">00:34 · 18.4 MB</small></div>
+              <div data-hf-id="hf-m54q" class="subtitle-settings">
+                <div data-hf-id="hf-54ra" class="language-box"><label data-hf-id="hf-u113">Spoken language</label><div data-hf-id="hf-fgmm" class="language-value">English <span data-hf-id="hf-g5xn" style="color:#637269">⌄</span></div></div>
+                <div data-hf-id="hf-vu4q"><div data-hf-id="hf-kutz" class="quality-topline"><span data-hf-id="hf-ie6y" class="quality-label">Transcription quality</span><span data-hf-id="hf-39rx" class="sample-tag">CHOOSE A PACE</span></div><div data-hf-id="hf-wuna" class="quality-options"><div data-hf-id="hf-y1en" class="quality-option"><strong data-hf-id="hf-ew13">Faster</strong><small data-hf-id="hf-12wd">Quickest</small></div><div data-hf-id="hf-10r2" class="quality-option recommended"><strong data-hf-id="hf-o1f2">Balanced</strong><small data-hf-id="hf-vmof">Recommended</small></div><div data-hf-id="hf-6956" id="maxOption" class="quality-option"><strong data-hf-id="hf-fprw">Max</strong><small data-hf-id="hf-wecp">Best accuracy · slowest</small></div></div></div>
+                <button data-hf-id="hf-l7rx" id="generateButton" class="primary-button generate-button"><span data-hf-id="hf-7yjq" class="button-glyph">✦</span>Generate subtitles</button>
+              </div>
+            </section>
+            <section data-hf-id="hf-4fux" id="s3Review" class="review-panel">
+              <div data-hf-id="hf-bp0f" class="review-media"><h3 data-hf-id="hf-2ieu">voice-note-enhanced.wav</h3><p data-hf-id="hf-h0r9">Media preview</p><div data-hf-id="hf-o0gl" class="mini-player"><button data-hf-id="hf-kru2" class="mini-play" aria-label="Play preview">▶</button><div data-hf-id="hf-fv6x" id="miniWave" class="mini-wave"></div></div></div>
+              <div data-hf-id="hf-iyq5" class="review-right"><div data-hf-id="hf-2zl5" class="review-title"><div data-hf-id="hf-1043"><h3 data-hf-id="hf-bhya">Review your subtitles</h3><p data-hf-id="hf-9zvu">2 timed cues · edit any line before export</p></div><span data-hf-id="hf-ztv4" class="ready-pill">✓ Ready</span></div>
+                <div data-hf-id="hf-3mzm" class="cue-list"><div data-hf-id="hf-xn7u" class="cue-row"><span data-hf-id="hf-dpo1" class="cue-time">00:01–00:03</span><span data-hf-id="hf-3m2l" class="cue-text">I’m checking the room before we begin.</span></div><div data-hf-id="hf-47ta" class="cue-row"><span data-hf-id="hf-5exk" class="cue-time">00:03–00:06</span><span data-hf-id="hf-f0uz" class="cue-text">Then we’ll find the right pace.</span></div></div>
+                <div data-hf-id="hf-rr5h" class="export-row"><span data-hf-id="hf-t0rn" class="export-label">Download your subtitle file</span><span data-hf-id="hf-wzbw" class="download-button">↓ SRT</span><span data-hf-id="hf-b6nt" class="download-button">↓ VTT</span></div>
+              </div>
+            </section>
+          </div>
+        </main>
+      </div></div>
+    </section>
+
+    <section data-hf-id="hf-1iy1" id="scene4" class="scene" data-layout-allow-overflow="true" aria-label="Roomtone subtitle review and exports">
+      <div data-hf-id="hf-4hlo" class="s4-backdrop"></div><div data-hf-id="hf-efmp" class="s4-topline"><span data-hf-id="hf-kjq2" class="eyebrow">REVIEW &amp; EXPORT</span><span data-hf-id="hf-wpgg">ROOMTONE / VOICE WORKSPACE</span></div>
+      <div data-hf-id="hf-84l3" id="s4Heading" class="s4-heading"><div data-hf-id="hf-8uie" class="eyebrow">The words stay editable</div><h2 data-hf-id="hf-gve8" class="display">Review.<br data-hf-id="hf-rsrt" />Then export.</h2><p data-hf-id="hf-1b87">Read every line beside its timing. Make an edit before the SRT leaves your device.</p></div>
+      <div data-hf-id="hf-k767" id="reviewFocus" class="review-focus">
+        <div data-hf-id="hf-lu3m" class="focus-toolbar"><span data-hf-id="hf-uckh"><strong data-hf-id="hf-m22c">Review your subtitles</strong><br data-hf-id="hf-szow" /><span data-hf-id="hf-faad" style="display:inline-block;margin-top:5px">voice-note-enhanced.wav · 00:34</span></span><span data-hf-id="hf-tqdk" class="ready-pill">✓ Ready</span></div>
+        <div data-hf-id="hf-0jix" class="focus-grid">
+          <div data-hf-id="hf-k6gy" class="focus-player"><h3 data-hf-id="hf-0mak">Media preview</h3><p data-hf-id="hf-twjz" style="margin-top:5px;color:#53645a;font-size:14px">voice-note-enhanced.wav</p><div data-hf-id="hf-u2rt" class="mini-player"><button data-hf-id="hf-phq2" class="mini-play" aria-label="Play media">▶</button><div data-hf-id="hf-di1a" id="focusWave" class="mini-wave"></div></div><span data-hf-id="hf-vm0d" class="play-time">00:02 / 00:34</span><div data-hf-id="hf-bmfe" class="file-pill"><span data-hf-id="hf-8pt4" class="file-square">WAV</span><span data-hf-id="hf-qe4r" class="file-copy"><strong data-hf-id="hf-xpe4">voice-note-enhanced.wav</strong><small data-hf-id="hf-h6ri">Saved on this device</small></span></div></div>
+          <div data-hf-id="hf-wl9p" class="focus-review"><div data-hf-id="hf-a2l9" class="review-title"><div data-hf-id="hf-1ef4"><h3 data-hf-id="hf-7xon">2 timed cues</h3><p data-hf-id="hf-kc4g">Sample text · editable before export</p></div><span data-hf-id="hf-v32d" class="sample-tag">SAMPLE TEXT</span></div>
+            <div data-hf-id="hf-4m4b" class="cue-row"><span data-hf-id="hf-a3ad" class="cue-time">00:01–00:03</span><span data-hf-id="hf-fvkh" class="cue-text">I’m checking the room before we begin.</span></div><div data-hf-id="hf-50fc" class="cue-row"><span data-hf-id="hf-oa40" class="cue-time">00:03–00:06</span><span data-hf-id="hf-1uu3" class="cue-text">Then we’ll find the right pace.</span></div>
+            <div data-hf-id="hf-z3vt" class="export-row"><span data-hf-id="hf-jw9v" class="export-label">Download your subtitle file</span><span data-hf-id="hf-arsv" id="srtButton" class="download-button active">↓ SRT</span><span data-hf-id="hf-iukt" class="download-button">↓ VTT</span></div>
+          </div>
+        </div>
+      </div>
+      <div data-hf-id="hf-kczg" class="output-pair"><span data-hf-id="hf-l12b" class="output-label">Your exports</span><div data-hf-id="hf-8cl9" id="wavOutput" class="output-card"><span data-hf-id="hf-8bi3" class="file-square">WAV</span><span data-hf-id="hf-l73p"><strong data-hf-id="hf-wih1">voice-note-enhanced.wav</strong><small data-hf-id="hf-ovyk">Enhanced audio</small></span><span data-hf-id="hf-4dx6" class="output-check">✓</span></div><div data-hf-id="hf-spvi" id="srtOutput" class="output-card"><span data-hf-id="hf-aym0" class="file-square">SRT</span><span data-hf-id="hf-me0s"><strong data-hf-id="hf-1oai">voice-note.srt</strong><small data-hf-id="hf-md02">Timed subtitles</small></span><span data-hf-id="hf-xd0e" class="output-check">✓</span></div></div>
+    </section>
+
+    <section data-hf-id="hf-dpvw" id="scene5" class="scene" aria-label="Roomtone closing title">
+      <div data-hf-id="hf-vsf2" class="s5-grain"></div><div data-hf-id="hf-0bev" class="s5-rule"></div><div data-hf-id="hf-drxt" class="subtle-glint" data-layout-ignore></div>
+      <div data-hf-id="hf-ncym" id="s5Index" class="s5-index">ROOMTONE / LOCAL-FIRST VOICE WORKSPACE</div>
+      <div data-hf-id="hf-e2jd" id="s5Brand" class="s5-brand"><span data-hf-id="hf-cdn7" id="markPulse5" class="brand-mark"><svg data-hf-id="hf-b2gn" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path data-hf-id="hf-kr7t" d="M2 13a2 2 0 0 0 2-2V7a2 2 0 0 1 4 0v13a2 2 0 0 0 4 0V4a2 2 0 0 1 4 0v13a2 2 0 0 0 4 0v-4a2 2 0 0 1 2-2" transform="translate(24 24) scale(1.625) translate(-12 -12)" stroke="#17352d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span data-hf-id="hf-37l6" class="word">roomtone<span data-hf-id="hf-37dq" class="dot">.</span></span></div>
+      <h2 data-hf-id="hf-noah" id="s5Tagline" class="s5-tagline display">Make room<br data-hf-id="hf-sldv" /><span data-hf-id="hf-u129">for the voice.</span></h2>
+      <div data-hf-id="hf-mpr6" id="s5Privacy" class="s5-privacy"><i data-hf-id="hf-0l8b"></i>Files stay on this device</div>
+      <div data-hf-id="hf-87f1" id="s5Files" class="s5-files"><div data-hf-id="hf-6ion" class="s5-file"><span data-hf-id="hf-6byy" class="file-square">WAV</span><span data-hf-id="hf-lzpr"><strong data-hf-id="hf-wws2">voice-note-enhanced.wav</strong><small data-hf-id="hf-nw84">Enhanced audio</small></span><span data-hf-id="hf-qb1c" class="check">✓</span></div><div data-hf-id="hf-iuqf" class="s5-file"><span data-hf-id="hf-hrww" class="file-square">SRT</span><span data-hf-id="hf-n6mu"><strong data-hf-id="hf-lz32">voice-note.srt</strong><small data-hf-id="hf-hg1a">Timed captions</small></span><span data-hf-id="hf-n97c" class="check">✓</span></div></div>
+      <div data-hf-id="hf-mg2o" class="s5-footer"><span data-hf-id="hf-23ip">Voice cleanup · Subtitles</span><span data-hf-id="hf-wo2d">01 — 05</span></div>
+    </section>
+
+    <audio data-hf-id="hf-hqlj" id="music-bed" src="assets/music/happy-beats-business-moves-vol-12-by-ende-dot-app.mp3" data-start="0" data-duration="21.29" data-track-index="10" data-volume="0.34" data-fade-in="0.45" data-fade-out="1.49"></audio>
+    <audio data-hf-id="hf-q6wb" id="file-sfx" src="assets/sfx/interface/bong_001.ogg" data-start="0.72" data-duration="0.12" data-track-index="11" data-volume="0.58"></audio>
+    <audio data-hf-id="hf-2pbs" id="choice-sfx" src="assets/sfx/interface/click_003.ogg" data-start="9.83" data-duration="0.04" data-track-index="12" data-volume="0.62"></audio>
+    <audio data-hf-id="hf-d1lc" id="payoff-sfx" src="assets/sfx/impact/impactSoft_medium_001.ogg" data-start="17.47" data-duration="0.18" data-track-index="13" data-volume="0.6"></audio>
+  </div>
+  <script>
+    window.__timelines = window.__timelines || {};
+    const waveHeights = [28,42,57,38,76,52,91,44,68,32,83,49,98,59,73,39,87,46,65,31,79,54,100,42,71,35,88,58,75,39,95,48,63,29,81,53,68,37,92,44,72,33,84,55,64,41,97,50,78,34,69,47,89,38,74,56,94,43,66,30,85,51,72,36,98,46,61,40,81,57,70,33,90,48,76,42,101,54,67,35,87,45,73,31,96,58,64,39,82,50,71,34,92,46,78,41];
+    function fillWave(selector, values) {
+      const element = document.querySelector(selector);
+      values.forEach((height) => {
+        const bar = document.createElement("i");
+        bar.style.setProperty("--bar", height + "%");
+        element.appendChild(bar);
+      });
+    }
+    fillWave("#editorWave", waveHeights);
+    fillWave("#miniWave", waveHeights.slice(0, 38));
+    fillWave("#focusWave", waveHeights.slice(0, 30));
+    fillWave("#heroSignal", waveHeights.slice(0, 25));
+
+    const tl = gsap.timeline({ paused: true });
+    window.__timelines["main"] = tl;
+
+    // Scene 1: the real workspace arrives as the first visual anchor.
+    tl.from("#s1Copy .eyebrow", { y: 18, autoAlpha: 0, duration: 0.42, ease: "power3.out" }, 0.27);
+    tl.from("#s1Copy h1", { x: -46, autoAlpha: 0, duration: 0.82, ease: "power4.out" }, 0.35);
+    tl.from("#s1Copy .subline", { y: 20, autoAlpha: 0, duration: 0.54, ease: "sine.out" }, 0.83);
+    tl.from("#heroWindow", { x: 104, y: 34, rotationY: -5, rotationX: 1.7, scale: 0.955, autoAlpha: 0, duration: 1.1, ease: "power3.out" }, 0.22);
+    tl.from("#heroFile", { y: 25, scale: 0.97, autoAlpha: 0, duration: 0.58, ease: "back.out(1.1)" }, 1.33);
+    tl.from(".s1-rail-note", { y: 12, autoAlpha: 0, duration: 0.48, ease: "power2.out" }, 1.2);
+
+    // Scene 2: editorial push into the actual editor.
+    tl.fromTo("#scene2", { xPercent: 100, opacity: 1 }, { xPercent: 0, opacity: 1, duration: 0.52, ease: "power3.inOut", immediateRender: false }, 3.5);
+    tl.to("#scene1", { xPercent: -100, duration: 0.52, ease: "power3.inOut" }, 3.5);
+    tl.from("#scene2Frame", { y: 32, scale: 0.978, autoAlpha: 0, duration: 0.72, ease: "power3.out" }, 3.64);
+    tl.from("#s2Heading", { x: -25, autoAlpha: 0, duration: 0.52, ease: "expo.out" }, 3.82);
+    tl.from("#s2Player", { x: -36, autoAlpha: 0, duration: 0.68, ease: "power2.out" }, 3.94);
+    tl.from("#s2Controls", { x: 38, autoAlpha: 0, duration: 0.6, ease: "power4.out" }, 4.04);
+    tl.from("#s2Controls .preset", { y: 13, autoAlpha: 0, duration: 0.38, ease: "sine.out", stagger: 0.09 }, 4.72);
+    tl.from("#s2Controls .range-block", { x: 18, autoAlpha: 0, duration: 0.4, ease: "power2.out", stagger: 0.08 }, 5.12);
+    tl.from("#enhanceButton", { y: 15, scale: 0.96, autoAlpha: 0, duration: 0.46, ease: "back.out(1.25)" }, 5.72);
+    tl.to("#enhanceButton", { scale: 0.965, duration: 0.12, ease: "power1.inOut", yoyo: true, repeat: 1 }, 6.35);
+    tl.fromTo("#noiseFill", { scaleX: 0 }, { scaleX: 1, duration: 0.68, ease: "power2.out", immediateRender: false }, 6.38);
+    tl.to("#abThumb", { x: 114, duration: 0.45, ease: "power3.inOut" }, 7.02);
+    tl.to("#abOriginal", { color: "#53645a", duration: 0.18 }, 7.02);
+    tl.to("#abEnhanced", { color: "#39533a", fontWeight: 700, duration: 0.18 }, 7.02);
+    tl.from(".player-download", { y: 12, autoAlpha: 0, duration: 0.4, ease: "power2.out" }, 7.35);
+    tl.from(".player-download .format-button", { x: 12, autoAlpha: 0, duration: 0.3, ease: "expo.out", stagger: 0.1 }, 7.58);
+
+    // Scene 3: three quality choices stay visible; selection and output are clear.
+    tl.fromTo("#scene3", { xPercent: 100, opacity: 1 }, { xPercent: 0, opacity: 1, duration: 0.52, ease: "power3.inOut", immediateRender: false }, 8.74);
+    tl.to("#scene2", { xPercent: -100, duration: 0.52, ease: "power3.inOut" }, 8.74);
+    tl.from("#scene3Frame", { y: 28, scale: 0.98, autoAlpha: 0, duration: 0.64, ease: "power4.out" }, 8.9);
+    tl.from("#s3Heading", { y: 21, autoAlpha: 0, duration: 0.5, ease: "power2.out" }, 9.02);
+    tl.from("#s3Source", { y: 25, autoAlpha: 0, duration: 0.56, ease: "expo.out" }, 9.15);
+    tl.from("#s3Source .quality-option", { y: 17, autoAlpha: 0, duration: 0.42, ease: "back.out(1.12)", stagger: 0.11 }, 9.6);
+    tl.to("#maxOption", { borderColor: "#8ea95d", backgroundColor: "#f0f6df", duration: 0.32, ease: "power2.out" }, 9.83);
+    tl.to("#generateButton", { scale: 0.97, duration: 0.12, ease: "power1.inOut", yoyo: true, repeat: 1 }, 11.13);
+    tl.from("#s3Review", { y: 25, autoAlpha: 0, duration: 0.56, ease: "power3.out" }, 11.58);
+    tl.from("#s3Review .cue-row", { x: 20, autoAlpha: 0, duration: 0.36, ease: "expo.out", stagger: 0.13 }, 12.05);
+    tl.from("#s3Review .export-row", { y: 10, autoAlpha: 0, duration: 0.36, ease: "sine.out" }, 12.48);
+
+    // Scene 4: editorial close crop turns review into the export payoff.
+    tl.fromTo("#scene4", { xPercent: 100, opacity: 1 }, { xPercent: 0, opacity: 1, duration: 0.52, ease: "power3.inOut", immediateRender: false }, 13.11);
+    tl.to("#scene3", { xPercent: -100, duration: 0.52, ease: "power3.inOut" }, 13.11);
+    tl.from("#s4Heading", { x: -35, autoAlpha: 0, duration: 0.68, ease: "power4.out" }, 13.27);
+    tl.from("#reviewFocus", { x: 72, y: 20, scale: 0.975, autoAlpha: 0, duration: 0.76, ease: "power3.out" }, 13.34);
+    tl.from("#reviewFocus .cue-row", { x: 18, autoAlpha: 0, duration: 0.4, ease: "expo.out", stagger: 0.14 }, 14.15);
+    tl.to("#srtButton", { scale: 0.94, duration: 0.12, ease: "power1.inOut", yoyo: true, repeat: 1 }, 14.73);
+    tl.from("#wavOutput", { y: 22, scale: 0.97, autoAlpha: 0, duration: 0.55, ease: "back.out(1.15)" }, 15.3);
+    tl.from("#srtOutput", { y: 22, scale: 0.97, autoAlpha: 0, duration: 0.55, ease: "power3.out" }, 15.48);
+
+    // Scene 5: slow dissolve and a warm brand close.
+    tl.fromTo("#scene5", { opacity: 0, scale: 1.025 }, { opacity: 1, scale: 1, duration: 0.72, ease: "sine.inOut", immediateRender: false }, 17.47);
+    tl.to("#scene4", { opacity: 0, scale: 0.99, duration: 0.72, ease: "sine.inOut" }, 17.47);
+    tl.from("#s5Index", { x: -22, autoAlpha: 0, duration: 0.46, ease: "expo.out" }, 18.22);
+    tl.from("#s5Brand", { x: -38, autoAlpha: 0, duration: 0.7, ease: "power4.out" }, 17.9);
+    tl.from("#s5Tagline", { y: 25, autoAlpha: 0, duration: 0.68, ease: "power3.out" }, 18.12);
+    tl.from("#s5Privacy", { y: 14, autoAlpha: 0, duration: 0.46, ease: "sine.out" }, 18.62);
+    tl.from("#s5Files", { x: 34, autoAlpha: 0, duration: 0.65, ease: "power2.out" }, 18.22);
+    tl.from("#s5Files .s5-file", { y: 12, autoAlpha: 0, duration: 0.38, ease: "expo.out", stagger: 0.14 }, 18.52);
+    tl.to("#scene5", { opacity: 0, duration: 0.28, ease: "power1.in" }, 21.01);
+
+    // Subtle, frame-accurate RMS response on the existing Roomtone signal marks.
+    const audioData = window.AUDIO_DATA;
+    if (audioData && audioData.frames) {
+      for (let index = 1; index < audioData.frames.length; index += 1) {
+        const frame = audioData.frames[index];
+        if (frame.time > 20.85) break;
+        const scale = 1 + frame.rms * 0.022;
+        tl.call(((value) => () => gsap.set(["#markPulse1 svg", "#markPulse5 svg"], { scale: value }))(scale), [], frame.time);
+      }
+    }
+  </script>
+</body>
+</html>
