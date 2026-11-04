@@ -21,6 +21,7 @@ try {
   const pages = [
     ['home.html', 'enhance'],
     ['extract.html', 'extract'],
+    ['subtitles.html', 'subtitles'],
   ];
 
   for (const [filename, initialView] of pages) {

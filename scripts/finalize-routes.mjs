@@ -5,6 +5,7 @@ const root = process.cwd();
 const distDirectory = resolve(root, 'dist');
 const homePath = resolve(distDirectory, 'index.html');
 const extractionPath = resolve(distDirectory, 'extract-audio-from-video', 'index.html');
+const subtitlesPath = resolve(distDirectory, 'generate-subtitles', 'index.html');
 const homeHtml = await readFile(homePath, 'utf8');
 const extractionMarkup = await readFile(resolve(root, '.seo-generated/extract.html'), 'utf8');
 const extractionTitle = 'Extract Audio from Video Online | Roomtone';
@@ -57,3 +58,28 @@ extractionHtml = extractionHtml.replace(schemaPattern, `$1${JSON.stringify(schem
 await mkdir(resolve(distDirectory, 'extract-audio-from-video'), { recursive: true });
 await writeFile(extractionPath, extractionHtml, 'utf8');
 console.log('Wrote prerendered route: /extract-audio-from-video/');
+
+const subtitlesMarkup = await readFile(resolve(root, '.seo-generated/subtitles.html'), 'utf8');
+const subtitlesTitle = 'Generate SRT Subtitles from Audio or Video | Roomtone';
+const subtitlesDescription = 'Create timed SRT or VTT subtitles from audio and video in your browser. Edit the transcript and keep your media on your device.';
+const subtitlesUrl = 'https://roomtone-flax.vercel.app/generate-subtitles/';
+let subtitlesHtml = replaceRootMarkup(homeHtml, subtitlesMarkup);
+subtitlesHtml = subtitlesHtml.replace(/<title>[^<]*<\/title>/i, `<title>${subtitlesTitle}</title>`);
+subtitlesHtml = setMetaContent(subtitlesHtml, 'name', 'description', subtitlesDescription);
+subtitlesHtml = setCanonical(subtitlesHtml, subtitlesUrl);
+subtitlesHtml = setMetaContent(subtitlesHtml, 'property', 'og:title', subtitlesTitle);
+subtitlesHtml = setMetaContent(subtitlesHtml, 'property', 'og:description', subtitlesDescription);
+subtitlesHtml = setMetaContent(subtitlesHtml, 'property', 'og:url', subtitlesUrl);
+subtitlesHtml = setMetaContent(subtitlesHtml, 'name', 'twitter:title', subtitlesTitle);
+subtitlesHtml = setMetaContent(subtitlesHtml, 'name', 'twitter:description', subtitlesDescription);
+
+const subtitlesSchemaMatch = subtitlesHtml.match(schemaPattern);
+if (!subtitlesSchemaMatch) throw new Error('Could not find the WebApplication JSON-LD script in the built subtitles HTML.');
+const subtitlesSchema = JSON.parse(subtitlesSchemaMatch[2]);
+subtitlesSchema.url = subtitlesUrl;
+subtitlesSchema.description = subtitlesDescription;
+subtitlesHtml = subtitlesHtml.replace(schemaPattern, `$1${JSON.stringify(subtitlesSchema)}$3`);
+
+await mkdir(resolve(distDirectory, 'generate-subtitles'), { recursive: true });
+await writeFile(subtitlesPath, subtitlesHtml, 'utf8');
+console.log('Wrote prerendered route: /generate-subtitles/');

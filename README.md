@@ -23,6 +23,10 @@ The Support tab opens a prefilled email in the visitor’s email app. The public
 
 Audio stays in the browser. Roomtone runs the open-source RNNoise recurrent neural noise suppressor in a Web Worker, then applies Web Audio EQ, compression, and an adjustable, smoothed room-tail suppressor. The tail control lowers quiet sound between phrases; it cannot remove reflections mixed into active speech or recreate studio acoustics. Strong settings can soften quiet words. Exports include 16-bit PCM WAV, MP3, MP4, and MOV. For MP4 or MOV input, the original video track is copied into the enhanced video and the processed audio replaces its original audio. MP4/M4A import tries native browser decoders first, then uses a local FFmpeg/WASM decoder when required, so AAC audio can still be opened when the browser has no supported stream. RNNoise reduces noise around speech, but very loud or rapidly changing noise can remain.
 
+## Subtitles
+
+Open **Generate subtitles** to create timed captions from audio or video files up to 200 MB and 30 minutes. Roomtone offers Faster (Whisper Tiny), Balanced (Whisper Small), and Max (Whisper Medium) transcription quality, lets you choose the spoken language, and exports editable captions as SRT or VTT. The selected quantized model downloads and caches in the browser on first use. Media files are decoded and transcribed locally and are not uploaded. Automatic recognition can miss words, so review the transcript before exporting.
+
 The RNNoise implementation and bundled model come from [`@audio/neural-denoise`](https://github.com/audiojs/neural/tree/main/packages/neural-denoise), which includes the BSD-3-Clause RNNoise attribution and additional dependency notices. Source copies are in [`licenses/`](./licenses/), and the app serves them at `/licenses/`.
 
 Media muxing and MP3/AAC encoding use Mediabunny and its encoder extensions, distributed under the Mozilla Public License 2.0. A copy is available at [`/licenses/mediabunny-LICENSE.txt`](./public/licenses/mediabunny-LICENSE.txt).

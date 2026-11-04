@@ -4,7 +4,11 @@ import { App } from './main.jsx';
 
 const root = document.getElementById('root');
 const path = window.location.pathname.replace(/\/+$/, '');
-const initialView = path === '/extract-audio-from-video' ? 'extract' : 'enhance';
+const initialView = path === '/extract-audio-from-video'
+  ? 'extract'
+  : path === '/generate-subtitles'
+    ? 'subtitles'
+    : 'enhance';
 const app = <App initialView={initialView} showLoader={root?.dataset.ssr !== 'true'} />;
 
 if (root?.dataset.ssr === 'true') {

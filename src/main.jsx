@@ -14,6 +14,7 @@ import {
   ArrowLeft,
   Bold,
   Check,
+  Captions,
   ChevronDown,
   CircleHelp,
   Clapperboard,
@@ -43,6 +44,7 @@ import AppLoader from './AppLoader.jsx';
 import PWAControls from './PWAControls.jsx';
 import { loadLocalProjects, saveLocalProject } from './project-storage.js';
 import ExtractAudioPage from './ExtractAudioPage.jsx';
+import SubtitlesPage from './SubtitlesPage.jsx';
 
 const presets = {
   natural: { label: 'Natural', description: 'Clear and balanced', presence: 54, leveling: 48, noiseReduction: 62, roomReduction: 30 },
@@ -100,11 +102,20 @@ const PUBLIC_PAGE_METADATA = {
     description: 'Extract audio from MP4, MOV, or WebM videos up to 200 MB in your browser. Reduce background noise and download WAV or MP3; files stay on your device.',
     url: 'https://roomtone-flax.vercel.app/extract-audio-from-video/',
   },
+  subtitles: {
+    title: 'Generate SRT Subtitles from Audio or Video | Roomtone',
+    description: 'Create timed SRT or VTT subtitles from audio and video in your browser. Edit the transcript and keep your media on your device.',
+    url: 'https://roomtone-flax.vercel.app/generate-subtitles/',
+  },
 };
 
 function updatePublicPageMetadata(view) {
   if (typeof document === 'undefined') return;
-  const metadata = view === 'extract' ? PUBLIC_PAGE_METADATA.extract : PUBLIC_PAGE_METADATA.enhance;
+  const metadata = view === 'extract'
+    ? PUBLIC_PAGE_METADATA.extract
+    : view === 'subtitles'
+      ? PUBLIC_PAGE_METADATA.subtitles
+      : PUBLIC_PAGE_METADATA.enhance;
   const setContent = (selector, value) => document.querySelector(selector)?.setAttribute('content', value);
 
   document.title = metadata.title;
@@ -444,7 +455,11 @@ export function App({ initialView = 'enhance', showLoader = true } = {}) {
 
   const navigateToView = (nextView) => {
     setView(nextView);
-    const nextPath = nextView === 'extract' ? '/extract-audio-from-video/' : '/';
+    const nextPath = nextView === 'extract'
+      ? '/extract-audio-from-video/'
+      : nextView === 'subtitles'
+        ? '/generate-subtitles/'
+        : '/';
     if (window.location.pathname !== nextPath) window.history.pushState({}, '', nextPath);
     updatePublicPageMetadata(nextView);
   };
@@ -452,7 +467,11 @@ export function App({ initialView = 'enhance', showLoader = true } = {}) {
   useEffect(() => {
     const syncViewWithPath = () => {
       const path = window.location.pathname.replace(/\/+$/, '');
-      const nextView = path === '/extract-audio-from-video' ? 'extract' : 'enhance';
+      const nextView = path === '/extract-audio-from-video'
+        ? 'extract'
+        : path === '/generate-subtitles'
+          ? 'subtitles'
+          : 'enhance';
       setView(nextView);
       updatePublicPageMetadata(nextView);
     };
@@ -897,6 +916,7 @@ export function App({ initialView = 'enhance', showLoader = true } = {}) {
   const nav = [
     { id: 'enhance', label: 'Enhance speech', icon: AudioLines },
     { id: 'extract', label: 'Extract audio from video', icon: Clapperboard },
+    { id: 'subtitles', label: 'Generate subtitles', icon: Captions },
     { id: 'projects', label: 'Your projects', icon: FolderClosed, count: projects.length || null },
     { id: 'support', label: 'Support', icon: Mail },
   ];
@@ -934,7 +954,7 @@ export function App({ initialView = 'enhance', showLoader = true } = {}) {
 
       <main className="main-area">
         <header className="topbar">
-          <div className="topbar-context"><span className="context-dot" /> {view === 'extract' ? 'Video audio extraction' : 'Voice workspace'}</div>
+          <div className="topbar-context"><span className="context-dot" /> {view === 'extract' ? 'Video audio extraction' : view === 'subtitles' ? 'Subtitle generation' : 'Voice workspace'}</div>
           <div className="topbar-actions">
             <span className="local-pill"><span /> Runs in your browser</span>
             <PWAControls busy={loadingProjects || loadingFile || processing || Boolean(exportingFormat)} onToast={setToast} />
@@ -1038,6 +1058,8 @@ export function App({ initialView = 'enhance', showLoader = true } = {}) {
             onVideoSelected={clearExtractionResult}
           />
         )}
+
+        {view === 'subtitles' && <SubtitlesPage />}
 
         {view === 'editor' && (
           <div className="page-content editor-page">
